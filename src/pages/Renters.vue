@@ -311,7 +311,7 @@ export default {
              
         },
         fatchRenters(){
-            axios.post('http://localhost/vueApis/renter.php',{
+            axios.post('http://codingkloud.com/rentVue/renter.php',{
             action: "listRenter"
             }).then((response) => {
                 if(response.data.status == 1){
@@ -340,7 +340,7 @@ export default {
 
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
-                axios.post('http://localhost/vueApis/renterApi.php',{
+                axios.post('http://codingkloud.com/rentVue/renterApi.php',{
                 flatName: this.newRenter.flatName,
                 baseRent: this.newRenter.baseRent,
                 action: "addNewRenter"
@@ -390,7 +390,7 @@ export default {
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                axios.post('http://localhost/vueApis/renterApi.php',{
+                axios.post('http://codingkloud.com/rentVue/renterApi.php',{
                     flatId:this.editedFlatId,
                     flatName:this.editedFlat.flatName,
                     baseRent:this.editedFlat.baseRent,
@@ -416,7 +416,7 @@ export default {
         deleteUser(delFlat) {
             this.delFlatId = delFlat;
             /* Update Data Using API */ 
-            axios.post('http://localhost/vueApis/renterApi.php',{
+            axios.post('http://codingkloud.com/rentVue/renterApi.php',{
                 deleteIdData:this.delFlatId,
                 action: "deleteFlat"
             }).then((response) => {
@@ -451,7 +451,7 @@ export default {
     },
     created() {
         /* Get Flat Data For Form Options */
-        axios.post('http://localhost/vueApis/flatListApi.php',{
+        axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
         action: "listFlats"
         }).then((response) => {
             if(response.data.status == 1){

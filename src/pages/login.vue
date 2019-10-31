@@ -130,7 +130,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
-        axios.post("http://localhost/vueApis/loginUserApi.php", {
+        axios.post("http://codingkloud.com/rentVue/loginUserApi.php", {
             email: this.loginUserDetails.email,
             password: this.loginUserDetails.password,
             action: "loginNewUser"
