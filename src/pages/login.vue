@@ -122,10 +122,10 @@ export default {
       this.errors = [];
       
       if (!this.loginUserDetails.email) {
-        this.errors.push("Please enter email address");
+        this.errors.push("Please Enter Email Address");
       }
       if (!this.loginUserDetails.password) {
-        this.errors.push("Please enter password");
+        this.errors.push("Please Enter password");
       }
 
       if (!this.errors.length) {
