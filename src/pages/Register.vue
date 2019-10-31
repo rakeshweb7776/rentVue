@@ -175,39 +175,39 @@ export default {
               setTimeout(() => {
                 this.isActiveLoader = false;
                 this.showAlertError = true;
-              }, 2000)
+              }, 500)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.email = "";
                 this.registerDetails.phone = ""
-              }, 5000)
+              }, 800)
           }else if(response.data.status == 3){
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
                 this.showAlertError = true;
-              }, 2000)
+              }, 500)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.email = ""
-              }, 5000)
+              }, 800)
           }else if(response.data.status == 4){
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
                 this.showAlertError = true;
-              }, 2000)
+              }, 500)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.phone = ""
-              }, 5000)
+              }, 800)
           }else {
               console.log(response);
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
                 this.showAlertSuccess = true;
-              }, 2000)
+              }, 500)
               setTimeout(() => {
                 this.showAlertSuccess = false;
                 this.registerDetails.name = "",
@@ -216,7 +216,7 @@ export default {
                 this.registerDetails.password = "",
                 this.registerDetails.confirmPassword = ""    
                 router.replace('/login');        
-              }, 3000)
+              }, 800)
           }          
         }).catch(error => {
           console.log(error.message);

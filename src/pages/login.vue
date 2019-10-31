@@ -140,12 +140,12 @@ export default {
                 setTimeout(() => {
                   this.isActiveLoader = false;
                   this.showAlertError = true;
-                }, 2000)
+                }, 500)
                 setTimeout(() => {
                   this.showAlertError = false;
                   this.loginUserDetails.email = ""
                   this.loginUserDetails.password = ""
-                }, 5000)
+                }, 800)
             }else {
               console.log(response);
               console.log(response.data.records[0].id);
@@ -156,22 +156,22 @@ export default {
               setTimeout(() => {
                 this.isActiveLoader = false;
                 this.showAlertSuccess = true;
-              }, 2000)
+              }, 500)
               setTimeout(() => { 
                 router.replace('/dashboard');
-              }, 5000)
+              }, 800)
             }          
           }).catch(error => {
             this.loginUserAlert = "Registration fail due to server error";       
             setTimeout(() => {
               this.isActiveLoader = false;
               this.showAlertError = true;
-            }, 2000)
+            }, 500)
             setTimeout(() => {
               this.showAlertError = false;
               this.loginUserDetails.email = "",
               this.loginUserDetails.password = ""
-            }, 5000)
+            }, 800)
           });        
       }
     },

@@ -293,12 +293,12 @@ export default {
                     setTimeout(() => {
                         this.isActiveLoader = false;
                         this.showAlertError = true;
-                    }, 2000)
+                    }, 500)
                     setTimeout(() => {
                         this.showAlertError = false;
                         this.newFlat.flatName = "";
                         this.newFlat.baseRent = ""
-                    }, 5000)
+                    }, 800)
                 }else {
                     console.log(response);
                     this.alertMessage = response.data.message;

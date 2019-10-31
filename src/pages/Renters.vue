@@ -350,26 +350,26 @@ export default {
                     setTimeout(() => {
                         this.isActiveLoader = false;
                         this.showAlertError = true;
-                    }, 2000)
+                    }, 500)
                     setTimeout(() => {
                         this.showAlertError = false;
                         this.newRenter.flatName = "";
                         this.newRenter.baseRent = ""
-                    }, 5000)
+                    }, 800)
                 }else {
                     console.log(response);
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
                         this.isActiveLoader = false;
                         this.showAlertSuccess = true;
-                    }, 2000)
+                    }, 500)
                     setTimeout(() => {
                         this.showAlertSuccess = false;
                         this.newRenter.flatName = "",
                         this.newRenter.baseRent = "",
                         this.$refs['addNewRenterModal'].hide();
                         this.fatchRenters();     
-                    }, 3000)
+                    }, 800)
                 }          
                 }).catch(error => {
                     console.log(error.message);
@@ -400,14 +400,14 @@ export default {
                     setTimeout(() => {
                         this.isActiveLoader = false;
                         this.showAlertSuccess = true;
-                    }, 2000)
+                    }, 500)
                     setTimeout(() => {
                         this.showAlertSuccess = false;
                         this.editedFlat.flatName = '';
                         this.editedFlat.baseRent = '';
                         this.$refs['updateDataModal'].hide();
                         this.fatchRenters();            
-                    }, 5000)
+                    }, 800)
                     console.log(response);                    
                 })
             }
