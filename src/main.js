@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 //import VueResource from 'vue-resource'
 import VueCookies from 'vue-cookies'
+import swal from 'sweetalert';
 
 import BootstrapVue from 'bootstrap-vue'
 
@@ -23,8 +24,7 @@ import DashboardCss from "./assets/scss/dashboard.scss";
 import router from './routes/routes'
 
 window.router = router;
-
-
+window.swal = swal;
 
 /* Vue Use Code */
 Vue.use(DashboardCss)

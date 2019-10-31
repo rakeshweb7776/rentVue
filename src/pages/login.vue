@@ -119,6 +119,7 @@ export default {
   methods: {
     fatchUsers() {},
     loginUser() {
+      
       this.errors = [];
       
       if (!this.loginUserDetails.email) {
@@ -139,27 +140,30 @@ export default {
                 this.loginUserAlert = response.data.message;
                 setTimeout(() => {
                   this.isActiveLoader = false;
-                  this.showAlertError = true;
-                }, 500)
+                  //this.showAlertError = true;
+                  swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
+                }, 100)
                 setTimeout(() => {
-                  this.showAlertError = false;
+                 // this.showAlertError = false;
                   this.loginUserDetails.email = ""
                   this.loginUserDetails.password = ""
-                }, 800)
+                }, 100)
             }else {
               console.log(response);
               console.log(response.data.records[0].id);
-              this.loginUserAlert = response.data.message;
+              this.loginUserAlert = response.data.message;              
                 
               window.$cookies.set('user_session', response.data.records[0].id,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;
-                this.showAlertSuccess = true;
-              }, 500)
+               // this.showAlertSuccess = true;
+               swal(this.loginUserAlert,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 950});
+              }, 100)
               setTimeout(() => { 
                 router.replace('/dashboard');
-              }, 800)
+                //swal("Congratulation" ,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 1200});
+              }, 1200)
             }          
           }).catch(error => {
             this.loginUserAlert = "Registration fail due to server error";       
@@ -171,7 +175,7 @@ export default {
               this.showAlertError = false;
               this.loginUserDetails.email = "",
               this.loginUserDetails.password = ""
-            }, 800)
+            }, 1000)
           });        
       }
     },
