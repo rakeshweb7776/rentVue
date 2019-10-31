@@ -305,13 +305,13 @@ export default {
             this.selectedFile = event.target.files[0];
             const formData = new FormData()
             formData.append('myFile', this.selectedFile, this.selectedFile.name)
-            axios.post('http://localhost/vueApis/images/', formData)
+            axios.post('https://localhost/vueApis/images/', formData)
         },
         onUpload() {
              
         },
         fatchRenters(){
-            axios.post('http://codingkloud.com/rentVue/renter.php',{
+            axios.post('https://codingkloud.com/rentVue/renter.php',{
             action: "listRenter"
             }).then((response) => {
                 if(response.data.status == 1){
@@ -340,7 +340,7 @@ export default {
 
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
-                axios.post('http://codingkloud.com/rentVue/renterApi.php',{
+                axios.post('https://codingkloud.com/rentVue/renterApi.php',{
                 flatName: this.newRenter.flatName,
                 baseRent: this.newRenter.baseRent,
                 action: "addNewRenter"

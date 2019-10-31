@@ -162,7 +162,7 @@ export default {
       
       if (!this.errors.length) {
         this.isActiveLoader = true; 
-        axios.post('http://codingkloud.com/rentVue/registerUserApi.php',{
+        axios.post('https://codingkloud.com/rentVue/registerUserApi.php',{
           name: this.registerDetails.name,
           email: this.registerDetails.email,
           phone: this.registerDetails.phone,
