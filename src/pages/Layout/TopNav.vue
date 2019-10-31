@@ -35,7 +35,7 @@ export default {
     mounted(){
       this.loggedInUserId = window.$cookies.get('user_session');   
 
-      axios.post('http://localhost/vueApis/users.php',{
+      axios.post('https://codingkloud.com/rentVue/users.php',{
         loggedInUserId: this.loggedInUserId,
       }).then((response) => {
           console.log(response);
