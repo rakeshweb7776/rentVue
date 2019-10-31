@@ -123,11 +123,13 @@
                                 <b-row>
                                     <b-col sm="6" class="pr-2">
                                         <b-form-group>
+                                            First Name:<br>
                                             <b-form-input v-model="newRenter.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
                                         </b-form-group>
                                     </b-col>
                                     <b-col sm="6" class="pl-2">
                                         <b-form-group>
+                                            Last Name:<br>
                                             <b-form-input v-model="newRenter.lastName" placeholder="Last Name" id="lastName" type="email" size="md"></b-form-input>
                                         </b-form-group>
                                     </b-col>
@@ -135,16 +137,19 @@
                                 <b-row>
                                     <b-col sm="6" class="pr-2">
                                         <b-form-group>
+                                            Email Address:<br>
                                             <b-form-input v-model="newRenter.email" placeholder="Email Address" id="email" type="email" size="md"></b-form-input>
                                         </b-form-group>
                                     </b-col>
                                     <b-col sm="6" class="pl-2">
                                         <b-form-group>
+                                            Mobile Number:<br>
                                             <b-form-input v-model="newRenter.phone" placeholder="Mobile Number" id="phone" type="email" size="md"></b-form-input>
                                         </b-form-group>
                                     </b-col>
                                 </b-row>
                                 <b-form-group>
+                                    Aadhar Number:<br>
                                     <b-form-input v-model="newRenter.aadhar" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
                                 </b-form-group>
                                 <b-form-group>
