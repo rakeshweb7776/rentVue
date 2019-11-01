@@ -162,7 +162,6 @@ export default {
               }, 100)
               setTimeout(() => { 
                 router.replace('/dashboard');
-                //swal("Congratulation" ,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 1200});
               }, 1200)
             }          
           }).catch(error => {

@@ -39,30 +39,7 @@
             </circle>
         </g>
       </svg>
-    </div>
-    <div class="loginSuccessAnimate" v-show="showAlertSuccess">
-      <div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
-        <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
-        <span class="swal2-success-line-tip"></span>
-        <span class="swal2-success-line-long"></span>
-        <div class="swal2-success-ring"></div> 
-        <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
-        <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
-      </div>
-      <h4 style="color:#a5dc86;text-align:center">{{ loginUserAlert }}</h4>
-    </div> 
-   <transition name="fade" mode="out-in">
-    <div class="loginErrorAnimate" v-show="showAlertError"> 
-      <a class="errorCloseButton" style="color:#f27474;" @click="hideErrorAlert">Close</a>
-      <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;">
-        <span class="swal2-x-mark">
-          <span class="swal2-x-mark-line-left"></span>
-          <span class="swal2-x-mark-line-right"></span>
-        </span>
-      </div>
-      <h4 style="color:#f27474;text-align:center">{{ loginUserAlert }}</h4>
-    </div>
-   </transition>  
+    </div>     
     <b-card>
       <h3 class="mb-3">Registration</h3>
       <b-row>        
@@ -174,40 +151,44 @@ export default {
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
-                this.showAlertError = true;
-              }, 500)
+                //this.showAlertError = true;
+                swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
+              }, 100)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.email = "";
                 this.registerDetails.phone = ""
-              }, 800)
+              }, 100)
           }else if(response.data.status == 3){
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
-                this.showAlertError = true;
-              }, 500)
+                //this.showAlertError = true;
+                swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
+              }, 100)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.email = ""
-              }, 800)
+              }, 100)
           }else if(response.data.status == 4){
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
-                this.showAlertError = true;
-              }, 500)
+                //this.showAlertError = true;
+                swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
+              }, 100)
               setTimeout(() => {
                 this.showAlertError = false;
                 this.registerDetails.phone = ""
-              }, 800)
+              }, 100)
           }else {
               console.log(response);
               this.loginUserAlert = response.data.message;
               setTimeout(() => {
                 this.isActiveLoader = false;
-                this.showAlertSuccess = true;
-              }, 500)
+                //this.showAlertSuccess = true;
+                swal(this.loginUserAlert,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 950});
+              }, 100)
               setTimeout(() => {
                 this.showAlertSuccess = false;
                 this.registerDetails.name = "",
@@ -216,7 +197,7 @@ export default {
                 this.registerDetails.password = "",
                 this.registerDetails.confirmPassword = ""    
                 router.replace('/login');        
-              }, 800)
+              }, 1200)
           }          
         }).catch(error => {
           console.log(error.message);
