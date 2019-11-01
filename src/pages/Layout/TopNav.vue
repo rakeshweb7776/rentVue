@@ -37,6 +37,7 @@ export default {
 
       axios.post('https://codingkloud.com/rentVue/users.php',{
         loggedInUserId: this.loggedInUserId,
+        action: "getLoggedUser"
       }).then((response) => {
           console.log(response);
           this.loggedInUserData.name = response.data.records[0].name;

@@ -15,7 +15,7 @@
                             </b-tr>
                         </b-thead>
                         <b-tbody>
-                            <!-- <b-tr v-bind:key="item.index" v-for="(item, index) in users">
+                            <b-tr v-bind:key="item.index" v-for="(item, index) in users">
                                 <b-td>{{ item.id }}</b-td>               
                                 <b-td>{{ item.name }}</b-td>
                                 <b-td>{{ item.phone }}</b-td>
@@ -25,7 +25,7 @@
                                     
                                     <b-button variant="outline-danger" class="ml-2 deleteIcon" @click="deleteUser(item.id)"><i class="material-icons">delete</i></b-button>
                                 </b-td>
-                            </b-tr> -->
+                            </b-tr>
                         </b-tbody>
                     </b-table-simple>
                 </b-card>
@@ -42,16 +42,23 @@
 </style>
 
 <script>
-import axios from 'axios'
 export default { 
     data(){
         return {
-
+            users:[]
         }            
     },
     methods:{    
     },
     created() {
+    },
+    mounted(){
+      axios.post('https://codingkloud.com/rentVue/users.php',{
+        action: "listUsers"
+      }).then((response) => {
+          console.log(response);
+          this.users = response.data.users;
+      });
     }  
 }
     
