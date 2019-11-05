@@ -1,7 +1,7 @@
 <template>
     <div class="topBar">
       <h3>{{ $route.name }}</h3>
-      <b-dropdown id="dropdown-right" :text="loggedInUserData.name" right class="float-right">
+      <b-dropdown id="dropdown-right" :text="loggedInUserData.firstName + ' ' + loggedInUserData.lastName" right class="float-right">
         <b-dropdown-item-button @click="logout">Logout</b-dropdown-item-button>
       </b-dropdown>
     </div>
@@ -18,9 +18,9 @@ export default {
       return {
         loggedInUserId:'',
         loggedInUserData: {
-          name:'',
-          email:'',
-          phone:''
+          firstName:null,
+          lastName:null,
+          phone:null
         }
       }
     },
@@ -40,9 +40,8 @@ export default {
         action: "getLoggedUser"
       }).then((response) => {
           console.log(response);
-          this.loggedInUserData.name = response.data.records[0].name;
-          this.loggedInUserData.email = response.data.records[0].email;
-          this.loggedInUserData.phone = response.data.records[0].phone;
+          this.loggedInUserData.firstName = response.data.records[0].firstName;
+          this.loggedInUserData.lastName = response.data.records[0].lastName;
       });
 
     }

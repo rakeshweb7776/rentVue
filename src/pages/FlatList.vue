@@ -27,9 +27,9 @@
                                 <b-td>{{ item.flatName }}</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</b-td>
                                 <b-td>                                    
-                                    <b-button variant="outline-primary" class="mr-2 editIcon" @click="editModal(item.id, index)"><i class="material-icons">edit</i></b-button>
+                                    <b-button variant="outline-primary" class="mr-2 editIcon p-0" @click="editModal(item.id, index)"><i class="material-icons">edit</i></b-button>
                                     
-                                    <b-button variant="outline-danger" class="ml-2 deleteIcon" @click="deleteUser(item.id)"><i class="material-icons">delete</i></b-button>
+                                    <b-button variant="outline-danger" class="ml-2 deleteIcon p-0" @click="deleteUser(item.id)"><i class="material-icons">delete</i></b-button>
                                 </b-td>
                             </b-tr>
                         </b-tbody>

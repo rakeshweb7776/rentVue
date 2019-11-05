@@ -1,7 +1,7 @@
 <template>
 <div class="loginContainer">
   
-  <div class="commonFormDesign loginSection"> 
+  <div class="commonFormDesign registerSection"> 
   <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
       <svg width="100" height="100" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#EF4B7C">
         <g fill="none" fill-rule="evenodd" stroke-width="2">
@@ -41,28 +41,66 @@
       </svg>
     </div>     
     <b-card>
-      <h3 class="mb-3">Registration</h3>
+      <h3 class="mb-3">Renter Registration</h3>
       <b-row>        
         <b-col cols="12">
           <form>
+            <b-row>        
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.lastName" placeholder="Last Name" id="lastName" type="text" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>  
+            <b-row>        
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.email" placeholder="Email" id="email" type="email" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>  
             <b-form-group>
-              <b-form-input v-model="registerDetails.name" placeholder="Name" id="name" type="text" size="md"></b-form-input>
+              <b-form-input v-model="registerDetails.aadhar" v-mask="'####-####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
             </b-form-group>
             <b-form-group>
-              <b-form-input v-model="registerDetails.email" placeholder="Email" id="email" type="email" size="md"></b-form-input>
+                <b-form-select
+                    v-model="registerDetails.selectedFlat"
+                    :options="this.options"
+                    value-field="id"
+                    text-field="flatName"
+                    disabled-field="notEnabled"
+                >
+                <template v-slot:first>
+                    <option :value="null" disabled>-- Please select Flat --</option>
+                </template>
+                </b-form-select>
             </b-form-group>
-            <b-form-group>
-              <b-form-input v-model="registerDetails.phone" placeholder="Phone Number" type="text" size="md"></b-form-input>
-            </b-form-group>
-            <b-form-group>
-              <b-form-input v-model="registerDetails.password" placeholder="Password" type="password" size="md"></b-form-input>
-            </b-form-group>
-            <b-form-group>
-              <b-form-input v-model="registerDetails.confirmPassword" placeholder="Confirm Password" type="password" size="md"  v-on:keyup.enter="registerUser()"></b-form-input>
-            </b-form-group>
+            <b-row>        
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.password" placeholder="Password" type="password" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.confirmPassword" placeholder="Confirm Password" type="password" size="md"  v-on:keyup.enter="registerUser()"></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row> 
+            
+           
             <b-button class="siteButton"  @click="registerUser()">Register</b-button>
-            <hr>
-            <p class="loginSignupLink">Already have an account? <router-link to="/login">login Now</router-link></p>            
+            <span class="loginSignupLink">Already have an account? <router-link to="/login">login Now</router-link></span>            
           </form>
           <ul class="errorListing" v-if="errors.length">
             <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>
@@ -87,12 +125,18 @@ export default {
     return {
       errors: [],
       registerDetails: {
-        name: null,
+        firstName: null,
+        lastName: null,
         email: null,
         phone: null,
+        aadhar:null,
+        selectedFlat: null,
         password: null,
         confirmPassword: null
       },
+
+      selectedFile: null,
+      options: [],
       
       loginUserAlert: "",
       showAlertError: false,
@@ -101,14 +145,45 @@ export default {
     };
   },
   methods: {    
-    fatchUsers() {},
+    fatchUsers() {
+
+    },
+    fatchFlats(){
+        /* Get Flat Data For Form Options */
+        axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
+        action: "listAvailableFlats"
+        }).then((response) => {
+            if(response.data.status == 1){
+                console.log(response);   
+                this.options = response.data.records;
+                for(var i = 0; i < this.options.length; i++) {
+                    var getFlatName = this.options[i].flatName;
+                    var getFlatRent = this.options[i].baseRent;
+                    this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
+                    
+                    if(this.options[i].status == 1){                                        
+                        this.options[i].flatName = getFlatName + " Not Available";
+                        var newKey = 'notEnabled';
+                        var newValue = true ;
+                        var newObj = this.options[i];
+                        newObj[newKey] = newValue;                    
+                    }
+                }
+            }else if(response.data.status == 0) {
+                this.noRenterMessage = response.data.message;
+                console.log(response);
+            }
+        });
+    },
     registerUser(){
       this.errors = [];
       
-      if (!this.registerDetails.name) {
+      if (!this.registerDetails.firstName) {
         this.errors.push("Name required.");
-      }else if (this.registerDetails.name.length < 8){
-        this.errors.push("User Name required 8 characters");
+      }
+
+      if (!this.registerDetails.lastName) {
+        this.errors.push("lastName required.");
       }
 
       if (!this.registerDetails.email) {
@@ -121,6 +196,14 @@ export default {
         this.errors.push("Phone No required.");
       }else if (!this.validMobile(this.registerDetails.phone)){
         this.errors.push("Enter 10 Digit Number");
+      }
+      if (!this.registerDetails.aadhar) {
+        this.errors.push("Aadhar No required.");
+      }else if (!this.validMobile(this.registerDetails.aadhar)){
+        this.errors.push("Enter 16 Digit Aadhar Number");
+      }
+      if (!this.registerDetails.selectedFlat) {
+        this.errors.push("Please Select Flat.");
       }
 
       if (!this.registerDetails.password) {
@@ -139,13 +222,16 @@ export default {
       
       if (!this.errors.length) {
         this.isActiveLoader = true; 
-        axios.post('https://codingkloud.com/rentVue/registerUserApi.php',{
-          name: this.registerDetails.name,
+        axios.post('https://codingkloud.com/rentVue/registerUserApi.php',{          
+          firstName: this.registerDetails.firstName,
+          lastName: this.registerDetails.lastName,
           email: this.registerDetails.email,
           phone: this.registerDetails.phone,
+          aadhar: this.registerDetails.aadhar,
+          selectedFlat: this.registerDetails.selectedFlat,
           password: this.registerDetails.password,
           confirmPassword: this.registerDetails.confirmPassword,
-          action: "registerNewUser"
+          action: "registerRenter"          
         }).then(response=> {
           if(response.data.status == 2){
               this.loginUserAlert = response.data.message;
@@ -210,7 +296,7 @@ export default {
       return re.test(email);
     },
     validMobile(phoneNo) {
-        var phoneNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        var phoneNo = /^\d{3}-\d{3}-\d{4}$/;
         if(this.registerDetails.phone.match(phoneNo)) {
           return true;
         }
@@ -222,8 +308,8 @@ export default {
       this.showAlertError = false;
     }
   },
-  mounted(){
-    
+  mounted() {
+      this.fatchFlats();  
   }
 };
 </script>

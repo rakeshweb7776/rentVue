@@ -11,7 +11,7 @@
          <b-row>
             <b-col>
                 <b-card class="p-1">      
-                    <b-alert class="m-0" show variant="info" v-if="!flatListStatus > 0">{{ noUserMessage }}</b-alert>          
+                    <b-alert class="m-0" show variant="info" v-if="!flatListStatus > 0">{{ noRenterMessage }}</b-alert>          
                     <b-table-simple responsive bordered striped hover class="m-0"  v-if="flatListStatus > 0">
                         <b-thead>
                             <b-tr>
@@ -89,29 +89,7 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="loginSuccessAnimate" v-show="showAlertSuccess">
-                        <div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
-                            <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
-                            <span class="swal2-success-line-tip"></span>
-                            <span class="swal2-success-line-long"></span>
-                            <div class="swal2-success-ring"></div> 
-                            <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
-                            <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
-                        </div>
-                        <h4 style="color:#a5dc86;text-align:center">{{ alertMessage }}</h4>
-                    </div> 
-                    <transition name="fade" mode="out-in">
-                        <div class="loginErrorAnimate" v-show="showAlertError"> 
-                        <a class="errorCloseButton" style="color:#f27474;" @click="hideErrorAlert">Close</a>
-                        <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;">
-                            <span class="swal2-x-mark">
-                            <span class="swal2-x-mark-line-left"></span>
-                            <span class="swal2-x-mark-line-right"></span>
-                            </span>
-                        </div>
-                        <h4 style="color:#f27474;text-align:center">{{ alertMessage }}</h4>
-                        </div>
-                    </transition>  
+                      
                     <b-card>
                         <h3 class="mb-3">Add New Renter</h3>
                         <b-row>
@@ -150,7 +128,7 @@
                                 <b-form-group>
                                     <b-form-select
                                         v-model="selected"
-                                        :options="this.flats"
+                                        :options="this.options"
                                         class="mb-3"
                                         value-field="id"
                                         text-field="flatName"
@@ -214,30 +192,7 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="loginSuccessAnimate" v-show="showAlertSuccess">
-                        <div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
-                            <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
-                            <span class="swal2-success-line-tip"></span>
-                            <span class="swal2-success-line-long"></span>
-                            <div class="swal2-success-ring"></div> 
-                            <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
-                            <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
-                        </div>
-                        <h4 style="color:#a5dc86;text-align:center">{{ alertMessage }}</h4>
-                    </div> 
-                    <transition name="fade" mode="out-in">
-                        <div class="loginErrorAnimate" v-show="showAlertError"> 
-                        <a class="errorCloseButton" style="color:#f27474;" @click="hideErrorAlert">Close</a>
-                        <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;">
-                            <span class="swal2-x-mark">
-                            <span class="swal2-x-mark-line-left"></span>
-                            <span class="swal2-x-mark-line-right"></span>
-                            </span>
-                        </div>
-                        <h4 style="color:#f27474;text-align:center">{{ alertMessage }}</h4>
-                        </div>
-                    </transition>
-                    <b-card>    
+                                        <b-card>    
                         <h3 class="mb-3">Update Flat Details</h3>       
                         <b-row>                            
                             <b-col cols="6">
@@ -273,6 +228,7 @@ import axios from 'axios'
 export default { 
     data(){
         return {
+            failedExample: { name: 'test'},
             errors: [],
             newRenter: {
                 flatName: null,
@@ -281,9 +237,6 @@ export default {
             renters:[],
             selectedFile: null,
             selected: null,
-            flats:[
-                { value: null, text: 'Please select an option' }
-            ],
             options: [],
             editedFlat: {
                 flatName:null,
@@ -296,7 +249,7 @@ export default {
             showAlertError: false,
             showAlertSuccess: false,
             isActiveLoader: false,
-            noUserMessage:null,
+            noRenterMessage:null,
             flatListStatus:null
         }
     },
@@ -311,16 +264,41 @@ export default {
              
         },
         fatchRenters(){
-            axios.post('https://codingkloud.com/rentVue/renter.php',{
+            axios.post('https://codingkloud.com/rentVue/renterApi.php',{
             action: "listRenter"
             }).then((response) => {
                 if(response.data.status == 1){
                     console.log(response);   
-                    this.flatListStatus = response.data.status;
-                    this.flats = response.data.records;
                 }else if(response.data.status == 0) {
                     this.flatListStatus = response.data.status;
-                    this.noUserMessage = response.data.message;
+                    this.noRenterMessage = response.data.message;
+                    console.log(response);
+                }
+            });
+        },
+        fatchFlats(){
+            /* Get Flat Data For Form Options */
+            axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
+            action: "listAvailableFlats"
+            }).then((response) => {
+                if(response.data.status == 1){
+                    console.log(response);   
+                    this.options = response.data.records;
+                    for(var i = 0; i < this.options.length; i++) {
+                        var getFlatName = this.options[i].flatName;
+                        var getFlatRent = this.options[i].baseRent;
+                        this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
+                        
+                        if(this.options[i].status == 1){                                        
+                            this.options[i].flatName = getFlatName + " Not Available";
+                            var newKey = 'notEnabled';
+                            var newValue = true ;
+                            var newObj = this.options[i];
+                            newObj[newKey] = newValue;                    
+                        }
+                    }
+                }else if(response.data.status == 0) {
+                    this.noRenterMessage = response.data.message;
                     console.log(response);
                 }
             });
@@ -339,7 +317,7 @@ export default {
             }            
 
             if (!this.errors.length) {
-                this.isActiveLoader = true; 
+                /*this.isActiveLoader = true; 
                 axios.post('https://codingkloud.com/rentVue/renterApi.php',{
                 flatName: this.newRenter.flatName,
                 baseRent: this.newRenter.baseRent,
@@ -373,7 +351,7 @@ export default {
                 }          
                 }).catch(error => {
                     console.log(error.message);
-                });         
+                });*/         
             }
             
         },
@@ -390,39 +368,39 @@ export default {
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                axios.post('http://codingkloud.com/rentVue/renterApi.php',{
-                    flatId:this.editedFlatId,
-                    flatName:this.editedFlat.flatName,
-                    baseRent:this.editedFlat.baseRent,
-                    action: "update"
-                }).then((response) => {
-                    this.alertMessage = response.data.message;
-                    setTimeout(() => {
-                        this.isActiveLoader = false;
-                        this.showAlertSuccess = true;
-                    }, 500)
-                    setTimeout(() => {
-                        this.showAlertSuccess = false;
-                        this.editedFlat.flatName = '';
-                        this.editedFlat.baseRent = '';
-                        this.$refs['updateDataModal'].hide();
-                        this.fatchRenters();            
-                    }, 800)
-                    console.log(response);                    
-                })
+                // axios.post('http://codingkloud.com/rentVue/renterApi.php',{
+                //     flatId:this.editedFlatId,
+                //     flatName:this.editedFlat.flatName,
+                //     baseRent:this.editedFlat.baseRent,
+                //     action: "update"
+                // }).then((response) => {
+                //     this.alertMessage = response.data.message;
+                //     setTimeout(() => {
+                //         this.isActiveLoader = false;
+                //         this.showAlertSuccess = true;
+                //     }, 500)
+                //     setTimeout(() => {
+                //         this.showAlertSuccess = false;
+                //         this.editedFlat.flatName = '';
+                //         this.editedFlat.baseRent = '';
+                //         this.$refs['updateDataModal'].hide();
+                //         this.fatchRenters();            
+                //     }, 800)
+                //     console.log(response);                    
+                // })
             }
                                   
         },
         deleteUser(delFlat) {
             this.delFlatId = delFlat;
             /* Update Data Using API */ 
-            axios.post('http://codingkloud.com/rentVue/renterApi.php',{
-                deleteIdData:this.delFlatId,
-                action: "deleteFlat"
-            }).then((response) => {
-                console.log(response);
-                this.fatchRenters();             
-            })
+            // axios.post('http://codingkloud.com/rentVue/renterApi.php',{
+            //     deleteIdData:this.delFlatId,
+            //     action: "deleteFlat"
+            // }).then((response) => {
+            //     console.log(response);
+            //     this.fatchRenters();             
+            // })
         },
         editModal(flatId, index){
             this.editedFlat.flatName = this.flats[index].flatName;
@@ -432,6 +410,22 @@ export default {
         },
         addRenterModal(){
             this.$refs['addNewRenterModal'].show();
+            //this.checkAvailableFlats();
+        },
+        checkAvailableFlats(){
+            // for(var i = 0; i < this.options.length; i++) {
+            //     var getFlatName = this.options[i].flatName;
+            //     var getFlatRent = this.options[i].baseRent;
+            //     this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
+                
+            //     if(this.options[i].status == 1){                                        
+            //         this.options[i].flatName = getFlatName + " Not Available";
+            //         var newKey = 'notEnabled';
+            //         var newValue = true ;
+            //         var newObj = this.options[i];
+            //         newObj[newKey] = newValue;                    
+            //     }
+            // }
         }
     },
     computed: {
@@ -444,26 +438,14 @@ export default {
         },
         totalFlats: function () {
             return this.flats.length;
-        }
+        }        
     },
     mounted() {
-        this.fatchRenters();     
+        this.fatchRenters();  
+        this.fatchFlats();  
     },
-    created() {
-        /* Get Flat Data For Form Options */
-        axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
-        action: "listFlats"
-        }).then((response) => {
-            if(response.data.status == 1){
-                console.log(response);   
-                this.flatListStatus = response.data.status;
-                this.flats = response.data.records;
-            }else if(response.data.status == 0) {
-                this.flatListStatus = response.data.status;
-                this.noUserMessage = response.data.message;
-                console.log(response);
-            }
-        });
+    created() {               
+                
     }
 }; 
 </script>
