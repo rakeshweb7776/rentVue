@@ -79,7 +79,7 @@
             <p class="loginSignupLink">Don't have an account? <router-link to="/register">Register here</router-link></p>
           </form>
           <ul class="errorListing" v-if="errors.length">
-            <li v-bind:key="error.index" v-for="error in errors">{{ error }}</li>
+            <li v-bind:key="error.index" v-for="error in errors">{{ error }}</li> 
           </ul>
         </b-col> 
       </b-row>
