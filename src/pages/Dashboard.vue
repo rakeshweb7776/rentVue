@@ -14,6 +14,13 @@
                                 <b-th>Email</b-th>
                                 <b-th>Actions</b-th>
                             </b-tr>
+                            <b-tr>                              
+                                <b-th colspan="5"  class="p-2">
+                                    <b-form-group class="m-0">
+                                        <b-form-input type="text" placeholder="Search" size="md"></b-form-input>                                         
+                                    </b-form-group>
+                                </b-th>
+                            </b-tr>
                         </b-thead>
                         <b-tbody>
                             <b-tr v-bind:key="item.index" v-for="(item, index) in users">          

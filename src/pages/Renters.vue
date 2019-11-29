@@ -1,13 +1,13 @@
 <template>
     <div> 
-         <b-row class="mb-3">
+         <!-- <b-row class="mb-3">
             <b-col>
                 <b-card>  
                     <h6 class="float-left mt-2">Add New Renter</h6>
                     <button class="btn siteButton btn-secondary float-right"  @click="addRenterModal()">Add Renter</button>
                 </b-card>
             </b-col>
-         </b-row>       
+         </b-row>        -->
          <b-row>
             <b-col>
                 <b-card class="p-1">      

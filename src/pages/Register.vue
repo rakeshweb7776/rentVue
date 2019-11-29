@@ -60,12 +60,12 @@
             <b-row>        
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input v-model="registerDetails.email" placeholder="Email" id="email" type="email" size="md"></b-form-input>
+                  <b-form-input @keyUp="inputFocus(event)" :class="{ inputError: errorEmail }" v-model="registerDetails.email" placeholder="Email" id="email" type="email" size="md"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input v-model="registerDetails.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
+                  <b-form-input :class="{ inputError: errorPhone }" v-model="registerDetails.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>  
@@ -134,6 +134,8 @@ export default {
         password: null,
         confirmPassword: null
       },
+      errorEmail: false,
+      errorPhone: false,
 
       selectedFile: null,
       options: [],
@@ -242,8 +244,8 @@ export default {
               }, 100)
               setTimeout(() => {
                 this.showAlertError = false;
-                this.registerDetails.email = "";
-                this.registerDetails.phone = ""
+                this.errorEmail = true;
+                this.errorPhone = true;
               }, 100)
           }else if(response.data.status == 3){
               this.loginUserAlert = response.data.message;
@@ -306,6 +308,9 @@ export default {
     },
     hideErrorAlert(){
       this.showAlertError = false;
+    },
+    inputFocus(event){
+      console.log(this.keyCode);
     }
   },
   mounted() {

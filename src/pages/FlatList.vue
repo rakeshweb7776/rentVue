@@ -228,6 +228,7 @@
 
 <script>
 import axios from 'axios'
+import { setInterval } from 'timers';
 export default { 
     data(){
         return {
@@ -292,27 +293,30 @@ export default {
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
                         this.isActiveLoader = false;
-                        this.showAlertError = true;
-                    }, 500)
+                        //this.showAlertError = true;                        
+                        this.$refs['addNewFlatModal'].hide();
+                        swal(this.alertMessage, "Seems like something went wrong!", "error",{buttons: false});
+                    }, 100)
                     setTimeout(() => {
                         this.showAlertError = false;
                         this.newFlat.flatName = "";
                         this.newFlat.baseRent = ""
-                    }, 800)
+                    }, 100)
                 }else {
                     console.log(response);
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
                         this.isActiveLoader = false;
-                        this.showAlertSuccess = true;
-                    }, 500)
+                        //this.showAlertSuccess = true;
+                        swal(this.alertMessage, "Thanks for using CK-Renter App.", "success",{buttons: false, timer: 1150});
+                    }, 100)
                     setTimeout(() => {
                         this.newFlat.flatName = "",
                         this.newFlat.baseRent = "",
                         this.$refs['addNewFlatModal'].hide();
                         this.showAlertSuccess = false;
                         this.fatchFlats();     
-                    }, 800)
+                    }, 100)
                 }          
                 }).catch(error => {
                     console.log(error.message);
@@ -342,15 +346,16 @@ export default {
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
                         this.isActiveLoader = false;
-                        this.showAlertSuccess = true;
-                    }, 500)
+                        //this.showAlertSuccess = true;
+                        swal(this.alertMessage, "Thanks for using CK-Renter App.", "success",{buttons: false, timer: 1150});
+                    }, 100)
                     setTimeout(() => {                        
                         this.editedFlat.flatName = '';
                         this.editedFlat.baseRent = '';
                         this.$refs['updateDataModal'].hide();
                         this.showAlertSuccess = false;
                         this.fatchFlats();            
-                    }, 800)
+                    }, 100)
                     console.log(response);
                     
                 })
@@ -376,7 +381,7 @@ export default {
         },
         addFlatModal(){
             this.$refs['addNewFlatModal'].show();
-        }       
+        }     
     },
     computed: {
         totalRent: function () {
@@ -391,7 +396,7 @@ export default {
         }
     },
     created() {
-        this.fatchFlats();
+        this.fatchFlats();        
     }   
 }; 
 </script>

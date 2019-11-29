@@ -168,7 +168,8 @@ export default {
             this.loginUserAlert = "Registration fail due to server error";       
             setTimeout(() => {
               this.isActiveLoader = false;
-              this.showAlertError = true;
+              //this.showAlertError = true;
+              swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
             }, 500)
             setTimeout(() => {
               this.showAlertError = false;
