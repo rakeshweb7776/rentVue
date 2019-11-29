@@ -152,7 +152,7 @@ export default {
     },
     fatchFlats(){
         /* Get Flat Data For Form Options */
-        axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
+        axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
         action: "listAvailableFlats"
         }).then((response) => {
             if(response.data.status == 1){
