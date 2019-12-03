@@ -10,6 +10,9 @@ $theme-colors: map-merge(
   ),
   $theme-colors
 );
+.whiteColor {
+  color: $white;
+}
 .pinkColor {
   color: $pink;
 }
@@ -41,6 +44,9 @@ $theme-colors: map-merge(
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
+}
+.width50 {
+  width: 50%;
 }
 .loginSignupLink {
   color: #828282;

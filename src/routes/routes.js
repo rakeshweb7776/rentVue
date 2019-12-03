@@ -4,12 +4,13 @@ import VueRouter from 'vue-router';
 
 import DashboardLayout from '@/pages/Layout/DashboardLayout.vue'
 import Dashboard from '@/pages/Dashboard.vue'
+import UserDashboard from '@/pages/UserDashboard.vue'
 import Login from '@/pages/login.vue'
 import Register from '@/pages/Register.vue'
 
 import FlatList from '@/pages/FlatList.vue'
 import Renters from '@/pages/Renters.vue'
-import Maps from '@/pages/Map.vue'
+import WaterCalculation from '@/pages/WaterCalculation.vue'
 import UserEdit from '@/pages/UserEdit.vue'
 
 
@@ -67,9 +68,9 @@ let router = new VueRouter({
                 }
             },
             {
-                path: "map",
-                name: "Maps",
-                component: Maps,
+                path: "waterCalculation",
+                name: "WaterCalculation",
+                component: WaterCalculation,
                 meta:{
                     requiresAuth:true
                 }
@@ -80,18 +81,33 @@ let router = new VueRouter({
                 component: UserEdit
             }
           ]
-        }
+        },
+        {
+            path:"/",
+            component:DashboardLayout,
+            redirect:'userDashboard',
+            children: [
+              {
+                  path: "userDashboard",
+                  name: "UserDashboard",
+                  component: UserDashboard,
+                  meta:{
+                      requiresAuth:true
+                  }
+              }              
+            ]
+          }
     ]    
   });
 
-  router.beforeEach((to, from, next) => {
-  
+  router.beforeEach((to, from, next) => { 
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if(window.$cookies.get('user_session') == null){
         /* If User Not Logged In */
         next({ name: 'Login'})
-      } else {
+      } else {        
         /* If User Logged In */
+        /* next() */
         next()
       }
     }else if(to.matched.some(record => record.meta.guest)) {
@@ -107,7 +123,40 @@ let router = new VueRouter({
   });
 
 export default router;
-
+/*
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+      if (localStorage.getItem('jwt') == null) {
+        next({
+          path: '/login',
+          params: { nextUrl: to.fullPath }
+        })
+      } else {
+        let user = JSON.parse(localStorage.getItem('user'))
+        if(to.matched.some(record => record.meta.is_admin)) {
+          if(user.is_admin == 1){
+              next()
+          }
+          else{
+              next({ name: 'userboard'})
+          }
+        }
+        else {
+            next()
+        }
+      }
+    } else if(to.matched.some(record => record.meta.guest)) {
+          if(localStorage.getItem('jwt') == null){
+              next()
+          }
+          else{
+              next({ name: 'userboard'})
+          }
+      }else {
+      next() 
+    }
+  })
+*/
 /*const routes = [    
     {
         path: "/",
@@ -151,37 +200,3 @@ export default router;
   
   
 
-/*
-router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (localStorage.getItem('jwt') == null) {
-        next({
-          path: '/login',
-          params: { nextUrl: to.fullPath }
-        })
-      } else {
-        let user = JSON.parse(localStorage.getItem('user'))
-        if(to.matched.some(record => record.meta.is_admin)) {
-          if(user.is_admin == 1){
-              next()
-          }
-          else{
-              next({ name: 'userboard'})
-          }
-        }
-        else {
-            next()
-        }
-      }
-    } else if(to.matched.some(record => record.meta.guest)) {
-          if(localStorage.getItem('jwt') == null){
-              next()
-          }
-          else{
-              next({ name: 'userboard'})
-          }
-      }else {
-      next() 
-    }
-  })
-*/

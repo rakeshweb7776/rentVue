@@ -22,7 +22,7 @@
         <b-row class="mt-3">
             <b-col>
                 <b-card class="p-1">  
-                    <h3>Renters</h3>    
+                    <h3>Renters 2</h3>    
                     <b-table-simple responsive bordered striped hover class="m-0">
                         <b-thead>
                             <b-tr>                              
