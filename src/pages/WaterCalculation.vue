@@ -8,7 +8,7 @@
                         <b-col cols="12">
                             <b-card class="p-1 mb-3"> 
                                 <b-form inline class="mb-3">
-                                    <b-form-input type="number" placeholder="BMR" @keyup="watercalculationFunction" v-model="waterCalculation.bmr"></b-form-input>                                         
+                                    <b-form-input :type="setAttrToBMR()" placeholder="BMR" @keyup="watercalculationFunction" v-model="waterCalculation.bmr"></b-form-input>                                         
                                     <b-form-input type="number" placeholder="CMR" @keyup="watercalculationFunction" v-model="waterCalculation.cmr" class="ml-3"></b-form-input>                                         
                                 </b-form>
                                 <ul class="errorListing" v-if="errors.length">
@@ -103,7 +103,16 @@ export default {
             }).then((response) => {
                 console.log(response);
                 this.waterList = response.data.waterList;
+                if(this.waterList.length) {
+                    let getLastMonthReading = this.waterList[this.waterList.length - 1];
+                    console.log(getLastMonthReading.bmr)
+                    this.waterCalculation.bmr = getLastMonthReading.bmr;
+                    
+                }
             });
+        },
+        setAttrToBMR(){
+            console.log(this.event);
         },
         addWaterCalculation(){            
             this.errors = [];

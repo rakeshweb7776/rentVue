@@ -11,7 +11,6 @@ import Register from '@/pages/Register.vue'
 import FlatList from '@/pages/FlatList.vue'
 import Renters from '@/pages/Renters.vue'
 import WaterCalculation from '@/pages/WaterCalculation.vue'
-import UserEdit from '@/pages/UserEdit.vue'
 
 
 Vue.use(VueRouter)
@@ -48,9 +47,18 @@ let router = new VueRouter({
                 name: "Dashboard",
                 component: Dashboard,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
                 }
             },
+            {
+                path: "userDashboard",
+                name: "UserDashboard",
+                component: UserDashboard,
+                meta:{
+                    requiresAuth:true
+                }
+            },   
             {
                 path: "flatList",
                 name: "Flat List",
@@ -74,29 +82,9 @@ let router = new VueRouter({
                 meta:{
                     requiresAuth:true
                 }
-            },
-            {
-                path: "userEdit/:userId",
-                name: "User Edit",
-                component: UserEdit
             }
           ]
-        },
-        {
-            path:"/",
-            component:DashboardLayout,
-            redirect:'userDashboard',
-            children: [
-              {
-                  path: "userDashboard",
-                  name: "UserDashboard",
-                  component: UserDashboard,
-                  meta:{
-                      requiresAuth:true
-                  }
-              }              
-            ]
-          }
+        }
     ]    
   });
 
@@ -107,15 +95,25 @@ let router = new VueRouter({
         next({ name: 'Login'})
       } else {        
         /* If User Logged In */
-        /* next() */
-        next()
+        let user = window.$cookies.get('user_session')        
+        if(to.matched.some(record => record.meta.is_admin)) {
+            if(user == 1){
+                /* If Admin Logged In */
+                next()
+            }
+            else{
+                next()
+            }
+        }else {
+            next()
+        }
       }
     }else if(to.matched.some(record => record.meta.guest)) {
         if(window.$cookies.get('user_session') == null){
             next()
         }
         else{
-            next({ name: 'Dashboard'})
+            next({ name: 'UserDashboard'})
         }
     }else {
         next() 

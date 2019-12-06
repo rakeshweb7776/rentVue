@@ -99,7 +99,7 @@
             </b-row> 
             
            
-            <b-button class="siteButton"  @click="registerUser()">Register Rakesh</b-button>
+            <b-button class="siteButton"  @click="registerUser()">Register</b-button>
             <span class="loginSignupLink">Already have an account? <router-link to="/login">login Now</router-link></span>            
           </form>
           <ul class="errorListing" v-if="errors.length">

@@ -152,7 +152,8 @@ export default {
               console.log(response);
               console.log(response.data.records[0].id);
               this.loginUserAlert = response.data.message;              
-                
+              let is_admin = response.data.records[0].id;
+              
               window.$cookies.set('user_session', response.data.records[0].id,60 * 60 * 1);
 
               setTimeout(() => {
@@ -161,7 +162,13 @@ export default {
                swal(this.loginUserAlert,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 950});
               }, 100)
               setTimeout(() => { 
-                router.replace('/dashboard');
+                if(is_admin== 1){
+                  console.log('userType'+is_admin);
+                    this.$router.push('dashboard')
+                }
+                else {
+                    this.$router.push('userDashboard')
+                }
               }, 1200)
             }          
           }).catch(error => {
