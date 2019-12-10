@@ -3,13 +3,13 @@
         <b-row class="mt-3">
             <b-col>
                 <b-card class="p-1">  
-                    <h3>Water Calculations 1</h3> 
+                    <h3>Water Calculations</h3> 
                     <b-row>
                         <b-col cols="12">
                             <b-card class="p-1 mb-3"> 
                                 <b-form inline class="mb-3">
-                                    <b-form-input :type="setAttrToBMR()" placeholder="BMR" @keyup="watercalculationFunction" v-model="waterCalculation.bmr"></b-form-input>                                         
-                                    <b-form-input type="number" placeholder="CMR" @keyup="watercalculationFunction" v-model="waterCalculation.cmr" class="ml-3"></b-form-input>                                         
+                                    <b-form-input type="text" placeholder="BMR" @keyup="watercalculationFunction" v-bind:disabled="bmrValueStatus" v-model.number="waterCalculation.bmr"></b-form-input>                                         
+                                    <b-form-input type="text" placeholder="CMR" @keyup="watercalculationFunction" v-model.number="waterCalculation.cmr" class="ml-3"></b-form-input>                                         
                                 </b-form>
                                 <ul class="errorListing" v-if="errors.length">
                                     <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>
@@ -38,7 +38,7 @@
                                         </b-tr>  
                                     </b-tbody>
                                 </b-table-simple>
-                                <b-button class="siteButton mt-3"  @click="addWaterCalculation()">Add Water Calculation</b-button>                                
+                                <b-button class="siteButton mt-3" v-bind:class="{ buttonloading: isLoaderActive }"  @click="addWaterCalculation()">Add Water Calculation</b-button>                                
                             </b-card>
                         </b-col>
                     </b-row>   
@@ -83,14 +83,16 @@ export default {
             errors:[],
             waterList:[],
             waterCalculation: {
-                currentMonth:new Date().getMonth() + '-' + new Date().getFullYear(),
+                currentMonth:new Date().getMonth() + 1 + '-' + new Date().getFullYear(),
                 bmr:0,
                 cmr:0,
                 totalMR:0,
                 totalWC:0,
                 perUserWC:0
             },
-            alertMessage:null
+            alertMessage:null,
+            bmrValueStatus:false,
+            isLoaderActive:false
         }
     },
     computed:{
@@ -104,33 +106,30 @@ export default {
                 console.log(response);
                 this.waterList = response.data.waterList;
                 if(this.waterList.length) {
-                    let getLastMonthReading = this.waterList[this.waterList.length - 1];
-                    console.log(getLastMonthReading.bmr)
-                    this.waterCalculation.bmr = getLastMonthReading.bmr;
-                    
+                    let getLastMonthReading = this.waterList[this.waterList.length - 1];                    
+                    this.waterCalculation.bmr = parseInt(getLastMonthReading.cmr);      
+                    this.bmrValueStatus = true;              
                 }
             });
         },
         setAttrToBMR(){
-            console.log(this.event);
+           // console.log(this.event);
         },
         addWaterCalculation(){            
             this.errors = [];
 
             if (!this.waterCalculation.bmr) {
                 this.errors.push("BMR required.");
-            }else if (this.waterCalculation.bmr <= 0){
-                this.errors.push("Flat name required 6 characters");
             }  
 
             if (!this.waterCalculation.cmr) {
                 this.errors.push("CMR required.");
-            }else if (this.waterCalculation.cmr <= 0){
-                this.errors.push("Flat name required 6 characters");
+            }else if (this.waterCalculation.cmr <= this.waterCalculation.bmr){
+                this.errors.push("Please enter greater than BMR.");
             }            
 
             if (!this.errors.length) {
-                this.isActiveLoader = true; 
+                this.isLoaderActive = true; 
                 axios.post('https://codingkloud.com/rentVue/waterCalculationApi.php',{
                 currentMonth: this.waterCalculation.currentMonth,
                 bmr: this.waterCalculation.bmr,
@@ -143,11 +142,10 @@ export default {
                 if(response.data.status == 1){
                     this.alertMessage = response.data.message;
                     setTimeout(() => {    
+                        this.isLoaderActive = false; 
                         swal(this.alertMessage, "Seems like something went wrong!", "error",{buttons: false});
                     }, 100)
-                    setTimeout(() => {
-                        this.fatchWaterList();  
-                        this.waterCalculation.bmr = 0;
+                    setTimeout(() => {                     
                         this.waterCalculation.cmr = 0;
                         this.waterCalculation.totalMR = 0;
                         this.waterCalculation.totalWC = 0;
@@ -156,10 +154,11 @@ export default {
                 }else {
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
-                        this.isActiveLoader = false;      
+                        this.isLoaderActive = false;       
                         swal(this.alertMessage, "Thanks for using CK-Renter App.", "success",{buttons: false, timer: 1150});
                     }, 100)
                     setTimeout(() => {
+                        this.fatchWaterList();
                         this.showAlertError = false;
                         this.waterCalculation.bmr = 0;
                         this.waterCalculation.cmr = 0;
@@ -175,7 +174,8 @@ export default {
         },
         watercalculationFunction(){
             if(this.waterCalculation.bmr > 0 && this.waterCalculation.cmr > this.waterCalculation.bmr) {
-                this.waterCalculation.totalMR = Math.abs(this.waterCalculation.bmr - this.waterCalculation.cmr);
+                this.waterCalculation.totalMR = this.waterCalculation.cmr - this.waterCalculation.bmr;
+                console.log("Testing" + this.waterCalculation.totalMR);
                 this.waterCalculation.totalWC = this.waterCalculation.totalMR * 8;
                 this.waterCalculation.perUserWC = Math.trunc( this.waterCalculation.totalWC / 6 );
             }else {

@@ -2,7 +2,7 @@
     <div class="sideBarfixed" :style="{ backgroundImage: `url(${backgroundUrl})` }">
             <div class="dashboardLogo">
                 <b-img src="http://ck2.codingkloud.com/wp-content/uploads/2019/09/new_logo_icon-2.png" alt="Responsive image"></b-img>
-                CK Rent
+                <span>CK Rent</span>
             </div>
             <div class="sideBarLinks">
                 <router-link to="/dashboard"><i class="material-icons">dashboard</i> <span>Dashboard</span></router-link>  

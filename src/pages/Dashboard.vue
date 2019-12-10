@@ -10,56 +10,17 @@
 
                     <b-card-body class="p-0 mt-3">
                         <p><b>Flat Assign</b> : FLat No. {{ item.flatId }}</p>
-                        <p><b>Base Rent</b> : ₹ 3000 /-</p>
+                        <p><b>Base Rent</b> : <span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</p>
                     </b-card-body>
 
                     <b-card-body class="p-0 mt-3">
-                        <b-button class="siteButton mr-2 pt-1 pb-1" @click.enter="loginUser()">Add Rent</b-button>
+                        <b-button class="siteButton mr-2 pt-1 pb-1" @click.enter="addRentModal(item.id)">Add Rent</b-button>
                     </b-card-body>
                 </b-card> 
             </b-col>              
-        </b-row>    
-        <b-row class="mt-3">
-            <b-col>
-                <b-card class="p-1">  
-                    <h3>Renters</h3>    
-                    <b-table-simple responsive bordered striped hover class="m-0">
-                        <b-thead>
-                            <b-tr>                              
-                                <b-th colspan="6"  class="p-2">
-                                    <b-form-group class="m-0">
-                                        <b-form-input type="text" placeholder="Search" size="md"></b-form-input>                                         
-                                    </b-form-group>
-                                </b-th>
-                            </b-tr>
-                            <b-tr>                              
-                                <b-th>Full Name</b-th>
-                                <b-th>Flat No</b-th>
-                                <b-th>Phone</b-th>
-                                <b-th>Email</b-th>
-                                <b-th>Aadhar</b-th>
-                                <b-th>Actions</b-th>
-                            </b-tr>
-                        </b-thead>
-                        <b-tbody>
-                            <b-tr v-bind:key="item.index" v-for="(item, index) in users">          
-                                <b-td>{{ item.firstName + ' ' + item.lastName | capitalize }}</b-td>
-                                <b-td>FLat No. {{ item.flatId }}</b-td>
-                                <b-td>{{ item.phone }}</b-td>
-                                <b-td>{{ item.email }}</b-td>
-                                <b-td>{{ item.aadhar }}</b-td>
-                                <b-td>
-                                    <b-button variant="outline-primary" class="mr-2 editIcon p-0" @click="editModal(item.id, index)"><i class="material-icons">edit</i></b-button>                                    
-                                    <b-button variant="outline-danger" class="ml-2 deleteIcon p-0" @click="deleteUser(item.id, item.flatId)"><i class="material-icons">delete</i></b-button>
-                                </b-td>
-                            </b-tr>
-                        </b-tbody>
-                    </b-table-simple>
-                </b-card>
-            </b-col>
-        </b-row> 
-
-        <b-modal class="updateUserDataModal" ref="updateUserDataModal" hide-footer hide-header>
+        </b-row>  
+        
+        <b-modal class="addRentModal" ref="addRentModal" hide-footer hide-header>
             <div class="d-block">  
                 <div class="commonFormDesign pt-2 pb-2">
                     <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
@@ -101,51 +62,37 @@
                         </svg>
                     </div>
                     <b-card>    
-                        <h3 class="mb-3">Update User Details</h3>
+                        <h3 class="mb-3">Add Rent</h3>
                         <b-row>        
                             <b-col cols="12">
                                 <form>
                                     <b-row>        
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input v-model="editedUser.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="BMR" @keyup="rentcalculationFunction" v-model.number="renterData.back_month_reading" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input v-model="editedUser.lastName" placeholder="Last Name" id="lastName" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="CMR" @keyup="rentcalculationFunction" v-model.number="renterData.current_month_reading" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                     </b-row>  
                                     <b-row>
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input v-model="editedUser.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="Rent" @keyup="rentcalculationFunction" v-model.number="renterData.rent" v-bind:disabled="rentValueStatus" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input v-model="editedUser.aadhar" v-mask="'####-####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
+                                                <b-form-input placeholder="Water Charges" @keyup="rentcalculationFunction" v-model.number="renterData.water_charge"  v-bind:disabled="waterChargesValueStatus" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                     </b-row>
-                                    <b-form-group>
-                                        <b-form-select
-                                            v-model="editedUser.editedFlat"
-                                            :options="this.options"
-                                            value-field="id"
-                                            text-field="flatName"
-                                            disabled-field="notEnabled"
-                                        >
-                                        <template v-slot:first>
-                                            <option :value="null" disabled>-- Please select Flat --</option>
-                                        </template>
-                                        </b-form-select>
-                                        <input type="hidden" name="currentFlatId" :value="editedUser.editedFlat">
-                                    </b-form-group>
                                     <b-row>     
                                         <b-col cols="12">                    
-                                            <b-button class="siteButton" @click="updateUserData()">Update</b-button>
+                                            <b-button class="siteButton" @click="addRent()">Add Rent</b-button>
                                         </b-col>
                                     </b-row>
                                     <ul class="errorListing" v-if="errors.length">
@@ -157,9 +104,10 @@
                     </b-card>
                 </div>
             </div>            
-        </b-modal>    
-
+        </b-modal>     
+        
     </div>
+
 </template>
 
 <style scoped>  
@@ -173,134 +121,178 @@
 export default { 
     data(){
         return {
+            waterList:[],
             errors: [],
-            users:[],   
-            editedUser: {
-                firstName: null,
-                lastName: null,
-                email: null,
-                phone: null,
-                aadhar: null,
-                editedFlat:null   
+            flats:[],
+            flatsLength:'',
+            users:[], 
+            renterData: {
+                renter_id: null, 
+                back_month_reading: null, 
+                current_month_reading: null,
+                meter_reading: null,
+                light_charge: null,
+                water_charge: null,
+                rent: null,
+                month: new Date().getMonth() + 1 + '-' + new Date().getFullYear(),
+                total_rent: null
             },
-            editedUserId:null,
-            delUserId:null,
-            deletedUserFlatId:null,
-            selectedFile: null,
             alertMessage: "",
             showAlertError: false,
             showAlertSuccess: false,
             isActiveLoader: false,
-            options: [],
-            currentFlatId:''
+            rentValueStatus:false,
+            waterChargesValueStatus:false
         }            
     },
     methods:{
+        fatchFlats(){
+            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
+            action: "listFlats"
+            }).then((response) => {
+                if(response.data.status == 1){
+                    console.log(response);   
+                    this.flatListStatus = response.data.status;
+                    this.flats = response.data.records;
+                }else if(response.data.status == 0) {
+                    this.flatListStatus = response.data.status;
+                    this.noUserMessage = response.data.message;
+                    console.log(response);
+                }
+            });
+        },
         fatchUsers(){
             axios.post('https://codingkloud.com/rentVue/users.php',{
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
-                this.users = response.data.users;
+                this.users = response.data.users;  
+                for(var i = 0; i < this.users.length; i++) {
+                    for(var j = 0; j < this.flats.length; j++) {
+                        if(this.users[i].flatId == this.flats[j].id) {
+                            var newKey = 'baseRent';
+                            var newValue = this.flats[j].baseRent;
+                            var newObj = this.users[i];
+                            newObj[newKey] = newValue;
+                        }
+                    }
+                }                 
             });
         },
-        fatchFlats(){
-            /* Get Flat Data For Form Options */
-            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
-            action: "listAvailableFlats"
+        fatchWaterList(){
+            axios.post('https://codingkloud.com/rentVue/waterCalculationApi.php',{
+                action: "getWaterList"
             }).then((response) => {
-                if(response.data.status == 1){
-                    console.log(response);   
-                    this.options = response.data.records;                   
-                    for(var i = 0; i < this.options.length; i++) {
-                        var getFlatName = this.options[i].flatName;
-                        var getFlatRent = this.options[i].baseRent;
-                        this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
-                        
-                        if(this.options[i].status == 1){
-                            this.options[i].flatName = getFlatName + " Not Available";
-                            var newKey = 'notEnabled';
-                            var newValue = true ;
-                            var newObj = this.options[i];
-                            newObj[newKey] = newValue;                    
-                        }                        
+                console.log(response);
+                this.waterList = response.data.waterList;
+                if(this.waterList.length) {
+                    for(var i = 0; i < this.waterList.length; i++){
+                        if(this.renterData.month == this.waterList[i].currentMonth){
+                            this.renterData.water_charge = this.waterList[i].perUserWC;
+                        }
                     }
-                }else if(response.data.status == 0) {
-                    this.noRenterMessage = response.data.message;
-                    console.log(response);
+                    this.waterChargesValueStatus = true;                    
                 }
             });
         },
-        deleteUser(delUser,delFlatID) {
-            this.delUserId = delUser;
-            this.deletedUserFlatId = delFlatID;
-            /* Update Data Using API */ 
-            axios.post('https://codingkloud.com/rentVue/users.php',{
-                deleteIdData:this.delUserId,
-                action: "deleteUser"
-            }).then((response) => {
-                console.log(response);
-                this.fatchUsers();        
-            });
-            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
-                deletedUserFlatId:this.deletedUserFlatId,
-                action: "updateFlatstatus"
-            }).then((response) => {
-                console.log(response);
-                this.fatchUsers();        
-            });            
+        getChargesStatus(){    
+            
         },
-        editModal(userId, index){
-            this.editedUser.firstName = this.users[index].firstName;
-            this.editedUser.lastName = this.users[index].lastName;
-            this.editedUser.phone = this.users[index].phone;
-            this.editedUser.aadhar = this.users[index].aadhar;
-            this.editedUser.editedFlat = this.users[index].flatId;            
-            this.editedUserId = userId;
-            this.currentFlatId = this.editedUser.editedFlat;
-            this.$refs['updateUserDataModal'].show();
+        rentcalculationFunction(){
+            if(this.renterData.back_month_reading > 0 && this.renterData.current_month_reading > this.renterData.back_month_reading){
+               this.renterData.meter_reading = this.renterData.current_month_reading - this.renterData.back_month_reading;
+               this.renterData.light_charge = this.renterData.meter_reading * 8;
+               this.renterData.total_rent = this.renterData.light_charge + parseInt(this.renterData.rent) + parseInt(this.renterData.water_charge);               
+               console.log(this.renterData.meter_reading);
+            }
         },
-        updateUserData(){
+        addRentModal(renterId){ 
+            this.renterData.renter_id = renterId;
+            
+            for(var i =0; i < this.users.length; i++){
+                if(renterId == this.users[i].id) {
+                    this.renterData.rent = this.users[i].baseRent;
+                }
+            }
+            if(this.renterData.rent !== null) {
+                this.rentValueStatus = true;
+                console.log('not Null');
+            }else {
+                console.log('Null');
+            }
+            this.$refs['addRentModal'].show();
+        },
+        addRent(){           
             this.errors = [];
+
+            if (!this.renterData.back_month_reading) {
+                this.errors.push("BMR required.");
+            }  
+
+            if (!this.renterData.current_month_reading) {
+                this.errors.push("CMR required.");
+            }else if (this.renterData.current_month_reading <= this.renterData.back_month_reading){
+                this.errors.push("Please enter greater than BMR.");
+            } 
+
+            if (!this.renterData.rent) {
+                this.errors.push("Rent required.");
+            } 
+
+            if (!this.renterData.water_charge) {
+                this.errors.push("Water Charges required.");
+            } 
+
 
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
-                /* Update Data Using API */ 
-                axios.post('https://codingkloud.com/rentVue/users.php',{
-                    editedUserId:this.editedUserId,
-                    firstName:this.editedUser.firstName,
-                    lastName:this.editedUser.lastName,
-                    phone:this.editedUser.phone,
-                    aadhar:this.editedUser.aadhar,
-                    editedFlat:this.editedUser.editedFlat,
-                    OldflatId:this.currentFlatId,
-                    action: "update"
-                }).then((response) => {
+                axios.post('https://codingkloud.com/rentVue/addRentApi.php',{
+                renter_id: this.renterData.renter_id, 
+                back_month_reading: this.renterData.back_month_reading, 
+                current_month_reading: this.renterData.current_month_reading,
+                meter_reading: this.renterData.meter_reading,
+                light_charge: this.renterData.light_charge,
+                water_charge: this.renterData.water_charge,
+                rent: this.renterData.rent,
+                month: this.renterData.month,
+                total_rent: this.renterData.total_rent,               
+                action: "addRent"
+                }).then(response=> {
+                if(response.data.status == 1){
                     this.alertMessage = response.data.message;
                     setTimeout(() => {
-                        this.isActiveLoader = false;
-                        //this.showAlertSuccess = true;
+                        this.isActiveLoader = false;                                       
+                        this.$refs['addRentModal'].hide();      
                         swal(this.alertMessage, "Thanks for using CK-Renter App.", "success",{buttons: false, timer: 1150});
                     }, 100)
-                    setTimeout(() => { 
-                        this.$refs['updateUserDataModal'].hide();
-                        this.showAlertSuccess = false;
-                        this.fatchUsers();   
-                        this.fatchFlats();         
+                    setTimeout(() => {
+                        //this.fatchWaterList();
+                        this.renterData.current_month_reading = 0;
+                    }, 100)                    
+                }else {
+                    this.alertMessage = response.data.message;
+                    setTimeout(() => {    
+                        this.isActiveLoader = false;                                                         
+                        this.$refs['addRentModal'].hide(); 
+                        swal(this.alertMessage, "Seems like something went wrong!", "error",{buttons: false});
                     }, 100)
-                    console.log(response);
-                    
-                })
+                    setTimeout(() => {                     
+                        this.renterData.current_month_reading = 0;
+                    }, 100)
+                }}).catch(error => {
+                    console.log(error.message);
+                });                
             }
-                                  
+            
         }
     },
     created() {
-        
+        this.fatchFlats();
+        this.fatchUsers();
+        this.fatchWaterList();
     },
     mounted(){
-        this.fatchUsers();
-        this.fatchFlats(); 
+       
     }  
 }
 </script>

@@ -166,7 +166,7 @@ export default {
                         var newKey = 'notEnabled';
                         var newValue = true ;
                         var newObj = this.options[i];
-                        newObj[newKey] = newValue;                    
+                        newObj[newKey] = newValue;
                     }
                 }
             }else if(response.data.status == 0) {

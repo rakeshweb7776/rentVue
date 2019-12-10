@@ -109,6 +109,13 @@ ul.errorListing li {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.buttonloading {
+  background: url(/img/loader.27e2ef14.svg);
+  background-position: center right 6px;
+  background-repeat: no-repeat;
+  background-size: 33px;
+  padding-right: 50px;
+}
 body .siteButton {
     background-color: $pink;
     border-color: $pink;
@@ -1625,4 +1632,58 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end,body.swal2-no-backdrop .swa
       -webkit-transform:rotate(360deg);
       transform:rotate(360deg)
   }
+}
+
+
+/* Responsive css start */
+
+/*---- Mobile All Portrait + Landscape ----*/
+@media only screen and (max-width: 767px) {
+  .sideBarfixed {
+    width: 44px;
+  }
+  .sideBarfixed .dashboardLogo {
+    padding: 8px 6px;
+    margin-bottom: 15px;
+}
+.sideBarfixed .sideBarLinks {
+  padding: 0 6px;
+}
+.sideBarfixed .sideBarLinks a {
+  padding: 2px 6px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.sideBarfixed .sideBarLinks a span {
+  display: none;
+}
+
+.sideBarfixed .sideBarLinks a i.material-icons {
+  display: inline-block;
+  float: none;
+  margin: 0 !important;
+  font-size: 18px;
+  width: auto;
+  line-height: 25px;
+}
+.sideBarfixed .dashboardLogo img {
+  margin-right: 0;
+  width: 100%;
+  padding: 2px;
+}
+.dashboardLogo span {
+  display: none;
+}
+.mainContent {
+  width: calc(100% - 44px);
+}
+.topBar {
+  padding: 8px;
+}
+.topBar h3 {
+  font-size: 18px;
+}
+.p-4.siteContainerFluid {
+  padding: 0.8rem !important;
+}
 }

@@ -1,159 +1,48 @@
 <template>
-    <div> 
-         <!-- <b-row class="mb-3">
+    <div>     
+        <b-row>
             <b-col>
-                <b-card>  
-                    <h6 class="float-left mt-2">Add New Renter</h6>
-                    <button class="btn siteButton btn-secondary float-right"  @click="addRenterModal()">Add Renter</button>
-                </b-card>
-            </b-col>
-         </b-row>        -->
-         <b-row>
-            <b-col>
-                <b-card class="p-1">      
-                    <b-alert class="m-0" show variant="info" v-if="!flatListStatus > 0">{{ noRenterMessage }}</b-alert>          
-                    <b-table-simple responsive bordered striped hover class="m-0"  v-if="flatListStatus > 0">
+                <b-card class="p-1">  
+                    <h3>Renters</h3>    
+                    <b-table-simple responsive bordered striped hover class="m-0">
                         <b-thead>
-                            <b-tr>
-                                <b-th>Id</b-th>                                
-                                <b-th>Renter Name</b-th>
-                                <b-th>Email Address</b-th>
-                                <b-th>Mobile</b-th>
-                                <b-th>Aadhaar</b-th>
-                                <b-th>Flat Assigned</b-th>
-                                <b-th>Date Of Join</b-th>
-                                <b-th>Action</b-th>
+                            <b-tr>                              
+                                <b-th colspan="6"  class="p-2">
+                                    <b-form-group class="m-0">
+                                        <b-form-input type="text" placeholder="Search" size="md"></b-form-input>                                         
+                                    </b-form-group>
+                                </b-th>
+                            </b-tr>
+                            <b-tr>                              
+                                <b-th>Full Name</b-th>
+                                <b-th>Flat No</b-th>
+                                <b-th>Phone</b-th>
+                                <b-th>Email</b-th>
+                                <b-th>Aadhar</b-th>
+                                <b-th>Actions</b-th>
                             </b-tr>
                         </b-thead>
                         <b-tbody>
-                            <b-tr v-bind:key="item.index" v-for="(item, index) in renters">
-                                <b-td>{{ item.id }}</b-td>               
-                                <b-td>{{ item.flatName }}</b-td>
-                                <b-td><span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</b-td>
-                                <b-td>                                    
-                                    <b-button variant="outline-primary" class="mr-2 editIcon" @click="editModal(item.id, index)"><i class="material-icons">edit</i></b-button>
-                                    
-                                    <b-button variant="outline-danger" class="ml-2 deleteIcon" @click="deleteUser(item.id)"><i class="material-icons">delete</i></b-button>
+                            <b-tr v-bind:key="item.index" v-for="(item, index) in users">          
+                                <b-td>{{ item.firstName + ' ' + item.lastName | capitalize }}</b-td>
+                                <b-td>FLat No. {{ item.flatId }}</b-td>
+                                <b-td>{{ item.phone }}</b-td>
+                                <b-td>{{ item.email }}</b-td>
+                                <b-td>{{ item.aadhar }}</b-td>
+                                <b-td>
+                                    <b-button variant="outline-primary" class="mr-2 editIcon p-0" @click="editModal(item.id, index)"><i class="material-icons">edit</i></b-button>                                    
+                                    <b-button variant="outline-danger" class="ml-2 deleteIcon p-0" @click="deleteUser(item.id, item.flatId)"><i class="material-icons">delete</i></b-button>
                                 </b-td>
                             </b-tr>
                         </b-tbody>
-                        <!-- <b-tfoot>
-                            <b-tr>
-                                <b-td colspan="2"><span class="pink bold">Total Flats :  {{ totalFlats }}</span></b-td>
-                                <b-td colspan="2"><span class="pink bold">Total Rent : <span class="pinkColor bold">&#8377;</span> {{ totalRent }} /-</span></b-td>
-                            </b-tr>
-                        </b-tfoot> -->
                     </b-table-simple>
                 </b-card>
             </b-col>
-        </b-row>     
+        </b-row> 
 
-        <b-modal ref="addNewRenterModal" hide-footer hide-header>
-            <div class="d-block">           
-                <div class="commonFormDesign"> 
-                    <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
-                        <svg width="100" height="100" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#EF4B7C">
-                            <g fill="none" fill-rule="evenodd" stroke-width="2">
-                                <circle cx="22" cy="22" r="1">
-                                    <animate attributeName="r"
-                                        begin="0s" dur="1.8s"
-                                        values="1; 20"
-                                        calcMode="spline"
-                                        keyTimes="0; 1"
-                                        keySplines="0.165, 0.84, 0.44, 1"
-                                        repeatCount="indefinite" />
-                                    <animate attributeName="stroke-opacity"
-                                        begin="0s" dur="1.8s"
-                                        values="1; 0"
-                                        calcMode="spline"
-                                        keyTimes="0; 1"
-                                        keySplines="0.3, 0.61, 0.355, 1"
-                                        repeatCount="indefinite" />
-                                </circle>
-                                <circle cx="22" cy="22" r="1">
-                                    <animate attributeName="r"
-                                        begin="-0.9s" dur="1.8s"
-                                        values="1; 20"
-                                        calcMode="spline"
-                                        keyTimes="0; 1"
-                                        keySplines="0.165, 0.84, 0.44, 1"
-                                        repeatCount="indefinite" />
-                                    <animate attributeName="stroke-opacity"
-                                        begin="-0.9s" dur="1.8s"
-                                        values="1; 0"
-                                        calcMode="spline"
-                                        keyTimes="0; 1"
-                                        keySplines="0.3, 0.61, 0.355, 1"
-                                        repeatCount="indefinite" />
-                                </circle>
-                            </g>
-                        </svg>
-                    </div>
-                      
-                    <b-card>
-                        <h3 class="mb-3">Add New Renter</h3>
-                        <b-row>
-                            <b-col cols="12">                            
-                            <form>
-                                <b-form-group>
-                                    <b-form-file accept=".jpg" @change="profilePicUpload"></b-form-file>                                    
-                                </b-form-group>
-                                <b-row>
-                                    <b-col sm="6" class="pr-2">
-                                        <b-form-group>
-                                            <b-form-input v-model="newRenter.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
-                                        </b-form-group>
-                                    </b-col>
-                                    <b-col sm="6" class="pl-2">
-                                        <b-form-group>
-                                            <b-form-input v-model="newRenter.lastName" placeholder="Last Name" id="lastName" type="email" size="md"></b-form-input>
-                                        </b-form-group>
-                                    </b-col>
-                                </b-row>
-                                <b-row>
-                                    <b-col sm="6" class="pr-2">
-                                        <b-form-group>
-                                            <b-form-input v-model="newRenter.email" placeholder="Email Address" id="email" type="email" size="md"></b-form-input>
-                                        </b-form-group>
-                                    </b-col>
-                                    <b-col sm="6" class="pl-2">
-                                        <b-form-group>
-                                            <b-form-input v-model="newRenter.phone" placeholder="Mobile Number" id="phone" type="email" size="md"></b-form-input>
-                                        </b-form-group>
-                                    </b-col>
-                                </b-row>
-                                <b-form-group>
-                                    <b-form-input v-model="newRenter.aadhar" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
-                                </b-form-group>
-                                <b-form-group>
-                                    <b-form-select
-                                        v-model="selected"
-                                        :options="this.options"
-                                        class="mb-3"
-                                        value-field="id"
-                                        text-field="flatName"
-                                        disabled-field="notEnabled"
-                                    >
-                                    <template v-slot:first>
-                                        <option :value="null" disabled>-- Please select Flat --</option>
-                                    </template>
-                                    </b-form-select>
-                                </b-form-group>
-                                <b-button class="siteButton"  @click="addNewRenter()">Add New Renter</b-button>
-                            </form>
-                            <ul class="errorListing" v-if="errors.length">
-                                <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>
-                            </ul>
-                            </b-col>
-                        </b-row>
-                    </b-card>
-                </div>
-            </div>
-        </b-modal>   
-
-        <b-modal class="updateFlatModal" ref="updateDataModal" hide-footer hide-header>
+        <b-modal class="updateUserDataModal" ref="updateUserDataModal" hide-footer hide-header>
             <div class="d-block">  
-                <div class="commonFormDesign pt-5 pb-5">
+                <div class="commonFormDesign pt-2 pb-2">
                     <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
                         <svg width="100" height="100" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#EF4B7C">
                             <g fill="none" fill-rule="evenodd" stroke-width="2">
@@ -192,27 +81,64 @@
                             </g>
                         </svg>
                     </div>
-                                        <b-card>    
-                        <h3 class="mb-3">Update Flat Details</h3>       
-                        <b-row>                            
-                            <b-col cols="6">
-                                <b-form-group>
-                                    <b-form-input v-model="editedFlat.flatName" placeholder="Flat Name" readonly="" size="md"></b-form-input>
-                                </b-form-group>
+                    <b-card>    
+                        <h3 class="mb-3">Update User Details</h3>
+                        <b-row>        
+                            <b-col cols="12">
+                                <form>
+                                    <b-row>        
+                                        <b-col cols="6">
+                                            <b-form-group>
+                                                <b-form-input v-model="editedUser.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
+                                            </b-form-group>
+                                        </b-col>
+                                        <b-col cols="6">
+                                            <b-form-group>
+                                                <b-form-input v-model="editedUser.lastName" placeholder="Last Name" id="lastName" type="text" size="md"></b-form-input>
+                                            </b-form-group>
+                                        </b-col>
+                                    </b-row>  
+                                    <b-row>
+                                        <b-col cols="6">
+                                            <b-form-group>
+                                                <b-form-input v-model="editedUser.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
+                                            </b-form-group>
+                                        </b-col>
+                                        <b-col cols="6">
+                                            <b-form-group>
+                                                <b-form-input v-model="editedUser.aadhar" v-mask="'####-####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
+                                            </b-form-group>
+                                        </b-col>
+                                    </b-row>
+                                    <b-form-group>
+                                        <b-form-select
+                                            v-model="editedUser.editedFlat"
+                                            :options="this.options"
+                                            value-field="id"
+                                            text-field="flatName"
+                                            disabled-field="notEnabled"
+                                        >
+                                        <template v-slot:first>
+                                            <option :value="null" disabled>-- Please select Flat --</option>
+                                        </template>
+                                        </b-form-select>
+                                        <input type="hidden" name="currentFlatId" :value="editedUser.editedFlat">
+                                    </b-form-group>
+                                    <b-row>     
+                                        <b-col cols="12">                    
+                                            <b-button class="siteButton" @click="updateUserData()">Update</b-button>
+                                        </b-col>
+                                    </b-row>
+                                    <ul class="errorListing" v-if="errors.length">
+                                        <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>
+                                    </ul> 
+                                </form>                            
                             </b-col>
-                            <b-col cols="6">
-                                <b-form-group>
-                                    <b-form-input v-model="editedFlat.baseRent" placeholder="Base Rent" size="md"></b-form-input>
-                                </b-form-group>
-                            </b-col>
-                            <b-col cols="12">                    
-                                <b-button class="siteButton" @click="updateFlat()">Update</b-button>
-                            </b-col>
-                        </b-row>
+                        </b-row>   
                     </b-card>
                 </div>
             </div>            
-        </b-modal>
+        </b-modal>    
 
     </div>
 </template>
@@ -224,78 +150,61 @@
 </style>
 
 <script>
-import axios from 'axios'
+
 export default { 
     data(){
         return {
-            failedExample: { name: 'test'},
             errors: [],
-            newRenter: {
-                flatName: null,
-                baseRent: null
+            users:[],   
+            editedUser: {
+                firstName: null,
+                lastName: null,
+                email: null,
+                phone: null,
+                aadhar: null,
+                editedFlat:null   
             },
-            renters:[],
+            editedUserId:null,
+            delUserId:null,
+            deletedUserFlatId:null,
             selectedFile: null,
-            selected: null,
-            options: [],
-            editedFlat: {
-                flatName:null,
-                baseRent:null
-            },
-            editedFlatId:'',
-            delFlatId:'',
-
             alertMessage: "",
             showAlertError: false,
             showAlertSuccess: false,
             isActiveLoader: false,
-            noRenterMessage:null,
-            flatListStatus:null
-        }
+            options: [],
+            currentFlatId:''
+        }            
     },
     methods:{
-        profilePicUpload(event) {
-            this.selectedFile = event.target.files[0];
-            const formData = new FormData()
-            formData.append('myFile', this.selectedFile, this.selectedFile.name)
-            axios.post('https://localhost/vueApis/images/', formData)
-        },
-        onUpload() {
-             
-        },
-        fatchRenters(){
-            axios.post('https://codingkloud.com/rentVue/renterApi.php',{
-            action: "listRenter"
+        fatchUsers(){
+            axios.post('https://codingkloud.com/rentVue/users.php',{
+                action: "listUsers"
             }).then((response) => {
-                if(response.data.status == 1){
-                    console.log(response);   
-                }else if(response.data.status == 0) {
-                    this.flatListStatus = response.data.status;
-                    this.noRenterMessage = response.data.message;
-                    console.log(response);
-                }
+                console.log(response);
+                this.users = response.data.users;
             });
         },
         fatchFlats(){
             /* Get Flat Data For Form Options */
-            axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
+            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
             action: "listAvailableFlats"
             }).then((response) => {
                 if(response.data.status == 1){
                     console.log(response);   
-                    this.options = response.data.records;
+                    this.options = response.data.records;                   
                     for(var i = 0; i < this.options.length; i++) {
                         var getFlatName = this.options[i].flatName;
                         var getFlatRent = this.options[i].baseRent;
                         this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
                         
-                        if(this.options[i].status == 1){                                        
+                        if(this.options[i].status == 1){
                             this.options[i].flatName = getFlatName + " Not Available";
                             var newKey = 'notEnabled';
                             var newValue = true ;
                             var newObj = this.options[i];
                             newObj[newKey] = newValue;                    
-                        }
+                        }                        
                     }
                 }else if(response.data.status == 0) {
                     this.noRenterMessage = response.data.message;
@@ -303,149 +212,76 @@ export default {
                 }
             });
         },
-        addNewRenter(){        
-            this.errors = [];
-
-            if (!this.newRenter.flatName) {
-                this.errors.push("Flat name required.");
-            }else if (this.newRenter.flatName.length < 6){
-                this.errors.push("Flat name required 6 characters");
-            }
-
-            if (!this.newRenter.baseRent) {
-                this.errors.push("Base rent required.");
-            }            
-
-            if (!this.errors.length) {
-                /*this.isActiveLoader = true; 
-                axios.post('https://codingkloud.com/rentVue/renterApi.php',{
-                flatName: this.newRenter.flatName,
-                baseRent: this.newRenter.baseRent,
-                action: "addNewRenter"
-                }).then(response=> {
-                if(response.data.status == 2){
-                    this.alertMessage = response.data.message;
-                    setTimeout(() => {
-                        this.isActiveLoader = false;
-                        this.showAlertError = true;
-                    }, 500)
-                    setTimeout(() => {
-                        this.showAlertError = false;
-                        this.newRenter.flatName = "";
-                        this.newRenter.baseRent = ""
-                    }, 800)
-                }else {
-                    console.log(response);
-                    this.alertMessage = response.data.message;
-                    setTimeout(() => {
-                        this.isActiveLoader = false;
-                        this.showAlertSuccess = true;
-                    }, 500)
-                    setTimeout(() => {
-                        this.showAlertSuccess = false;
-                        this.newRenter.flatName = "",
-                        this.newRenter.baseRent = "",
-                        this.$refs['addNewRenterModal'].hide();
-                        this.fatchRenters();     
-                    }, 800)
-                }          
-                }).catch(error => {
-                    console.log(error.message);
-                });*/         
-            }
-            
+        deleteUser(delUser,delFlatID) {
+            this.delUserId = delUser;
+            this.deletedUserFlatId = delFlatID;
+            /* Update Data Using API */ 
+            axios.post('https://codingkloud.com/rentVue/users.php',{
+                deleteIdData:this.delUserId,
+                action: "deleteUser"
+            }).then((response) => {
+                console.log(response);
+                this.fatchUsers();        
+            });
+            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
+                deletedUserFlatId:this.deletedUserFlatId,
+                action: "updateFlatstatus"
+            }).then((response) => {
+                console.log(response);
+                this.fatchUsers();        
+            });            
         },
-        hideErrorAlert(){
-        this.showAlertError = false;
+        editModal(userId, index){
+            this.editedUser.firstName = this.users[index].firstName;
+            this.editedUser.lastName = this.users[index].lastName;
+            this.editedUser.phone = this.users[index].phone;
+            this.editedUser.aadhar = this.users[index].aadhar;
+            this.editedUser.editedFlat = this.users[index].flatId;            
+            this.editedUserId = userId;
+            this.currentFlatId = this.editedUser.editedFlat;
+            this.$refs['updateUserDataModal'].show();
         },
-        updateFlat(){ 
+        updateUserData(){
             this.errors = [];
-
-            if (!this.editedFlat.baseRent) {
-                this.errors.push("Base rent required.");
-            }
 
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                // axios.post('http://codingkloud.com/rentVue/renterApi.php',{
-                //     flatId:this.editedFlatId,
-                //     flatName:this.editedFlat.flatName,
-                //     baseRent:this.editedFlat.baseRent,
-                //     action: "update"
-                // }).then((response) => {
-                //     this.alertMessage = response.data.message;
-                //     setTimeout(() => {
-                //         this.isActiveLoader = false;
-                //         this.showAlertSuccess = true;
-                //     }, 500)
-                //     setTimeout(() => {
-                //         this.showAlertSuccess = false;
-                //         this.editedFlat.flatName = '';
-                //         this.editedFlat.baseRent = '';
-                //         this.$refs['updateDataModal'].hide();
-                //         this.fatchRenters();            
-                //     }, 800)
-                //     console.log(response);                    
-                // })
+                axios.post('https://codingkloud.com/rentVue/users.php',{
+                    editedUserId:this.editedUserId,
+                    firstName:this.editedUser.firstName,
+                    lastName:this.editedUser.lastName,
+                    phone:this.editedUser.phone,
+                    aadhar:this.editedUser.aadhar,
+                    editedFlat:this.editedUser.editedFlat,
+                    OldflatId:this.currentFlatId,
+                    action: "update"
+                }).then((response) => {
+                    this.alertMessage = response.data.message;
+                    setTimeout(() => {
+                        this.isActiveLoader = false;
+                        //this.showAlertSuccess = true;
+                        swal(this.alertMessage, "Thanks for using CK-Renter App.", "success",{buttons: false, timer: 1150});
+                    }, 100)
+                    setTimeout(() => { 
+                        this.$refs['updateUserDataModal'].hide();
+                        this.showAlertSuccess = false;
+                        this.fatchUsers();   
+                        this.fatchFlats();         
+                    }, 100)
+                    console.log(response);
+                    
+                })
             }
                                   
-        },
-        deleteUser(delFlat) {
-            this.delFlatId = delFlat;
-            /* Update Data Using API */ 
-            // axios.post('http://codingkloud.com/rentVue/renterApi.php',{
-            //     deleteIdData:this.delFlatId,
-            //     action: "deleteFlat"
-            // }).then((response) => {
-            //     console.log(response);
-            //     this.fatchRenters();             
-            // })
-        },
-        editModal(flatId, index){
-            this.editedFlat.flatName = this.flats[index].flatName;
-            this.editedFlat.baseRent = this.flats[index].baseRent;
-            this.editedFlatId = flatId;
-            this.$refs['updateDataModal'].show();
-        },
-        addRenterModal(){
-            this.$refs['addNewRenterModal'].show();
-            //this.checkAvailableFlats();
-        },
-        checkAvailableFlats(){
-            // for(var i = 0; i < this.options.length; i++) {
-            //     var getFlatName = this.options[i].flatName;
-            //     var getFlatRent = this.options[i].baseRent;
-            //     this.options[i].flatName = getFlatName + ' -- ' +  '₹ ' + getFlatRent + ' /-';
-                
-            //     if(this.options[i].status == 1){                                        
-            //         this.options[i].flatName = getFlatName + " Not Available";
-            //         var newKey = 'notEnabled';
-            //         var newValue = true ;
-            //         var newObj = this.options[i];
-            //         newObj[newKey] = newValue;                    
-            //     }
-            // }
         }
     },
-    computed: {
-        totalRent: function () {
-            let sum = 0;
-            this.flats.forEach(function(item) {
-                sum += (parseFloat(item.baseRent));
-            });
-            return sum;
-        },
-        totalFlats: function () {
-            return this.flats.length;
-        }        
+    created() {
+        
     },
-    mounted() {
-        this.fatchRenters();  
-        this.fatchFlats();  
-    },
-    created() {               
-                
-    }
-}; 
+    mounted(){
+        this.fatchUsers();
+        this.fatchFlats(); 
+    }  
+}
 </script>
