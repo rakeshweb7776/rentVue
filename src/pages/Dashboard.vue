@@ -168,7 +168,17 @@ export default {
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
-                this.users = response.data.users;                                 
+                this.users = response.data.users;
+                for(var i = 0; i < this.users.length; i++) {
+                    for(var j = 0; j < this.flats.length; j++) {
+                        if(this.users[i].flatId == this.flats[j].id) {
+                            var newKey = 'baseRent';
+                            var newValue = this.flats[j].baseRent;
+                            var newObj = this.users[i];
+                            newObj[newKey] = newValue;
+                        }
+                    }
+                }                 
             });
         },
         fatchWaterList(){
@@ -289,16 +299,6 @@ export default {
         this.fatchUsers();
         this.fatchWaterList();
         this.fatchBackMonthReading();
-        for(var i = 0; i < this.users.length; i++) {
-            for(var j = 0; j < this.flats.length; j++) {
-                if(this.users[i].flatId == this.flats[j].id) {
-                    var newKey = 'baseRent';
-                    var newValue = this.flats[j].baseRent;
-                    var newObj = this.users[i];
-                    newObj[newKey] = newValue;
-                }
-            }
-        }
     },
     beforeMount(){
 
