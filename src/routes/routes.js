@@ -11,6 +11,7 @@ import Register from '@/pages/Register.vue'
 import FlatList from '@/pages/FlatList.vue'
 import Renters from '@/pages/Renters.vue'
 import WaterCalculation from '@/pages/WaterCalculation.vue'
+import RentRecords from '@/pages/RentRecords.vue'
 
 
 Vue.use(VueRouter)
@@ -79,6 +80,14 @@ let router = new VueRouter({
                 path: "waterCalculation",
                 name: "WaterCalculation",
                 component: WaterCalculation,
+                meta:{
+                    requiresAuth:true
+                }
+            },
+            {
+                path: "rentRecords/:userId",
+                name: "RentRecords",
+                component: RentRecords,
                 meta:{
                     requiresAuth:true
                 }

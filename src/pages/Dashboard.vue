@@ -1,7 +1,7 @@
 <template>
     <div>   
         <b-row>           
-            <b-col sm="4" v-bind:key="item.index" v-for="item in users">
+            <b-col class="mb-3" sm="4" v-bind:key="item.index" v-for="item in users">
                 <b-card class="p-0">
                                 
                     <b-card-body class="p-0">
@@ -15,6 +15,7 @@
 
                     <b-card-body class="p-0 mt-3">
                         <b-button class="siteButton mr-2 pt-1 pb-1" @click.enter="addRentModal(item.id)">Add Rent</b-button>
+                        <router-link v-bind:to="'/rentRecords/' + item.id" class="siteButton btn btn-secondary"><span>View Records</span></router-link>
                     </b-card-body>
                 </b-card> 
             </b-col>              
@@ -69,7 +70,7 @@
                                     <b-row>        
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input placeholder="BMR" @keyup="rentcalculationFunction" v-model.number="renterData.back_month_reading" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="BMR" @keyup="rentcalculationFunction" v-model.number="renterData.back_month_reading" v-bind:disabled="backMonthReadingValueStatus" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                         <b-col cols="6">
@@ -86,7 +87,7 @@
                                         </b-col>
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input placeholder="Water Charges" @keyup="rentcalculationFunction" v-model.number="renterData.water_charge"  v-bind:disabled="waterChargesValueStatus" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="Water Charges" @keyup="rentcalculationFunction" v-model.number="renterData.water_charge" v-bind:disabled="waterChargesValueStatus" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                     </b-row>
@@ -142,7 +143,8 @@ export default {
             showAlertSuccess: false,
             isActiveLoader: false,
             rentValueStatus:false,
-            waterChargesValueStatus:false
+            waterChargesValueStatus:false,
+            backMonthReadingValueStatus:false
         }            
     },
     methods:{
@@ -166,17 +168,7 @@ export default {
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
-                this.users = response.data.users;  
-                for(var i = 0; i < this.users.length; i++) {
-                    for(var j = 0; j < this.flats.length; j++) {
-                        if(this.users[i].flatId == this.flats[j].id) {
-                            var newKey = 'baseRent';
-                            var newValue = this.flats[j].baseRent;
-                            var newObj = this.users[i];
-                            newObj[newKey] = newValue;
-                        }
-                    }
-                }                 
+                this.users = response.data.users;                                 
             });
         },
         fatchWaterList(){
@@ -195,8 +187,13 @@ export default {
                 }
             });
         },
-        getChargesStatus(){    
-            
+        fatchBackMonthReading(){    
+            axios.get('https://codingkloud.com/rentVue/addRentApi.php?records='+this.renterData.renter_id).then((response) => {
+                console.log(response.data.records);
+                this.renterData.back_month_reading = response.data.records[0].current_month_reading;
+                
+                this.backMonthReadingValueStatus = true;
+            });
         },
         rentcalculationFunction(){
             if(this.renterData.back_month_reading > 0 && this.renterData.current_month_reading > this.renterData.back_month_reading){
@@ -207,8 +204,8 @@ export default {
             }
         },
         addRentModal(renterId){ 
-            this.renterData.renter_id = renterId;
-            
+            this.renterData.renter_id = renterId;            
+            this.fatchBackMonthReading();         
             for(var i =0; i < this.users.length; i++){
                 if(renterId == this.users[i].id) {
                     this.renterData.rent = this.users[i].baseRent;
@@ -216,9 +213,7 @@ export default {
             }
             if(this.renterData.rent !== null) {
                 this.rentValueStatus = true;
-                console.log('not Null');
             }else {
-                console.log('Null');
             }
             this.$refs['addRentModal'].show();
         },
@@ -286,13 +281,32 @@ export default {
             
         }
     },
+    beforeCreate() {
+
+    },
     created() {
         this.fatchFlats();
         this.fatchUsers();
         this.fatchWaterList();
+        this.fatchBackMonthReading();
+        for(var i = 0; i < this.users.length; i++) {
+            for(var j = 0; j < this.flats.length; j++) {
+                if(this.users[i].flatId == this.flats[j].id) {
+                    var newKey = 'baseRent';
+                    var newValue = this.flats[j].baseRent;
+                    var newObj = this.users[i];
+                    newObj[newKey] = newValue;
+                }
+            }
+        }
+    },
+    beforeMount(){
+
     },
     mounted(){
-       
+       if(this.$refs.addRentModal == "hidden.bs.modal"){
+           alert('ok');
+       }
     }  
 }
 </script>
