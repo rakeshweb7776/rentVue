@@ -126,7 +126,7 @@ export default {
             errors: [],
             flats:[],
             flatsLength:'',
-            users:[], 
+            users:[],
             renterData: {
                 renter_id: null, 
                 back_month_reading: null, 
@@ -169,16 +169,6 @@ export default {
             }).then((response) => {
                 console.log(response);
                 this.users = response.data.users;
-                for(var i = 0; i < this.users.length; i++) {
-                    for(var j = 0; j < this.flats.length; j++) {
-                        if(this.users[i].flatId == this.flats[j].id) {
-                            var newKey = 'baseRent';
-                            var newValue = this.flats[j].baseRent;
-                            var newObj = this.users[i];
-                            newObj[newKey] = newValue;
-                        }
-                    }
-                }                 
             });
         },
         fatchWaterList(){
@@ -197,13 +187,19 @@ export default {
                 }
             });
         },
-        fatchBackMonthReading(){    
-            axios.get('https://codingkloud.com/rentVue/addRentApi.php?records='+this.renterData.renter_id).then((response) => {
-                console.log(response.data.records);
-                this.renterData.back_month_reading = response.data.records[0].current_month_reading;
+        fatchBackMonthReading(){            
+            axios.get('https://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records='+this.renterData.renter_id).then((response) => {
+                if(response.data.status == 1){
+                    this.renterData.back_month_reading = response.data.records[0].current_month_reading;                
+                    this.backMonthReadingValueStatus = true;
+                }else {
+                    this.renterData.back_month_reading = null;
+                    this.backMonthReadingValueStatus = false;
+                }
                 
-                this.backMonthReadingValueStatus = true;
-            });
+            }).catch(error => {
+                console.log(error.message);
+            }); 
         },
         rentcalculationFunction(){
             if(this.renterData.back_month_reading > 0 && this.renterData.current_month_reading > this.renterData.back_month_reading){
@@ -213,9 +209,9 @@ export default {
                console.log(this.renterData.meter_reading);
             }
         },
-        addRentModal(renterId){ 
+        addRentModal(renterId){
             this.renterData.renter_id = renterId;            
-            this.fatchBackMonthReading();         
+            this.fatchBackMonthReading();
             for(var i =0; i < this.users.length; i++){
                 if(renterId == this.users[i].id) {
                     this.renterData.rent = this.users[i].baseRent;
@@ -223,7 +219,6 @@ export default {
             }
             if(this.renterData.rent !== null) {
                 this.rentValueStatus = true;
-            }else {
             }
             this.$refs['addRentModal'].show();
         },
@@ -298,7 +293,6 @@ export default {
         this.fatchFlats();
         this.fatchUsers();
         this.fatchWaterList();
-        this.fatchBackMonthReading();
     },
     beforeMount(){
 

@@ -267,6 +267,15 @@ export default {
                 this.showAlertError = false;
                 this.registerDetails.phone = ""
               }, 100)
+          }else if(response.data.status == 5){
+              this.loginUserAlert = response.data.message;
+              setTimeout(() => {
+                this.isActiveLoader = false;
+                swal(this.loginUserAlert, "Seems like something went wrong!", "error",{buttons: false});
+              }, 100)
+              setTimeout(() => {
+                this.showAlertError = false;
+              }, 100)
           }else {
               console.log(response);
               this.loginUserAlert = response.data.message;

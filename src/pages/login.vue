@@ -134,7 +134,7 @@ export default {
         axios.post("https://codingkloud.com/rentVue/loginUserApi.php", {
             email: this.loginUserDetails.email,
             password: this.loginUserDetails.password,
-            action: "loginNewUser"
+            action: "loginNewUser" 
           }).then(response => {
             if(response.data.status == 0){
                 this.loginUserAlert = response.data.message;
@@ -150,11 +150,11 @@ export default {
                 }, 100)
             }else {
               console.log(response);
-              console.log(response.data.records[0].id);
+              console.log(response.data.userId);
               this.loginUserAlert = response.data.message;              
-              let is_admin = response.data.records[0].id;
+              let is_admin = response.data.userId;
               
-              window.$cookies.set('user_session', response.data.records[0].id,60 * 60 * 1);
+              window.$cookies.set('user_session', response.data.userId,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;

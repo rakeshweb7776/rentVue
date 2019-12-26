@@ -3,8 +3,9 @@
         <b-row>
             <b-col>
                 <b-card class="p-1">  
-                    <h3>Rent Recoards</h3>  
-                    <b-table-simple responsive bordered striped hover class="m-0">
+                    <h3>{{ renterName }} Rent Recoards</h3>  
+                    <b-alert class="m-0" show variant="info" v-if="!rentRecordListStatus > 0">{{ noRentMessage }}</b-alert>
+                    <b-table-simple responsive bordered striped hover class="m-0"  v-if="rentRecordListStatus > 0">
                         <b-thead>
                             <b-tr>                              
                                 <b-th colspan="8"  class="p-2">
@@ -13,8 +14,8 @@
                                     </b-form-group>
                                 </b-th>
                             </b-tr>
-                            <b-tr>                    
-                                <b-th>Flat No</b-th>
+                            <b-tr>              
+                                <b-th>Date</b-th>      
                                 <b-th>BMR</b-th>
                                 <b-th>CMR</b-th>
                                 <b-th>Meter Reading</b-th>
@@ -26,16 +27,21 @@
                         </b-thead>
                         <b-tbody>
                             <b-tr v-bind:key="item.index" v-for="item in rentRecord">
-                                <b-td>FLat No. 0</b-td>
+                                <b-td>{{ item.month }}</b-td>
                                 <b-td>{{ item.back_month_reading }} <sup>Unit</sup></b-td>
                                 <b-td>{{ item.current_month_reading }} <sup>Unit</sup></b-td>
-                                <b-td><span class="pinkColor bold">&#8377;</span> {{ item.meter_reading }}</b-td>
+                                <b-td> {{ item.meter_reading }} <sup>Unit</sup></b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.light_charge }} /-</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.water_charge }} /-</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.rent }} /-</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.total_rent }} /-</b-td>
                             </b-tr>
                         </b-tbody>
+                        <b-tfoot>
+                            <b-tr>
+                                <b-td colspan="8"><span class="pink bold">Total Rent : <span class="pinkColor bold">&#8377;</span> {{ totalRent }} /-</span></b-td>
+                            </b-tr>
+                        </b-tfoot>
                     </b-table-simple>
                 </b-card>
             </b-col>
@@ -56,32 +62,53 @@ export default {
             userId: this.$route.params.userId,
             rentRecord: [],
             userlist: {},
-            users: []
+            users: [],
+            rentRecordListStatus:null,
+            noRentMessage:null,
+            renterName:null
         }
     },
     methods:{
         getRentsRecords(){
-            axios.get('https://codingkloud.com/rentVue/addRentApi.php?records='+this.userId).then((response) => {
-                this.rentRecord = response.data.records;        
+            axios.get('https://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records='+this.userId).then((response) => {
+                if(response.data.status == 1){
+                    console.log(response);   
+                    this.rentRecord = response.data.records;
+                    this.rentRecordListStatus = response.data.status;
+                }else if(response.data.status == 0) {
+                    this.rentRecordListStatus = response.data.status;
+                    this.noRentMessage = response.data.message;
+                    console.log(response);
+                }
+            }).catch(error => {
+                console.log(error.message);
+            });
+
+            axios.get('https://codingkloud.com/rentVue/addRentApi.php?action=getUserNameRecords&records='+this.userId).then((response) => {
+                if(response.data.status == 1){
+                    console.log(response);   
+                    this.renterName = response.data.records[0].firstName + ' ' + response.data.records[0].lastName;
+                }else if(response.data.status == 0) {
+                    this.noRentMessage = response.data.message;
+                    console.log(response);
+                }
+            }).catch(error => {
+                console.log(error.message);
             });
         }
     },
-    created() {
-        this.getRentsRecords()
-      /*  this.$http.get('https://reqres.in/api/users?id='+this.userId).then(function(response){            
-            this.userlist = response.body.data;
-        });*/
+    computed: {
+        totalRent: function () {
+            let sum = 0;
+            this.rentRecord.forEach(function(item) {
+                sum += (parseFloat(item.total_rent));
+            });
+            return sum;
+        },
     },
-    mounted() {
-        //this.getRentsRecords(); 
-        /*this.$http.post('https://reqres.in/api/users/'+this.userId,{
-           // userId:this.userlist.id,
-            first_name:this.userlist.first_name,
-            last_name:this.userlist.last_name,
-            email:this.userlist.email
-        }).then(function(response){
-            console.log(response);
-        });*/
-    }
+    created() {
+        this.getRentsRecords();
+    },
+    mounted() {}
 }; 
 </script>
