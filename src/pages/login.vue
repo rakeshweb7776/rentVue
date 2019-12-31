@@ -162,11 +162,11 @@ export default {
                swal(this.loginUserAlert,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 950});
               }, 100)
               setTimeout(() => { 
-                if(is_admin== 1){
+                if(is_admin == 1){
                   console.log('userType'+is_admin);
                     this.$router.push('dashboard')
                 }
-                else {
+                else if(is_admin == 2) {
                     this.$router.push('userDashboard')
                 }
               }, 1200)
