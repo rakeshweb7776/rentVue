@@ -152,7 +152,7 @@ export default {
               console.log(response);
               console.log(response.data.userId);
               this.loginUserAlert = response.data.message;              
-              let is_admin = response.data.userId;
+              let is_admin = response.data.userType;
               
               window.$cookies.set('user_session', response.data.userId,60 * 60 * 1);
 
