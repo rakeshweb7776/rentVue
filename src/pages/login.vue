@@ -169,6 +169,9 @@ export default {
                 else if(is_admin == 2) {
                     this.$router.push('userDashboard')
                 }
+                else {
+                    this.$router.push('waterCalculation')
+                }
               }, 1200)
             }          
           }).catch(error => {
