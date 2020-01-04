@@ -12,6 +12,8 @@ import FlatList from '@/pages/FlatList.vue'
 import Renters from '@/pages/Renters.vue'
 import WaterCalculation from '@/pages/WaterCalculation.vue'
 import RentRecords from '@/pages/RentRecords.vue'
+import Chat from '@/pages/chat.vue'
+
 
 
 Vue.use(VueRouter)
@@ -65,7 +67,8 @@ let router = new VueRouter({
                 name: "Flat List",
                 component: FlatList,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
                 }
             },
             {
@@ -73,7 +76,8 @@ let router = new VueRouter({
                 name: "Renters",
                 component: Renters,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
                 }
             },
             {
@@ -81,7 +85,17 @@ let router = new VueRouter({
                 name: "WaterCalculation",
                 component: WaterCalculation,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
+                }
+            },
+            {
+                path: "chat",
+                name: "Chat",
+                component: Chat,
+                meta:{
+                    requiresAuth:true,
+                    is_admin : true
                 }
             },
             {
@@ -89,7 +103,8 @@ let router = new VueRouter({
                 name: "RentRecords",
                 component: RentRecords,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
                 }
             }
           ]
@@ -111,7 +126,7 @@ let router = new VueRouter({
                 next()
             }
             else{
-                next()
+                next({ name: 'UserDashboard'})
             }
         }else {
             next()

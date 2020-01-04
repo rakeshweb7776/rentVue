@@ -1,12 +1,13 @@
 <template>
   <transition name="fade" mode="out-in">
     <b-container fluid class="p-4 siteContainerFluid">      
-        <router-view></router-view>
+        <router-view v-bind:loggedUserMainDataForContent="loggedUserMainData"></router-view>
     </b-container>
   </transition>
 </template>
 <script>
   export default {
+    props:["loggedUserMainData"],
     data(){
       return {
       }

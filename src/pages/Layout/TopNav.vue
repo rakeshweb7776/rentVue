@@ -1,7 +1,7 @@
 <template>
     <div class="topBar">
       <h3>{{ $route.name }}</h3>
-      <b-dropdown id="dropdown-right" :text="loggedInUserData.firstName + ' ' + loggedInUserData.lastName" right class="float-right">
+      <b-dropdown id="dropdown-right" :text="loggedUserMainData.userName" right class="float-right">
         <b-dropdown-item-button @click="logout">Logout</b-dropdown-item-button>
       </b-dropdown>
     </div>
@@ -12,28 +12,32 @@
 </style>
 
 <script>
-
-export default { 
+export default {
+    props:["loggedUserMainData"],
     data() {
       return {
-        loggedInUserId:'',
+        loggedInUserId:null,
+        loggedInUserType:null,
         loggedInUserData: {
           firstName:null,
           lastName:null,
-          phone:null
+          phone:null,
+          aadhar:null
         }
       }
     },
     methods: {
       logout(){
         window.$cookies.remove("user_session");
+        window.$cookies.remove("user_type");
         setTimeout(() => {
           router.replace('/login');
         }, 1000)
       }      
-    },
-    mounted(){
-      this.loggedInUserId = window.$cookies.get('user_session');   
+    }
+   /* mounted(){
+      this.loggedInUserId = window.$cookies.get('user_session');  
+      this.loggedInUserType = window.$cookies.get('user_type');
 
       axios.post('https://codingkloud.com/rentVue/users.php',{
         loggedInUserId: this.loggedInUserId,
@@ -44,6 +48,7 @@ export default {
           this.loggedInUserData.lastName = response.data.records[0].lastName;
       });
 
-    }
+    }*/
 }
+
 </script>

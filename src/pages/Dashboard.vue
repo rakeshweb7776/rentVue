@@ -143,7 +143,7 @@ export default {
             showAlertSuccess: false,
             isActiveLoader: false,
             rentValueStatus:false,
-            waterChargesValueStatus:false,
+            waterChargesValueStatus:true,
             backMonthReadingValueStatus:false
         }            
     },
@@ -240,7 +240,7 @@ export default {
             } 
 
             if (!this.renterData.water_charge) {
-                this.errors.push("Water Charges required.");
+                this.errors.push("Please calculate water charges before add rent.");
             } 
 
 

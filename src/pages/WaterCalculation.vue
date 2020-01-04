@@ -1,6 +1,6 @@
 <template>
     <div>   
-        <b-row class="mt-3">
+        <b-row>
             <b-col>
                 <b-card class="p-1">  
                     <h3>Water Calculations</h3> 
