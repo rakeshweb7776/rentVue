@@ -95,7 +95,7 @@ let router = new VueRouter({
                 component: Chat,
                 meta:{
                     requiresAuth:true,
-                    is_admin : true
+                    //is_admin : true
                 }
             },
             {

@@ -23,6 +23,10 @@
                     <p><b>Aadhar:</b> {{ loggedUserMainData.aadhar }}</p>
                 </div>
             </div>
+            <div class="sideBarLinks mt-3" v-if="userType == 2">
+                <router-link to="/userDashboard"><i class="material-icons">dashboard</i> <span>Dashboard</span></router-link>  
+                <router-link to="/chat"><i class="material-icons">chat</i> <span>Chat Box</span></router-link>           
+            </div>
 
         </div>
 </template>
