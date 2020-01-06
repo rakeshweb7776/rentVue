@@ -47,9 +47,8 @@
                             </div>
 
                         </div>
-                        <b-card class="p-1 chatBoxActionContainer">  
-                            <b-form-textarea
-                                id="textarea"
+                        <b-card class="p-1 chatBoxActionContainer">
+                            <b-form-input 
                                 v-model="sendChatEntry.text"
                                 placeholder="Enter something..."
                                 rows="1"
@@ -57,7 +56,7 @@
                                 @keyup.enter="sendChatMessage"
                                 @focus="getDataReadyToSend()"
                                 >
-                            </b-form-textarea>
+                            </b-form-input>
                         </b-card>
                     </div> 
                 </div>
@@ -114,6 +113,7 @@ export default {
                 text: this.sendChatEntry.text,
                 action: "insertChating"
             }).then((response) => {
+                this.sendChatEntry.text = '';
                 this.fetchChatMessage();
                 console.log(response); 
                 if(response.data.status == 1){
@@ -148,7 +148,8 @@ export default {
     },
     mounted(){
         this.fatchUsers();
-        this.fetchChatMessage();     
+        this.fetchChatMessage();  
+        setTimeout(this.fetchChatMessage(), 1000);   
     }
 }; 
 /*
