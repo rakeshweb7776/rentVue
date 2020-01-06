@@ -71,6 +71,7 @@
 </style>
 
 <script>
+import { setTimeout } from 'timers';
 
 export default { 
     props:["loggedUserMainDataForContent"],
@@ -145,13 +146,15 @@ export default {
                 this.users = response.data.users;
             });
         }
+        
     },
     mounted(){
-        this.fatchUsers();
-        this.fetchChatMessage();  
-        setTimeout(this.fetchChatMessage(), 1000);   
+        this.fatchUsers();          
+        window.setInterval(() => {
+           this.fetchChatMessage();   
+        }, 1000);
     }
-}; 
+}
 /*
 { 
    "chatEntry":[ 
@@ -175,4 +178,9 @@ export default {
    ]
 }
 */
+// setTimeout(function(){
+//     console.log('Hello Rakesh');
+// },1000)
+
+setTimeout( console.log('Hello Rakesh'), 1000);
 </script>
