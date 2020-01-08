@@ -149,10 +149,11 @@ export default {
         
     },
     mounted(){
-        this.fatchUsers();          
-        window.setInterval(() => {
+        this.fatchUsers();  
+        this.fetchChatMessage();        
+       /* window.setInterval(() => {
            this.fetchChatMessage();   
-        }, 1000);
+        }, 5000);*/
     }
 }
 /*
