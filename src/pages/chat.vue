@@ -2,6 +2,7 @@
     <div>   
         <b-row>
             <b-col>
+                {{ckData.adventurer.name}}
                 <div class="chatContainer">
                     <div class="chatingUsersList" v-if="loggedUserMainDataForContent.userType == 1">
 
@@ -78,6 +79,7 @@ export default {
     data(){
         return {
             isActive: false,
+            ckData:{},
             errors:[],
             users:[],
             getChatData:{
@@ -145,10 +147,17 @@ export default {
                 console.log(response);
                 this.users = response.data.users;
             });
+        },
+        fatchCkData(){
+            axios.get('https://codingkart-d70b0.firebaseio.com/characters.json').then((response) => {
+                console.log(response);     
+                this.ckData = response.data;           
+            });
         }
         
     },
     mounted(){
+        this.fatchCkData();
         this.fatchUsers();  
         this.fetchChatMessage();        
        /* window.setInterval(() => {
