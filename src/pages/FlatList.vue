@@ -119,7 +119,7 @@
                                 <b-form-group>
                                 <b-form-input v-model="newFlat.baseRent" placeholder="Base Rent" id="baseRent" type="email" size="md"></b-form-input>
                                 </b-form-group>
-                                <b-button class="siteButton"  @click="addNewFlat()">Add New User</b-button>
+                                <b-button class="siteButton"  @click="addNewFlat()">Add New Flat</b-button>
                             </form>
                             <ul class="errorListing" v-if="errors.length">
                                 <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>

@@ -12,6 +12,7 @@ import VueMask from 'v-mask'
 import BootstrapVue from 'bootstrap-vue'
 
 window.axios = axios;
+window.swal = swal;
 
 Vue.prototype.$axios = axios;
 

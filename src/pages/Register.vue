@@ -41,7 +41,8 @@
       </svg>
     </div>     
     <b-card>
-      <h3 class="mb-3">Renter Registration</h3>
+      <h3 v-if="!appHasAdmin" class="mb-3">Renter Registration</h3>
+      <h3 v-if="appHasAdmin" class="mb-3">Insert Admin Registration</h3>
       <b-row>        
         <b-col cols="12">
           <form>
@@ -70,21 +71,30 @@
               </b-col>
             </b-row>  
             <b-form-group>
-              <b-form-input v-model="registerDetails.aadhar" v-mask="'####-####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
+              <b-form-input v-model="registerDetails.aadhar" v-mask="'####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
             </b-form-group>
-            <b-form-group>
-                <b-form-select
-                    v-model="registerDetails.selectedFlat"
-                    :options="this.options"
-                    value-field="id"
-                    text-field="flatName"
-                    disabled-field="notEnabled"
-                >
-                <template v-slot:first>
-                    <option :value="null" disabled>-- Please select Flat --</option>
-                </template>
-                </b-form-select>
-            </b-form-group>
+             <b-row v-if="!appHasAdmin">  
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-select
+                      v-model="registerDetails.selectedFlat"
+                      :options="this.options"
+                      value-field="id"
+                      text-field="flatName"
+                      disabled-field="notEnabled"
+                  >
+                  <template v-slot:first>
+                      <option :value="null" disabled>-- Please select Flat --</option>
+                  </template>
+                  </b-form-select>
+              </b-form-group>
+              </b-col>
+              <b-col cols="6">
+                <b-form-group>
+                  <b-form-input v-model="registerDetails.meterStart" placeholder="Meter Start" type="text" size="md"></b-form-input>
+                </b-form-group>
+              </b-col>       
+             </b-row>
             <b-row>        
               <b-col cols="6">
                 <b-form-group>
@@ -96,8 +106,7 @@
                   <b-form-input v-model="registerDetails.confirmPassword" placeholder="Confirm Password" type="password" size="md"  v-on:keyup.enter="registerUser()"></b-form-input>
                 </b-form-group>
               </b-col>
-            </b-row> 
-            
+            </b-row>            
            
             <b-button class="siteButton"  @click="registerUser()">Register</b-button>
             <span class="loginSignupLink">Already have an account? <router-link to="/login">login Now</router-link></span>            
@@ -131,8 +140,10 @@ export default {
         phone: null,
         aadhar:null,
         selectedFlat: null,
+        meterStart:null,
         password: null,
-        confirmPassword: null
+        confirmPassword: null,        
+        usertype:null
       },
 
       selectedFile: null,
@@ -142,11 +153,24 @@ export default {
       showAlertError: false,
       showAlertSuccess: false,
       isActiveLoader: false,
+      appHasAdmin:true
     };
   },
   methods: {    
     fatchUsers() {
-
+      axios.post('https://codingkloud.com/rentVue/users.php',{
+          action: "checkAdminData"
+      }).then((response) => {
+          console.log(response);
+          if(response.data.status == 0){             
+             this.registerDetails.usertype = 1;
+             this.registerDetails.selectedFlat = 0;
+             this.registerDetails.meterStart = 0;
+           }else {
+             this.appHasAdmin = false;
+             this.registerDetails.usertype = 2;
+           }
+      });
     },
     fatchFlats(){
         /* Get Flat Data For Form Options */
@@ -200,18 +224,21 @@ export default {
       if (!this.registerDetails.aadhar) {
         this.errors.push("Aadhar No required.");
       }else if (!this.validMobile(this.registerDetails.aadhar)){
-        this.errors.push("Enter 16 Digit Aadhar Number");
+        this.errors.push("Enter 12 Digit Aadhar Number");
       }
-      if (!this.registerDetails.selectedFlat) {
-        this.errors.push("Please Select Flat.");
+      if(this.usertype == 2) {
+        if (!this.registerDetails.selectedFlat) {
+          this.errors.push("Please Select Flat.");
+        }
+        if (!this.registerDetails.meterStart) {
+          this.errors.push("Please enter Meter Start Reading.");
+        }
       }
-
       if (!this.registerDetails.password) {
         this.errors.push("Password required.");
       }else if (this.registerDetails.password.length < 8){
         this.errors.push("Password required 8 characters");
       }
-
       if (!this.registerDetails.confirmPassword) {
         this.errors.push("Confirm Password required.");
       }else if (this.registerDetails.confirmPassword.length < 8){
@@ -229,9 +256,11 @@ export default {
           phone: this.registerDetails.phone,
           aadhar: this.registerDetails.aadhar,
           selectedFlat: this.registerDetails.selectedFlat,
+          meterStart: this.registerDetails.meterStart,
           password: this.registerDetails.password,
           confirmPassword: this.registerDetails.confirmPassword,
-          action: "registerRenter"          
+          action: "registerRenter" ,
+          usertype:this.registerDetails.usertype    
         }).then(response=> {
           if(response.data.status == 2){
               this.loginUserAlert = response.data.message;
@@ -319,6 +348,7 @@ export default {
   },
   mounted() {
       this.fatchFlats();  
+      this.fatchUsers();
   }
 };
 </script>

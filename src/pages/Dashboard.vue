@@ -70,7 +70,7 @@
                                     <b-row>        
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input placeholder="BMR" @keyup="rentcalculationFunction" v-model.number="renterData.back_month_reading" v-bind:disabled="backMonthReadingValueStatus" type="text" size="md"></b-form-input>
+                                                <b-form-input placeholder="BMR" @keyup="rentcalculationFunction" v-model.number="renterData.back_month_reading" disabled type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                         <b-col cols="6">
@@ -144,7 +144,8 @@ export default {
             isActiveLoader: false,
             rentValueStatus:false,
             waterChargesValueStatus:true,
-            backMonthReadingValueStatus:false
+         // backMonthReadingValueStatus:false,
+            firstTimeUserStartReading:null
         }            
     },
     methods:{
@@ -176,25 +177,27 @@ export default {
                 action: "getWaterList"
             }).then((response) => {
                 console.log(response);
-                this.waterList = response.data.waterList;
-                if(this.waterList.length) {
-                    for(var i = 0; i < this.waterList.length; i++){
-                        if(this.renterData.month == this.waterList[i].currentMonth){
-                            this.renterData.water_charge = this.waterList[i].perUserWC;
+                if(response.data.status == 1){
+                    this.waterList = response.data.waterList;
+                    if(this.waterList.length) {
+                        for(var i = 0; i < this.waterList.length; i++){
+                            if(this.renterData.month == this.waterList[i].currentMonth){
+                                this.renterData.water_charge = this.waterList[i].perUserWC;
+                            }
                         }
+                        this.waterChargesValueStatus = true;                    
                     }
-                    this.waterChargesValueStatus = true;                    
-                }
+                }                
             });
         },
         fatchBackMonthReading(){            
             axios.get('https://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records='+this.renterData.renter_id).then((response) => {
                 if(response.data.status == 1){
                     this.renterData.back_month_reading = response.data.records[0].current_month_reading;                
-                    this.backMonthReadingValueStatus = true;
+                   // this.backMonthReadingValueStatus = true;
                 }else {
-                    this.renterData.back_month_reading = null;
-                    this.backMonthReadingValueStatus = false;
+                    this.renterData.back_month_reading = this.firstTimeUserStartReading;
+                   // this.backMonthReadingValueStatus = false;
                 }
                 
             }).catch(error => {
@@ -210,13 +213,15 @@ export default {
             }
         },
         addRentModal(renterId){
-            this.renterData.renter_id = renterId;            
-            this.fatchBackMonthReading();
+            this.renterData.renter_id = renterId;  
             for(var i =0; i < this.users.length; i++){
                 if(renterId == this.users[i].id) {
-                    this.renterData.rent = this.users[i].baseRent;
+                    this.renterData.rent = this.users[i].baseRent;    
+                    this.firstTimeUserStartReading = this.users[i].meterStart;
                 }
             }
+            this.fatchBackMonthReading();
+
             if(this.renterData.rent !== null) {
                 this.rentValueStatus = true;
             }

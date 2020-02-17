@@ -54,7 +54,8 @@
         <b-modal class="recordCopyModal" ref="recordCopyModal" hide-footer hide-header>
             <div class="d-block">  
                 <b-card>    
-                    <h3 class="mb-3">{{ copyRentRecord.month }} Rent Details</h3>
+                    <h3>{{renterName}}</h3>
+                    <h4 class="mb-3">{{ copyRentRecord.month }} Rent Details</h4>
                     <div class="copyRecord">   
                         <p>Month: {{ copyRentRecord.month }}</p>  
                         <p>Meter Reading Start: {{ copyRentRecord.bmr }} <sup>Unit</sup></p>  

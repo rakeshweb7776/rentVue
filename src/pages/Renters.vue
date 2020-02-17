@@ -106,7 +106,7 @@
                                         </b-col>
                                         <b-col cols="6">
                                             <b-form-group>
-                                                <b-form-input v-model="editedUser.aadhar" v-mask="'####-####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
+                                                <b-form-input v-model="editedUser.aadhar" v-mask="'####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                     </b-row>

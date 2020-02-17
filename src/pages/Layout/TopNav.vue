@@ -35,20 +35,6 @@ export default {
         }, 1000)
       }      
     }
-   /* mounted(){
-      this.loggedInUserId = window.$cookies.get('user_session');  
-      this.loggedInUserType = window.$cookies.get('user_type');
-
-      axios.post('https://codingkloud.com/rentVue/users.php',{
-        loggedInUserId: this.loggedInUserId,
-        action: "getLoggedUser"
-      }).then((response) => {
-          console.log(response);
-          this.loggedInUserData.firstName = response.data.records[0].firstName;
-          this.loggedInUserData.lastName = response.data.records[0].lastName;
-      });
-
-    }*/
 }
 
 </script>
