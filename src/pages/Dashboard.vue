@@ -2,15 +2,15 @@
     <div>   
         <b-row>           
             <b-col class="mb-3" sm="4" v-bind:key="item.index" v-for="item in users">
-                <b-card class="p-0">
-                                
+                <b-card class="p-0"> 
                     <b-card-body class="p-0">
-                        <b-card-title>{{ item.firstName + ' ' + item.lastName | capitalize }}</b-card-title>
+                        <b-card-title>{{ item.firstName + ' ' + item.lastName | capitalize }} <b-badge v-if="item.advPayment != 'NA'" variant="primary"><span class="whiteColor bold">&#8377;</span> {{item.advPayment}} /-</b-badge></b-card-title>
                     </b-card-body>
 
-                    <b-card-body class="p-0 mt-3">
+                    <b-card-body class="p-0 mt-3 userDetailsDashboard">
                         <p><b>Flat Assign</b> : FLat No. {{ item.flatId }}</p>
                         <p><b>Base Rent</b> : <span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</p>
+                        <p><b>Start Date</b> :  {{ item.userCreatedTime }}</p>
                     </b-card-body>
 
                     <b-card-body class="p-0 mt-3">
@@ -18,7 +18,7 @@
                         <router-link v-bind:to="'/rentRecords/' + item.id" class="siteButton btn btn-secondary"><span>View Records</span></router-link>
                     </b-card-body>
                 </b-card> 
-            </b-col>              
+            </b-col>
         </b-row>  
         
         <b-modal class="addRentModal" ref="addRentModal" hide-footer hide-header>
@@ -306,6 +306,8 @@ export default {
        if(this.$refs.addRentModal == "hidden.bs.modal"){
            alert('ok');
        }
-    }  
+    },
+    computed: {
+    }
 }
 </script>

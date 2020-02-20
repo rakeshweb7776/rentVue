@@ -7,6 +7,9 @@ import VueAxios from 'vue-axios'
 import VueCookies from 'vue-cookies'
 import swal from 'sweetalert';
 import VueMask from 'v-mask'
+import Vue2Filters from 'vue2-filters'
+
+
 
 
 import BootstrapVue from 'bootstrap-vue'
@@ -31,7 +34,7 @@ window.swal = swal;
 
 window.Vue = Vue;
 window.VueMask = VueMask;
-
+window.Vue2Filters = Vue2Filters;
 /* Vue Use Code */
 Vue.use(DashboardCss)
 //Vue.use(VueResource)
@@ -39,7 +42,8 @@ Vue.use(DashboardCss)
 Vue.use(BootstrapVue)
 Vue.use(VueAxios, axios)
 Vue.use(VueCookies)
-Vue.use(VueMask);
+Vue.use(VueMask)
+Vue.use(Vue2Filters)
 
 Vue.config.productionTip = false
 
@@ -50,7 +54,7 @@ new Vue({
 }).$mount('#app')
 
 /* ----- Uppercase Filter ----- */
-Vue.filter("uppercase", function (value) {
+Vue.filter("npm", function (value) {
   return value.toUpperCase();
 });
 

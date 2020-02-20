@@ -221,14 +221,19 @@ export default {
                 action: "deleteUser"
             }).then((response) => {
                 console.log(response);
-                this.fatchUsers();        
             });
             axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
                 deletedUserFlatId:this.deletedUserFlatId,
                 action: "updateFlatstatus"
             }).then((response) => {
                 console.log(response);
-                this.fatchUsers();        
+            });
+            axios.post('https://codingkloud.com/rentVue/addRentApi.php',{
+                deleteIdData:this.delUserId,
+                action: "removeDeletedUserRecords"
+            }).then((response) => {
+                console.log(response);
+                this.fatchUsers();       
             });            
         },
         editModal(userId, index){
