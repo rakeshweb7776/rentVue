@@ -218,11 +218,13 @@ export default {
             }
 
             /* Get Current Month Rent */
-            /*for(var i = 0;i < this.rentRecord.length;i++){                     
-                        if (this.rentRecord[i].month == this.currentMonth) {
-                            this.currentMonthRentAmount = this.rentRecord[i].total_rent;
-                        }
-                    }*/
+            /*
+            for(var i = 0;i < this.rentRecord.length;i++){                     
+                if (this.rentRecord[i].month == this.currentMonth) {
+                    this.currentMonthRentAmount = this.rentRecord[i].total_rent;
+                }
+            }
+            */
           } else if (response.data.status == 0) {
             this.rentRecordListStatus = response.data.status;
             this.noRentMessage = response.data.message;

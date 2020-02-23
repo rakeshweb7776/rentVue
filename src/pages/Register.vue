@@ -256,6 +256,7 @@ export default {
   },
   methods: {
     fatchUsers() {
+      this.isActiveLoader = true;
       axios
         .post("https://codingkloud.com/rentVue/users.php", {
           action: "checkAdminData"
@@ -267,9 +268,11 @@ export default {
             this.registerDetails.selectedFlat = 0;
             this.registerDetails.meterStart = 0;
             this.registerDetails.advPayment = 'no-need';
+            this.isActiveLoader = false;
           } else {
             this.appHasAdmin = false;
             this.registerDetails.usertype = 2;
+            this.isActiveLoader = false;
           }
         });
     },

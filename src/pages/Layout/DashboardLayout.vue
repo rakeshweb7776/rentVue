@@ -50,7 +50,6 @@ export default {
         loggedInUserId: this.loggedInUserId,
         action: "getLoggedUser"
       }).then((response) => {
-          console.log('Oye');
           console.log(response);
           this.fetchedUserMainData.userName = response.data.records[0].firstName + ' ' + response.data.records[0].lastName;
           this.fetchedUserMainData.email = response.data.records[0].email;
