@@ -156,17 +156,19 @@ export default {
                   this.loginUserDetails.password = ""
                 }, 100)
             }else {
-              this.loginUserID = response.data.userId;
-              this.loginUserTYPE = response.data.userType;
+              var loginUserID = this;
+              var loginUserTYPE = this;
+              loginUserID = response.data.userId;
+              loginUserTYPE = response.data.userType;
               console.log(response);
               console.log(response.data.userId);
-              $cookies.set('userdata', {userID:this.loginUserID},60 * 60 * 1);
+              $cookies.set('userdata', {userID:loginUserID},60 * 60 * 1);
               
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
               
-              $cookies.set('user_session', this.loginUserID,60 * 60 * 1);
-              $cookies.set('user_type', this.loginUserTYPE,60 * 60 * 1);
+              $cookies.set('user_session', loginUserID,60 * 60 * 1);
+              $cookies.set('user_type', loginUserTYPE,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;
