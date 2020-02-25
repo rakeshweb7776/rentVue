@@ -160,20 +160,17 @@ export default {
                   this.loginUserDetails.password = ""
                 }, 100)
             }else {
-              var loginUserID = this;
-              var loginUserTYPE = this;
-              loginUserID = response.data.userId;
-              loginUserTYPE = response.data.userType;
+             
               console.log(response);
               console.log(response.data.userId);
-              
-              
+                           
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
-              cookSet(loginUserID);
-              $cookies.set('user_session', loginUserID,60 * 60 * 1);
-              $cookies.set('user_type', loginUserTYPE,60 * 60 * 1);
-
+              this.loginUserID = response.data.userId;
+              
+              $cookies.set('user_session', response.data.userId,60 * 60 * 1);
+              $cookies.set('user_type', response.data.userType,60 * 60 * 1);
+              
               setTimeout(() => {
                 this.isActiveLoader = false;
                // this.showAlertSuccess = true;
@@ -191,6 +188,7 @@ export default {
                     this.$router.push('waterCalculation')
                 }
               }, 1200)
+              this.cookSet(this.loginUserID);
             }          
           }).catch(error => {
             this.loginUserAlert = "Registration fail due to server error";       
