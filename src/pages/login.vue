@@ -169,6 +169,7 @@ export default {
                     this.$router.push('dashboard')
                 }
                 else if(this.is_admin == 2) {
+                    alert('not right');
                     this.$router.push('userDashboard')
                 }
                 else {
