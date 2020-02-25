@@ -126,6 +126,7 @@ let router = new VueRouter({
                 next()
             }
             else{
+                alert('access 1');
                 next({ name: 'UserDashboard'})
             }
         }else {
@@ -137,6 +138,7 @@ let router = new VueRouter({
             next()
         }
         else{
+            alert('access 2');
             next({ name: 'UserDashboard'})
         }
     }else {
