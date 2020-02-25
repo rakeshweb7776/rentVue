@@ -117,6 +117,8 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false,
         is_admin:null,
+        loginUserID:null,
+        loginUserTYPE:null,
         userDataDetails:$cookies.get('userdata')
     };
   },
@@ -154,14 +156,17 @@ export default {
                   this.loginUserDetails.password = ""
                 }, 100)
             }else {
+              this.loginUserID = response.data.userId;
+              this.loginUserTYPE = response.data.userType;
               console.log(response);
               console.log(response.data.userId);
-              $cookies.set('userdata', {userID:response.data.userId},60 * 60 * 1);
+              $cookies.set('userdata', {userID:this.loginUserID},60 * 60 * 1);
+              
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
               
-              $cookies.set('user_session', response.data.userId,60 * 60 * 1);
-              $cookies.set('user_type', response.data.userType,60 * 60 * 1);
+              $cookies.set('user_session', this.loginUserID,60 * 60 * 1);
+              $cookies.set('user_type', this.loginUserTYPE,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;
