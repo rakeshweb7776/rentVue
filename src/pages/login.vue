@@ -123,8 +123,12 @@ export default {
     };
   },
   methods: {
-    
-    fatchUsers() {},
+    cookSet(loginUserID){
+      $cookies.set('userdata', {userID:loginUserID},60 * 60 * 1);
+    },
+    fatchUsers() {
+      
+    },
     loginUser() {
       
       this.errors = [];
@@ -162,11 +166,11 @@ export default {
               loginUserTYPE = response.data.userType;
               console.log(response);
               console.log(response.data.userId);
-              $cookies.set('userdata', {userID:loginUserID},60 * 60 * 1);
+              
               
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
-              
+              cookSet(loginUserID);
               $cookies.set('user_session', loginUserID,60 * 60 * 1);
               $cookies.set('user_type', loginUserTYPE,60 * 60 * 1);
 
