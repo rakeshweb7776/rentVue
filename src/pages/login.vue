@@ -113,7 +113,8 @@ export default {
 
         dismissSecs: 5,
         dismissCountDown: 0,
-        showDismissibleAlert: false
+        showDismissibleAlert: false,
+        is_admin:null
     };
   },
   methods: {
@@ -152,11 +153,10 @@ export default {
               console.log(response);
               console.log(response.data.userId);
               this.loginUserAlert = response.data.message;              
-              let is_admin = response.data.userType;
-              sessionStorage.setItem("user_session", response.data.userId);
-              sessionStorage.setItem("user_type", response.data.userType);
-              //$cookies.set('user_session', response.data.userId,60 * 60 * 1);
-              //$cookies.set('user_type', response.data.userType,60 * 60 * 1);
+              this.is_admin = response.data.userType;
+              
+              $cookies.set('user_session', response.data.userId,60 * 60 * 1);
+              $cookies.set('user_type', response.data.userType,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;
@@ -164,11 +164,11 @@ export default {
                swal(this.loginUserAlert,"How lovely. Let me take your coat." , "success",{buttons: false, timer: 950});
               }, 100)
               setTimeout(() => { 
-                if(is_admin == 1){
-                  console.log('userType'+is_admin);
+                if(this.is_admin == 1){
+                  console.log('userType'+this.is_admin);
                     this.$router.push('dashboard')
                 }
-                else if(is_admin == 2) {
+                else if(this.is_admin == 2) {
                     this.$router.push('userDashboard')
                 }
                 else {

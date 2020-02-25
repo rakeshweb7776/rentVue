@@ -43,8 +43,8 @@ export default {
         }
     },
     mounted(){
-      this.loggedInUserId = sessionStorage.getItem("user_session"); 
-      this.loggedInUserType = sessionStorage.getItem('user_type');
+      this.loggedInUserId = $cookies.get('user_session');  
+      this.loggedInUserType = $cookies.get('user_type');
 
       axios.post('https://codingkloud.com/rentVue/users.php',{
         loggedInUserId: this.loggedInUserId,

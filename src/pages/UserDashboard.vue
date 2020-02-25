@@ -62,7 +62,7 @@ export default {
     props:["loggedUserMainDataForContent"],
     data(){
         return {
-            loggedUserDAtaID:sessionStorage.getItem('user_session'),
+            loggedUserDAtaID:$cookies.get('user_session'),
             rentRecords:[],
             rentRecordListStatus:null,
             noRentMessage:null

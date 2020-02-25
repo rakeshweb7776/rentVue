@@ -28,10 +28,8 @@ export default {
     },
     methods: {
       logout(){
-        sessionStorage.removeItem("user_session");
-        sessionStorage.removeItem("user_type");
-        //$cookies.remove("user_session");
-        //$cookies.remove("user_type");
+        $cookies.remove("user_session");
+        $cookies.remove("user_type");
         setTimeout(() => {
           router.replace('/login');
         }, 1000)

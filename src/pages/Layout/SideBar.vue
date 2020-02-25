@@ -41,7 +41,7 @@ export default {
     props:["loggedUserMainData"],
     data() {
         return {
-           userType: sessionStorage.getItem('user_type'), 
+           userType: $cookies.get('user_type'), 
            backgroundUrl
         }
     }
