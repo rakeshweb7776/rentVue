@@ -168,7 +168,7 @@ export default {
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
               this.loginUserID = response.data.userId;
-              
+              alert(response.data.userId);
               $cookies.set('user_session', response.data.userId,60 * 60 * 1);
               $cookies.set('user_type', response.data.userType,60 * 60 * 1);
               
@@ -189,7 +189,6 @@ export default {
                     this.$router.push('waterCalculation')
                 }
               }, 1200)
-              this.cookSet(this.loginUserID);
             }          
           }).catch(error => {
             this.loginUserAlert = "Registration fail due to server error";       
