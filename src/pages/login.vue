@@ -77,6 +77,8 @@
             <b-button class="siteButton" @click.enter="loginUser()">Login Now</b-button>
             <hr>
             <p class="loginSignupLink">Don't have an account? <router-link to="/register">Register here</router-link></p>
+            <b-button class="siteButton" @click.enter="cookSet()">Set Cookies Checking</b-button>
+            <p>{{userDataDetails}}</p>
           </form>
           <ul class="errorListing" v-if="errors.length">
             <li v-bind:key="error.index" v-for="error in errors">{{ error }}</li> 
@@ -114,10 +116,14 @@ export default {
         dismissSecs: 5,
         dismissCountDown: 0,
         showDismissibleAlert: false,
-        is_admin:null
+        is_admin:null,
+        userDataDetails:$cookies.get('userdata')
     };
   },
   methods: {
+    cookSet(){
+      $cookies.set('userdata', {email:this.loginUserDetails.email,password:this.loginUserDetails.password},60 * 60 * 1);
+    },
     fatchUsers() {},
     loginUser() {
       
@@ -165,11 +171,10 @@ export default {
               }, 100)
               setTimeout(() => { 
                 if(this.is_admin == 1){
-                   alert('userType'+this.is_admin);
+                    alert('userType'+this.is_admin);
                     this.$router.push('dashboard')
                 }
                 else if(this.is_admin == 2) {
-                    alert('not right');
                     this.$router.push('userDashboard')
                 }
                 else {
