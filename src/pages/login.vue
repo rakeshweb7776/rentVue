@@ -153,9 +153,10 @@ export default {
               console.log(response.data.userId);
               this.loginUserAlert = response.data.message;              
               let is_admin = response.data.userType;
-              
-              $cookies.set('user_session', response.data.userId,60 * 60 * 1);
-              $cookies.set('user_type', response.data.userType,60 * 60 * 1);
+              sessionStorage.setItem("user_session", response.data.userId);
+              sessionStorage.setItem("user_type", response.data.userType);
+              //$cookies.set('user_session', response.data.userId,60 * 60 * 1);
+              //$cookies.set('user_type', response.data.userType,60 * 60 * 1);
 
               setTimeout(() => {
                 this.isActiveLoader = false;

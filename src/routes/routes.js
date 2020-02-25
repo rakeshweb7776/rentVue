@@ -114,12 +114,12 @@ let router = new VueRouter({
 
   router.beforeEach((to, from, next) => { 
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      if($cookies.get('user_session') == null){
+      if(sessionStorage.getItem("user_session") == null){
         /* If User Not Logged In */
         next({ name: 'Login'})
       } else {        
         /* If User Logged In */
-        let user = $cookies.get('user_session')        
+        let user = sessionStorage.getItem("user_session")       
         if(to.matched.some(record => record.meta.is_admin)) {
             if(user == 1){
                 /* If Admin Logged In */
@@ -133,7 +133,7 @@ let router = new VueRouter({
         }
       }
     }else if(to.matched.some(record => record.meta.guest)) {
-        if($cookies.get('user_session') == null){
+        if(sessionStorage.getItem("user_session") == null){
             next()
         }
         else{
