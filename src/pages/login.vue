@@ -121,9 +121,7 @@ export default {
     };
   },
   methods: {
-    cookSet(){
-      $cookies.set('userdata', {email:this.loginUserDetails.email,password:this.loginUserDetails.password},60 * 60 * 1);
-    },
+    
     fatchUsers() {},
     loginUser() {
       
@@ -158,6 +156,7 @@ export default {
             }else {
               console.log(response);
               console.log(response.data.userId);
+              $cookies.set('userdata', {userID:response.data.userId},60 * 60 * 1);
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
               
