@@ -165,7 +165,7 @@ export default {
               }, 100)
               setTimeout(() => { 
                 if(this.is_admin == 1){
-                  console.log('userType'+this.is_admin);
+                   alert('userType'+this.is_admin);
                     this.$router.push('dashboard')
                 }
                 else if(this.is_admin == 2) {
