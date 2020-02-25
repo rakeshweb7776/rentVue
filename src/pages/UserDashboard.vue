@@ -3,7 +3,7 @@
         <b-row class="mt-3">
             <b-col>
                 <b-card class="p-1">  
-                    <h3>Rent Recoards</h3>  
+                    <h3>Rent Recoards {{loggedUserDAtaID}}</h3>  
                     <b-alert class="m-0" show variant="info" v-if="!rentRecordListStatus > 0">{{ noRentMessage }}</b-alert>
                     <b-table-simple responsive bordered striped hover class="m-0" v-if="rentRecordListStatus > 0">
                         <b-thead>
@@ -62,6 +62,7 @@ export default {
     props:["loggedUserMainDataForContent"],
     data(){
         return {
+            loggedUserDAtaID:window.$cookies.get('user_session'),
             rentRecords:[],
             rentRecordListStatus:null,
             noRentMessage:null
