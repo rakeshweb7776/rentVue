@@ -119,9 +119,9 @@ let router = new VueRouter({
         next({ name: 'Login'})
       } else {        
         /* If User Logged In */
-        let user = $cookies.get('user_session')        
+        /* let user = $cookies.get('user_session') */
         if(to.matched.some(record => record.meta.is_admin)) {
-            if(user == 1){
+            if($cookies.get('user_session') == 1){
                 /* If Admin Logged In */
                 next()
             }
