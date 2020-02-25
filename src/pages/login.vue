@@ -124,6 +124,7 @@ export default {
   },
   methods: {
     cookSet(loginUserID){
+      alert(loginUserID);
       $cookies.set('userdata', {userID:loginUserID},60 * 60 * 1);
     },
     fatchUsers() {
