@@ -17,7 +17,7 @@ import BootstrapVue from 'bootstrap-vue'
 window.axios = axios;
 window.swal = swal;
 window.$cookies = cookies;
-Vue.prototype.$axios = axios;
+window.$axios = axios;
 
 /* app.js */
 import 'bootstrap/dist/css/bootstrap.css'

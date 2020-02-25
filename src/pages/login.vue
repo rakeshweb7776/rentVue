@@ -143,7 +143,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
-        axios.post("https://codingkloud.com/rentVue/loginUserApi.php", {
+        $axios.post("https://codingkloud.com/rentVue/loginUserApi.php", {
             email: this.loginUserDetails.email,
             password: this.loginUserDetails.password,
             action: "loginNewUser" 
