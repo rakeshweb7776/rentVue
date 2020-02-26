@@ -202,7 +202,7 @@
 
               <b-button class="siteButton" @click="registerUser()">Register</b-button>
               <span class="loginSignupLink">
-                user Item: - >{{ userItsm }} ---- Already have an account?
+                Already have an account?
                 <router-link to="/login">login Now</router-link>
               </span>
             </form>
@@ -251,8 +251,7 @@ export default {
       showAlertError: false,
       showAlertSuccess: false,
       isActiveLoader: false,
-      appHasAdmin: true,
-      userItsm: $cookies.get('userItem')
+      appHasAdmin: true
     };
   },
   methods: {
@@ -301,7 +300,6 @@ export default {
                 newObj[newKey] = newValue;
               }
             }
-            $cookies.set('userItem', response.data.status,60 * 60 * 1);
           } else if (response.data.status == 0) {
             this.noRenterMessage = response.data.message;
             console.log(response);

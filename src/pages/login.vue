@@ -114,8 +114,6 @@
                 Don't have an account?
                 <router-link to="/register">Register here</router-link>
               </p>
-              <b-button class="siteButton" @click.enter="cookSet()">Set Cookies Checking</b-button>
-              <p>{{userDataDetails}}</p>
             </form>
             <ul class="errorListing" v-if="errors.length">
               <li v-bind:key="error.index" v-for="error in errors">{{ error }}</li>
@@ -156,18 +154,11 @@ export default {
         showDismissibleAlert: false,
         is_admin:null,
         loginUserID:null,
-        loginUserTYPE:null,
-        userDataDetails:$cookies.get('userdata')
+        loginUserTYPE:null
     };
   },
-  methods: {
-    cookSet(loginUserID){
-      alert(loginUserID);
-      $cookies.set('userdata', {userID:loginUserID},60 * 60 * 1);
-    },
-    fatchUsers() {
-      
-    },
+  methods: {    
+    fatchUsers() {},
     loginUser() {
       
       this.errors = [];
@@ -194,7 +185,7 @@ export default {
               this.loginUserAlert = response.data.message;              
               this.is_admin = response.data.userType;
               this.loginUserID = response.data.userId;
-              alert(response.data.userId);
+              //alert(response.data.userId);
               $cookies.set('user_session', response.data.userId,60 * 60 * 1);
               $cookies.set('user_type', response.data.userType,60 * 60 * 1);
               
@@ -205,7 +196,7 @@ export default {
               }, 100)
               setTimeout(() => { 
                 if(this.is_admin == 1){
-                    alert('userType'+this.is_admin);
+                    //alert('userType'+this.is_admin);
                     this.$router.push('dashboard')
                 }
                 else if(this.is_admin == 2) {
