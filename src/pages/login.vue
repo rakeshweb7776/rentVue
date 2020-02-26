@@ -143,7 +143,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
-        this.$http.post("https://codingkloud.com/rentVue/loginUserApi.php", {
+        axios.post("https://codingkloud.com/rentVue/loginUserApi.php", {
             email: this.loginUserDetails.email,
             password: this.loginUserDetails.password,
             action: "loginNewUser" 
@@ -202,7 +202,7 @@ export default {
               this.loginUserDetails.email = "",
               this.loginUserDetails.password = ""
             }, 1000)
-          });
+          });    
       }
     },
     hideErrorAlert(){
