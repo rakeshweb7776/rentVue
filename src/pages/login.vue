@@ -160,7 +160,7 @@ export default {
                   this.loginUserDetails.email = ""
                   this.loginUserDetails.password = ""
                 }, 100)
-            }else {
+           } else if (response.data.status == 1) {
              
               console.log(response);
               console.log(response.data.userId);
@@ -189,7 +189,7 @@ export default {
                     this.$router.push('waterCalculation')
                 }
               }, 1200)
-            }          
+            }           
           }).catch(error => {
             this.loginUserAlert = "Registration fail due to server error";       
             setTimeout(() => {
@@ -202,7 +202,12 @@ export default {
               this.loginUserDetails.email = "",
               this.loginUserDetails.password = ""
             }, 1000)
-          });        
+          });  
+          axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+              this.response = result.data;
+          }, error => {
+              console.error(error);
+          });      
       }
     },
     hideErrorAlert(){
