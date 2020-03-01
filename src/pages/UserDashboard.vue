@@ -8,7 +8,7 @@
                     <b-table-simple responsive bordered striped hover class="m-0" v-if="rentRecordListStatus > 0">
                         <b-thead>
                             <b-tr>                              
-                                <b-th colspan="8"  class="p-2">
+                                <b-th colspan="9"  class="p-2">
                                     <b-form-group class="m-0">
                                         <b-form-input type="text" placeholder="Search" size="md"></b-form-input>                                         
                                     </b-form-group>
@@ -23,6 +23,7 @@
                                 <b-th>Water Charge</b-th>
                                 <b-th>Base Rent</b-th>
                                 <b-th>Total Rent</b-th>
+                                <b-th>Status</b-th>
                             </b-tr>
                         </b-thead>
                         <b-tbody>
@@ -35,11 +36,15 @@
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.water_charge }} /-</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.rent }} /-</b-td>
                                 <b-td><span class="pinkColor bold">&#8377;</span> {{ item.total_rent }} /-</b-td>
+                                <b-td>
+                                    <span v-if="item.status == 0" class="redColor bold">Pending</span>
+                                    <span v-if="item.status == 1" class="greenColor bold">Diposited</span>
+                                </b-td>                                
                             </b-tr>
                         </b-tbody>
                         <b-tfoot>
                             <b-tr>
-                                <b-td colspan="8"><span class="pink bold">Total Rent : <span class="pinkColor bold">&#8377;</span> {{ totalRent }} /-</span></b-td>
+                                <b-td colspan="9"><span class="pink bold">Total Rent : <span class="pinkColor bold">&#8377;</span> {{ totalRent }} /-</span></b-td>
                             </b-tr>
                         </b-tfoot>
                     </b-table-simple>
@@ -124,7 +129,9 @@ export default {
         totalRent: function () {
             let sum = 0;
             this.rentRecord.forEach(function(item) {
-                sum += (parseFloat(item.total_rent));
+                if (item.status == 0) {
+                    sum += (parseFloat(item.total_rent));
+                }
             });
             return sum;
         },
