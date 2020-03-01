@@ -15,7 +15,7 @@
             bordered
             striped
             hover
-            class="m-0"
+            class="m-0 recordsTable responsiveTable"
             v-if="rentRecordListStatus > 0"
           >
             <b-thead>

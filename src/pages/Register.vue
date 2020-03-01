@@ -64,7 +64,7 @@
           <b-col cols="12">
             <form>
               <b-row>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.firstName"
@@ -75,7 +75,7 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.lastName"
@@ -88,7 +88,7 @@
                 </b-col>
               </b-row>
               <b-row>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.email"
@@ -99,7 +99,7 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.phone"
@@ -122,7 +122,7 @@
                 ></b-form-input>
               </b-form-group>
               <b-row v-if="!appHasAdmin">
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-select
                       v-model="registerDetails.selectedFlat"
@@ -137,7 +137,7 @@
                     </b-form-select>
                   </b-form-group>
                 </b-col>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.meterStart"
@@ -149,7 +149,7 @@
                 </b-col>
               </b-row>
               <b-row>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.password"
@@ -159,7 +159,7 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.confirmPassword"
@@ -172,7 +172,7 @@
                 </b-col>
               </b-row>
               <b-row v-if="!appHasAdmin">
-                <b-col cols="6">
+               <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-checkbox
                       id="checkbox-1"
@@ -187,7 +187,7 @@
                 </b-col>
               </b-row>
               <b-row v-if="!appHasAdmin && adv_status == 'adv_accepted'">
-                <b-col cols="6">
+                <b-col sm="6" xs="12">
                   <b-form-group>
                     <b-form-input
                       v-model="registerDetails.advPayment"
@@ -221,6 +221,7 @@
 .fade-leave-to {
   opacity: 0;
 }
+
 </style>
 
 <script>
@@ -365,8 +366,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
-        axios
-          .post("https://codingkloud.com/rentVue/registerUserApi.php", {
+        axios.post("https://codingkloud.com/rentVue/registerUserApi.php", {
             firstName: this.registerDetails.firstName,
             lastName: this.registerDetails.lastName,
             email: this.registerDetails.email,

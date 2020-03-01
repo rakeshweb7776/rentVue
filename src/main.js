@@ -2,8 +2,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
-//import VueResource from 'vue-resource'
 import cookies from 'vue-cookies'
 import swal from 'sweetalert';
 import VueMask from 'v-mask'
@@ -17,7 +15,6 @@ import BootstrapVue from 'bootstrap-vue'
 window.axios = axios;
 window.swal = swal;
 window.$cookies = cookies;
-window.$axios = axios;
 
 /* app.js */
 import 'bootstrap/dist/css/bootstrap.css'
@@ -37,10 +34,8 @@ window.VueMask = VueMask;
 window.Vue2Filters = Vue2Filters;
 /* Vue Use Code */
 Vue.use(DashboardCss)
-//Vue.use(VueResource)
 
 Vue.use(BootstrapVue)
-Vue.use(VueAxios, axios)
 Vue.use(cookies)
 Vue.use(VueMask)
 Vue.use(Vue2Filters)

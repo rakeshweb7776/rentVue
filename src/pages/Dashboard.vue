@@ -30,11 +30,11 @@
           </b-card-body>
 
           <b-card-body class="p-0 mt-3">
-            <b-button
-              class="siteButton mr-2 pt-1 pb-1"
+            <b-button              
+              class="siteButton mr-2 mb-2 pt-1 pb-1"
               @click.enter="addRentModal(item.id)"
             >Add Rent</b-button>
-            <router-link v-bind:to="'/rentRecords/' + item.id" class="siteButton btn btn-secondary pt-1 pb-1">
+            <router-link v-bind:to="'/rentRecords/' + item.id" class="siteButton  mb-2 btn btn-secondary pt-1 pb-1">
               <span>View Records</span>
             </router-link>
           </b-card-body>
@@ -107,7 +107,7 @@
               <b-col cols="12">
                 <form>
                   <b-row>
-                    <b-col cols="6">
+                    <b-col sm="6" xs="12">
                       <b-form-group label="Last Month Reading">
                         <b-form-input
                           placeholder="BMR"
@@ -119,7 +119,7 @@
                         ></b-form-input>
                       </b-form-group>
                     </b-col>
-                    <b-col cols="6">
+                    <b-col sm="6" xs="12">
                       <b-form-group label="Current Month Reading">
                         <b-form-input
                           placeholder="CMR"
@@ -132,7 +132,7 @@
                     </b-col>
                   </b-row>
                   <b-row>
-                    <b-col cols="6">
+                    <b-col sm="6" xs="12">
                       <b-form-group label="Base Rent">
                         <b-form-input
                           placeholder="Rent"
@@ -144,7 +144,7 @@
                         ></b-form-input>
                       </b-form-group>
                     </b-col>
-                    <b-col cols="6">
+                    <b-col sm="6" xs="12">
                       <b-form-group label="Water Charges">
                         <b-form-input
                           placeholder="Water Charges"

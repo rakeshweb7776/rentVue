@@ -4,7 +4,7 @@
             <b-col>
                 <b-card class="p-1">  
                     <h3>Renters</h3>    
-                    <b-table-simple responsive bordered striped hover class="m-0">
+                    <b-table-simple responsive bordered striped hover class="m-0 renterTable responsiveTable">
                         <b-thead>
                             <b-tr>                              
                                 <b-th colspan="6"  class="p-2">
@@ -87,24 +87,24 @@
                             <b-col cols="12">
                                 <form>
                                     <b-row>        
-                                        <b-col cols="6">
+                                         <b-col sm="6" xs="12">
                                             <b-form-group>
                                                 <b-form-input v-model="editedUser.firstName" placeholder="First Name" id="firstName" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
-                                        <b-col cols="6">
+                                         <b-col sm="6" xs="12">
                                             <b-form-group>
                                                 <b-form-input v-model="editedUser.lastName" placeholder="Last Name" id="lastName" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
                                     </b-row>  
                                     <b-row>
-                                        <b-col cols="6">
+                                         <b-col sm="6" xs="12">
                                             <b-form-group>
                                                 <b-form-input v-model="editedUser.phone" v-mask="'###-###-####'" placeholder="Phone Number" type="text" size="md"></b-form-input>
                                             </b-form-group>
                                         </b-col>
-                                        <b-col cols="6">
+                                         <b-col sm="6" xs="12">
                                             <b-form-group>
                                                 <b-form-input v-model="editedUser.aadhar" v-mask="'####-####-####'" placeholder="Aadhar Number" id="aadhar" type="email" size="md"></b-form-input>
                                             </b-form-group>
