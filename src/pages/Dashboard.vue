@@ -212,8 +212,9 @@ export default {
       // backMonthReadingValueStatus:false,
       firstTimeUserStartReading: null,
       water_charge_temp_store: null,
-      user7DataReading: null,
-      user8DataReading: null
+      user7DataReading: 0,
+      user8DataReading: 0,
+      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear()
     };
   },
   methods: {
@@ -287,6 +288,7 @@ export default {
     fatchUser7AndUser8Data() {
       axios
         .post("https://codingkloud.com/rentVue/addRentApi.php", {
+          currentMonth:this.currentMonth,
           action: "getUser7AndUser8Data"
         })
         .then(response => {
@@ -295,16 +297,19 @@ export default {
             this.user7AndUser8Data = response.data.records;
             if (this.user7AndUser8Data.length) {
               for (var i = 0; i < this.user7AndUser8Data.length; i++) {
-                if (this.user7AndUser8Data[i].renter_id == 7) {
-                  this.user7DataReading = this.user7AndUser8Data[i].meter_reading;
+                
+
+                if (parseInt(this.user7AndUser8Data[i].renter_id) == 8) {
+                  this.user8DataReading = parseInt(this.user7AndUser8Data[i].meter_reading);
                 } else {
-                  console.log("no 7 data");
+                  //console.log("no 8 data");
                 }
-                if (this.user7AndUser8Data[i].renter_id == 8) {
-                  this.user8DataReading = this.user7AndUser8Data[i].meter_reading;
+                if (parseInt(this.user7AndUser8Data[i].renter_id) == 7) {
+                  this.user7DataReading = parseInt(this.user7AndUser8Data[i].meter_reading);
                 } else {
-                  console.log("no 8 data");
+                  //console.log("no 7 data");
                 }
+                
               }
             }
           }
@@ -377,16 +382,12 @@ export default {
       }
 
       if (this.renterData.renter_id == 9) {
-        if (this.user7DataReading == null) {
+        if (this.user7DataReading <= 0) {
           this.errors.push("Please submit 7 Number Rent.");
-        } else {
-          this.errors = [];
-        }
-        if (this.user8DataReading == null) {
+        } 
+        if (this.user8DataReading <= 0) {
           this.errors.push("Please submit 8 Number Rent.");
-        } else {
-          this.errors = [];
-        }
+        } 
       }
 
       if (!this.errors.length) {
