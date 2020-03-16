@@ -11,6 +11,7 @@ import Register from '@/pages/Register.vue'
 import FlatList from '@/pages/FlatList.vue'
 import Renters from '@/pages/Renters.vue'
 import WaterCalculation from '@/pages/WaterCalculation.vue'
+import LightBillCalculation from '@/pages/LightBillCalculation.vue'
 import RentRecords from '@/pages/RentRecords.vue'
 import Chat from '@/pages/chat.vue'
 
@@ -59,7 +60,8 @@ let router = new VueRouter({
                 name: "UserDashboard",
                 component: UserDashboard,
                 meta:{
-                    requiresAuth:true
+                    requiresAuth:true,
+                    is_admin : true
                 }
             },   
             {
@@ -84,6 +86,15 @@ let router = new VueRouter({
                 path: "waterCalculation",
                 name: "WaterCalculation",
                 component: WaterCalculation,
+                meta:{
+                    requiresAuth:true,
+                    is_admin : true
+                }
+            },
+            {
+                path: "lightBillCalculation",
+                name: "LightBillCalculation",
+                component: LightBillCalculation,
                 meta:{
                     requiresAuth:true,
                     is_admin : true
@@ -126,7 +137,6 @@ let router = new VueRouter({
                 next()
             }
             else{
-                alert('access 1');
                 next({ name: 'UserDashboard'})
             }
         }else {

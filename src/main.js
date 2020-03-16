@@ -6,10 +6,6 @@ import cookies from 'vue-cookies'
 import swal from 'sweetalert';
 import VueMask from 'v-mask'
 import Vue2Filters from 'vue2-filters'
-
-
-
-
 import BootstrapVue from 'bootstrap-vue'
 
 window.axios = axios;
@@ -59,6 +55,25 @@ Vue.filter('capitalize', function (value) {
   value = value.toString()
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
+
+// import { Bar, Line } from 'vue-chartjs'
+// Vue.component('line-chart', {
+//   extends: Line,
+//   mounted () {
+//     this.renderChart({
+//       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+//       datasets: [
+//         {
+//           label: 'GitHub Commits',
+//           backgroundColor: '#f87979',
+//           data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+//         }
+//       ]
+//     }, {responsive: true, maintainAspectRatio: false})
+//   }
+  
+// })
+
 
 
 

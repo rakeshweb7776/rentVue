@@ -1,5 +1,25 @@
 <template>
   <div>
+    <b-row style="display:none">
+      <b-col sm="6">
+         <monthly-income :barMonthNames='lightBillMonthName' :barMonthData='lightBillMonthData'></monthly-income>
+      </b-col>
+      <b-col sm="6">
+        <VueSlideBar
+          v-model="slider.value"
+          :data="slider.data"
+          :range="slider.range"
+          :labelStyles="{ color: '#4a4a4a', backgroundColor: '#4a4a4a' }"
+          :processStyle="{ backgroundColor: '#000000' }"
+          @callbackRange="callbackRange">
+          <template slot="tooltip" slot-scope="tooltip">
+            <img src="static/images/rectangle-slider.svg">
+          </template>
+        </VueSlideBar>
+        <h2>Value: {{slider.value}}</h2>
+        <h2>Label: {{rangeValue.label}}</h2>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col class="mb-3" sm="4" v-bind:key="item.index" v-for="item in users">
         <b-card class="p-0">
@@ -183,15 +203,38 @@
 </style>
 
 <script>
+import VueSlideBar from 'vue-slide-bar'
+import MonthlyIncome from '@/pages/chart.vue'
 export default {
+   components: {
+        MonthlyIncome,
+        VueSlideBar
+    },
   data() {
     return {
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
       user7AndUser8Data: [],
       waterList: [],
       errors: [],
       flats: [],
       flatsLength: "",
       users: [],
+      lightBillData:[],
+      lightBillMonthData:[],
+      lightBillMonthName:[],
       renterData: {
         renter_id: null,
         back_month_reading: null,
@@ -214,10 +257,46 @@ export default {
       water_charge_temp_store: null,
       user7DataReading: 0,
       user8DataReading: 0,
-      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear()
+      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear(),
+      rangeValue: {},
+      slider: {
+        value: 45,
+        data: [
+          100,
+          500,
+          1500,
+          2000,
+          2500,
+          3000
+        ],
+        range: [
+          {
+            label: '100'
+          },
+          {
+            label: '500',
+            // isHide: true
+          },
+          {
+            label: '1500'
+          },
+          {
+            label: '2000'
+          },
+          {
+            label: '2500'
+          },
+          {
+            label: '3000'
+          }
+        ]
+      }
     };
   },
   methods: {
+    callbackRange (val) {
+      this.rangeValue = val
+    },
     fatchFlats() {
       axios
         .post("https://codingkloud.com/rentVue/flatListApi.php", {
@@ -243,6 +322,30 @@ export default {
         .then(response => {
           console.log(response);
           this.users = response.data.users;
+        });
+    },
+    getRentRecordMonthWise() {
+      axios
+        .post("https://codingkloud.com/rentVue/addRentApi.php", {
+          action: "getRentRecordMonthWise"
+        })
+        .then(response => {
+           if (response.data.status == 1) {
+            console.log(response);            
+            this.lightBillData = response.data.records;   
+            
+            for(var i = 0; i < this.lightBillData.length;i++){    
+              this.lightBillMonthData.push(this.lightBillData[i].total_charges);
+            }
+            for (var i = 0; i < this.lightBillData.length; i++) {
+              var monthIndex = parseInt(this.lightBillData[i].month) - 1;
+              for(var j = 0; j < this.months.length; j++){
+                if (j == monthIndex) {                  
+                  this.lightBillMonthName.push(this.months[j]);
+                }
+              }
+            }    
+           }
         });
     },
     fatchWaterList() {
@@ -450,6 +553,7 @@ export default {
     this.fatchFlats();
     this.fatchUsers();
     this.fatchWaterList();
+    this.getRentRecordMonthWise();
   },
   beforeMount() {},
   mounted() {

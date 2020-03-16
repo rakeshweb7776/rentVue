@@ -9,7 +9,8 @@
                 <router-link to="/flatList"><i class="material-icons">list</i> <span>Flat List</span></router-link>  
                 <router-link to="/renters"><i class="material-icons">work_outline</i> <span>Renter List</span></router-link>  
                 <router-link to="/waterCalculation"><i class="material-icons">settings_applications</i> <span>Water Calculation</span></router-link> 
-                <!-- <router-link to="/chat"><i class="material-icons">chat</i> <span>Chat Box</span></router-link> -->
+                <router-link to="/lightBillCalculation"><i class="material-icons">settings_applications</i> <span>Light Bill Calculation</span></router-link> 
+                <router-link to="/chat"><i class="material-icons">chat</i> <span>Chat Box</span></router-link>
             </div>
             
             <div class="sideBarLinks" v-if="userType == 2">
@@ -25,9 +26,8 @@
             </div>
             <div class="sideBarLinks mt-3" v-if="userType == 2">
                 <router-link to="/userDashboard"><i class="material-icons">dashboard</i> <span>Dashboard</span></router-link>  
-                <!-- <router-link to="/chat"><i class="material-icons">chat</i> <span>Chat Box</span></router-link>            -->
+                <router-link to="/chat"><i class="material-icons">chat</i> <span>Chat Box</span></router-link>            
             </div>
-
         </div>
 </template>
 
