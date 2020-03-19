@@ -3,7 +3,7 @@
     <b-row>
       <b-col>
         <b-card class="p-1">
-          <h3>{{ renterName }} Rent Recoards</h3>
+          <h3>{{ renterName }} / Flat No.{{ copyRentRecord.roomNo  }} </h3>
           <b-alert
             class="m-0"
             show
@@ -124,6 +124,7 @@
           <h3>{{renterName}}</h3>
           <h4 class="mb-3">{{ copyRentRecord.monthName }} Rent Details</h4>
           <div class="copyRecord">
+            <p>Flat No : {{ copyRentRecord.roomNo }}</p>
             <p>Month: {{ copyRentRecord.monthName }}</p>
             <p>
               Meter Reading Start: {{ copyRentRecord.bmr }}
@@ -241,10 +242,8 @@ export default {
         .then(response => {
           if (response.data.status == 1) {
             console.log(response);
-            this.renterName =
-              response.data.records[0].firstName +
-              " " +
-              response.data.records[0].lastName;
+            this.renterName = response.data.records[0].firstName + " " + response.data.records[0].lastName;
+            this.copyRentRecord.roomNo = response.data.records[0].flatId;
           } else if (response.data.status == 0) {
             this.noRentMessage = response.data.message;
             console.log(response);
@@ -258,9 +257,7 @@ export default {
       this.copyRentRecord.monthName = this.rentRecord[recordID].monthName;
       this.copyRentRecord.bmr = this.rentRecord[recordID].back_month_reading;
       this.copyRentRecord.cmr = this.rentRecord[recordID].current_month_reading;
-      this.copyRentRecord.meter_reading = this.rentRecord[
-        recordID
-      ].meter_reading;
+      this.copyRentRecord.meter_reading = this.rentRecord[recordID].meter_reading;
       this.copyRentRecord.water_charge = this.rentRecord[recordID].water_charge;
       this.copyRentRecord.light_charge = this.rentRecord[recordID].light_charge;
       this.copyRentRecord.total_rent = this.rentRecord[recordID].total_rent;
@@ -272,6 +269,9 @@ export default {
         "%0a" +
         "Month: " +
         this.copyRentRecord.monthName +
+        "%0a" +
+        "Flat No: " +
+        this.copyRentRecord.roomNo +
         "%0a" +
         "Meter Reading Start: " +
         this.copyRentRecord.bmr +
