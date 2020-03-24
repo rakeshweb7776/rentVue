@@ -75,7 +75,7 @@ export default {
     },
     methods:{
         getRentsRecords(){
-            axios.get('https://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records='+this.loggedUserMainDataForContent.userID).then((response) => {
+            axios.get('http://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records='+this.loggedUserMainDataForContent.userID).then((response) => {
                 if(response.data.status == 1){
                     console.log(response);   
                     this.rentRecord = response.data.records;
@@ -96,7 +96,7 @@ export default {
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                axios.post('https://codingkloud.com/rentVue/users.php',{
+                axios.post('http://codingkloud.com/rentVue/users.php',{
                     editedUserId:this.editedUserId,
                     firstName:this.editedUser.firstName,
                     lastName:this.editedUser.lastName,

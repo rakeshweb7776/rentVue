@@ -8,7 +8,7 @@
 
                         <div class="chatUser" v-bind:key="item.index" v-for="item in users" v-bind:data-id="item.id" v-on:click="makeActive(item.id)">
                             <div class="chatUserIcon">
-                                <img src="https://www.duffyduffylaw.com/wp-content/uploads/2018/05/user-placeholder.jpg">
+                                <img src="http://www.duffyduffylaw.com/wp-content/uploads/2018/05/user-placeholder.jpg">
                             </div>
                             <div class="chatUserDetails">
                                 <h3>{{ item.firstName + ' ' + item.lastName }}</h3>
@@ -110,7 +110,7 @@ export default {
             this.sendChatEntry.senderId = this.loggedUserMainDataForContent.userID;
         },
         sendChatMessage(){
-            axios.post('https://codingkloud.com/rentVue/chatApi.php',{
+            axios.post('http://codingkloud.com/rentVue/chatApi.php',{
                 senderId: this.sendChatEntry.senderId,
                 recipientId: this.sendChatEntry.recipientId,
                 text: this.sendChatEntry.text,
@@ -133,7 +133,7 @@ export default {
             if(this.loggedUserMainDataForContent.userType == 2 ){
                 this.getChatData.recipientId = this.loggedUserMainDataForContent.userID;
             }
-            axios.get('https://codingkloud.com/rentVue/chatApi.php?action=fetchChating&senderId='+this.getChatData.senderId+'&recipientId='+this.getChatData.recipientId).then((response) => {
+            axios.get('http://codingkloud.com/rentVue/chatApi.php?action=fetchChating&senderId='+this.getChatData.senderId+'&recipientId='+this.getChatData.recipientId).then((response) => {
                 console.log(response);
                 this.chatingData = response.data.chat;
             }).catch(error => {
@@ -141,7 +141,7 @@ export default {
             });
         },
         fatchUsers(){
-            axios.post('https://codingkloud.com/rentVue/users.php',{
+            axios.post('http://codingkloud.com/rentVue/users.php',{
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
@@ -149,7 +149,7 @@ export default {
             });
         },
         fatchCkData(){
-            axios.get('https://codingkart-d70b0.firebaseio.com/characters.json').then((response) => {
+            axios.get('http://codingkart-d70b0.firebaseio.com/characters.json').then((response) => {
                 console.log(response);     
                 this.ckData = response.data;           
             });

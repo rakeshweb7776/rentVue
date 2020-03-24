@@ -15,7 +15,7 @@
             
             <div class="sideBarLinks" v-if="userType == 2">
                 <div class="userProfilePick">
-                    <img src="https://www.duffyduffylaw.com/wp-content/uploads/2018/05/user-placeholder.jpg">                   
+                    <img src="http://www.duffyduffylaw.com/wp-content/uploads/2018/05/user-placeholder.jpg">                   
                 </div>
                 <div class="userDetails">
                     <h3>{{ loggedUserMainData.userName }}</h3>

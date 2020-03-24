@@ -178,7 +178,7 @@ export default {
     },
     methods:{
         fatchUsers(){
-            axios.post('https://codingkloud.com/rentVue/users.php',{
+            axios.post('http://codingkloud.com/rentVue/users.php',{
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
@@ -187,7 +187,7 @@ export default {
         },
         fatchFlats(){
             /* Get Flat Data For Form Options */
-            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
+            axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
             action: "listAvailableFlats"
             }).then((response) => {
                 if(response.data.status == 1){
@@ -216,19 +216,19 @@ export default {
             this.delUserId = delUser;
             this.deletedUserFlatId = delFlatID;
             /* Update Data Using API */ 
-            axios.post('https://codingkloud.com/rentVue/users.php',{
+            axios.post('http://codingkloud.com/rentVue/users.php',{
                 deleteIdData:this.delUserId,
                 action: "deleteUser"
             }).then((response) => {
                 console.log(response);
             });
-            axios.post('https://codingkloud.com/rentVue/flatListApi.php',{
+            axios.post('http://codingkloud.com/rentVue/flatListApi.php',{
                 deletedUserFlatId:this.deletedUserFlatId,
                 action: "updateFlatstatus"
             }).then((response) => {
                 console.log(response);
             });
-            axios.post('https://codingkloud.com/rentVue/addRentApi.php',{
+            axios.post('http://codingkloud.com/rentVue/addRentApi.php',{
                 deleteIdData:this.delUserId,
                 action: "removeDeletedUserRecords"
             }).then((response) => {
@@ -252,7 +252,7 @@ export default {
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                axios.post('https://codingkloud.com/rentVue/users.php',{
+                axios.post('http://codingkloud.com/rentVue/users.php',{
                     editedUserId:this.editedUserId,
                     firstName:this.editedUser.firstName,
                     lastName:this.editedUser.lastName,

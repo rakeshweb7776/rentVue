@@ -299,7 +299,7 @@ export default {
     },
     fatchFlats() {
       axios
-        .post("https://codingkloud.com/rentVue/flatListApi.php", {
+        .post("http://codingkloud.com/rentVue/flatListApi.php", {
           action: "listFlats"
         })
         .then(response => {
@@ -316,7 +316,7 @@ export default {
     },
     fatchUsers() {
       axios
-        .post("https://codingkloud.com/rentVue/users.php", {
+        .post("http://codingkloud.com/rentVue/users.php", {
           action: "listUsers"
         })
         .then(response => {
@@ -326,7 +326,7 @@ export default {
     },
     getRentRecordMonthWise() {
       axios
-        .post("https://codingkloud.com/rentVue/addRentApi.php", {
+        .post("http://codingkloud.com/rentVue/addRentApi.php", {
           action: "getRentRecordMonthWise"
         })
         .then(response => {
@@ -350,7 +350,7 @@ export default {
     },
     fatchWaterList() {
       axios
-        .post("https://codingkloud.com/rentVue/waterCalculationApi.php", {
+        .post("http://codingkloud.com/rentVue/waterCalculationApi.php", {
           action: "getWaterList"
         })
         .then(response => {
@@ -370,9 +370,8 @@ export default {
         });
     },
     fatchBackMonthReading() {
-      axios
-        .get(
-          "https://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records=" +
+      axios.get(
+          "http://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records=" +
             this.renterData.renter_id
         )
         .then(response => {
@@ -390,7 +389,7 @@ export default {
     },
     fatchUser7AndUser8Data() {
       axios
-        .post("https://codingkloud.com/rentVue/addRentApi.php", {
+        .post("http://codingkloud.com/rentVue/addRentApi.php", {
           currentMonth:this.currentMonth,
           action: "getUser7AndUser8Data"
         })
@@ -496,7 +495,7 @@ export default {
       if (!this.errors.length) {
         this.isActiveLoader = true;
         axios
-          .post("https://codingkloud.com/rentVue/addRentApi.php", {
+          .post("http://codingkloud.com/rentVue/addRentApi.php", {
             renter_id: this.renterData.renter_id,
             back_month_reading: this.renterData.back_month_reading,
             current_month_reading: this.renterData.current_month_reading,
