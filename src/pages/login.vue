@@ -204,7 +204,7 @@ export default {
                 }
                 else {
                     this.$router.push('waterCalculation')
-                }
+                } 
               }, 1200)
             } else if (response.data.status == 0) {
               this.loginUserAlert = response.data.message;
