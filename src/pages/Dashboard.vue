@@ -1,23 +1,8 @@
 <template>
   <div>
-    <b-row style="display:none">
+    <b-row>
       <b-col sm="6">
          <monthly-income :barMonthNames='lightBillMonthName' :barMonthData='lightBillMonthData'></monthly-income>
-      </b-col>
-      <b-col sm="6">
-        <VueSlideBar
-          v-model="slider.value"
-          :data="slider.data"
-          :range="slider.range"
-          :labelStyles="{ color: '#4a4a4a', backgroundColor: '#4a4a4a' }"
-          :processStyle="{ backgroundColor: '#000000' }"
-          @callbackRange="callbackRange">
-          <template slot="tooltip" slot-scope="tooltip">
-            <img src="static/images/rectangle-slider.svg">
-          </template>
-        </VueSlideBar>
-        <h2>Value: {{slider.value}}</h2>
-        <h2>Label: {{rangeValue.label}}</h2>
       </b-col>
     </b-row>
     <b-row>
@@ -371,7 +356,7 @@ export default {
     },
     fatchBackMonthReading() {
       axios.get(
-          "http://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records=" +
+          "http://codingkloud.com/rentVue/addRentApi.php?action=fatchBackMonthReading&records=" +
             this.renterData.renter_id
         )
         .then(response => {
