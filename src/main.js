@@ -24,7 +24,7 @@ import router from './routes/routes'
 
 window.router = router;
 window.swal = swal;
-window.httpBase='https';
+window.httpBase = "https";
 
 window.Vue = Vue;
 window.VueMask = VueMask;
