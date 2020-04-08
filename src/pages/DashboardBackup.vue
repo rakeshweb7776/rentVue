@@ -308,7 +308,7 @@ export default {
         },
         updateUser(){ 
             /* Update Data Using API */ 
-            axios.post('http://localhost/vueApis/tempUsers.php',{
+            axios.post(httpBase+'://localhost/vueApis/tempUsers.php',{
                 user_id:this.editedUserId,
                 name:this.editedUser.name,
                 phone:this.editedUser.phone,
@@ -329,7 +329,7 @@ export default {
         deleteUser(delUser) {
             this.delUserId = delUser;
             /* Update Data Using API */ 
-            axios.post('http://localhost/vueApis/tempUsers.php',{
+            axios.post(httpBase+'://localhost/vueApis/tempUsers.php',{
                 deleteIdData:this.delUserId,
                 action: "deleteUser"
             }).then((response) => {

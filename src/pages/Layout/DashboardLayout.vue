@@ -47,7 +47,7 @@ export default {
       this.loggedInUserId = $cookies.get('user_session');  
       this.loggedInUserType = $cookies.get('user_type');
 
-      axios.post('http://codingkloud.com/rentVue/users.php',{
+      axios.post(httpBase+'://codingkloud.com/rentVue/users.php',{
         loggedInUserId: this.loggedInUserId,
         action: "getLoggedUser"
       }).then((response) => {

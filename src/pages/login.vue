@@ -154,8 +154,7 @@ export default {
         showDismissibleAlert: false,
         is_admin:null,
         loginUserID:null,
-        loginUserTYPE:null,
-        httpBase:'https'
+        loginUserTYPE:null
     };
   },
   methods: {    
@@ -173,7 +172,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;         
-        axios.post(this.httpBase+"://codingkloud.com/rentVue/loginUserApi.php", {
+        axios.post(httpBase+"://codingkloud.com/rentVue/loginUserApi.php", {
             email: this.loginUserDetails.email,
             password: this.loginUserDetails.password,
             action: "loginNewUser" 

@@ -203,8 +203,7 @@ export default {
   methods: {
     getRentsRecords() {
       axios
-        .get(
-          "http://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records=" +
+        .get(httpBase+"://codingkloud.com/rentVue/addRentApi.php?action=getRentRecords&records=" +
             this.userId
         )
         .then(response => {
@@ -235,8 +234,7 @@ export default {
         });
 
       axios
-        .get(
-          "http://codingkloud.com/rentVue/addRentApi.php?action=getUserNameRecords&records=" +
+        .get(httpBase+"://codingkloud.com/rentVue/addRentApi.php?action=getUserNameRecords&records=" +
             this.userId
         )
         .then(response => {
@@ -292,7 +290,7 @@ export default {
     },
     dipositedStatus(recordID) {
       axios
-        .post("http://codingkloud.com/rentVue/addRentApi.php", {
+        .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
           rentRecordID: recordID,
           action: "updateDipositedRentRecordStatus"
         })
@@ -303,7 +301,7 @@ export default {
     },
     pendingStatus(recordID) {
       axios
-        .post("http://codingkloud.com/rentVue/addRentApi.php", {
+        .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
           rentRecordID: recordID,
           action: "updatePendingRentRecordStatus"
         })
