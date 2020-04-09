@@ -57,35 +57,7 @@
           </g>
         </svg>
       </div>
-      <div class="loginSuccessAnimate" v-show="showAlertSuccess">
-        <div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
-          <div
-            class="swal2-success-circular-line-left"
-            style="background-color: rgb(255, 255, 255);"
-          ></div>
-          <span class="swal2-success-line-tip"></span>
-          <span class="swal2-success-line-long"></span>
-          <div class="swal2-success-ring"></div>
-          <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
-          <div
-            class="swal2-success-circular-line-right"
-            style="background-color: rgb(255, 255, 255);"
-          ></div>
-        </div>
-        <h4 style="color:#a5dc86;text-align:center">{{ loginUserAlert }}</h4>
-      </div>
-      <transition name="fade" mode="out-in">
-        <div class="loginErrorAnimate" v-show="showAlertError">
-          <a class="errorCloseButton" style="color:#f27474;" @click="hideErrorAlert">Close</a>
-          <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;">
-            <span class="swal2-x-mark">
-              <span class="swal2-x-mark-line-left"></span>
-              <span class="swal2-x-mark-line-right"></span>
-            </span>
-          </div>
-          <h4 style="color:#f27474;text-align:center">{{ loginUserAlert }}</h4>
-        </div>
-      </transition>
+      
       <b-card>
         <h3 class="mb-3">Login</h3>
         <b-row>

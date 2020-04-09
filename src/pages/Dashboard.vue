@@ -1,10 +1,91 @@
 <template>
   <div>
-    <b-row>
-      <b-col sm="6">
-         <monthly-income :barMonthNames='lightBillMonthName' :barMonthData='lightBillMonthData'></monthly-income>
-      </b-col>
-    </b-row>
+    
+    <b-card-group deck class="mb-4" style="min-height:350px">
+      <b-card class="p-1">  
+        <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
+          <svg
+            width="100"
+            height="100"
+            viewBox="0 0 44 44"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#EF4B7C"
+          >
+            <g fill="none" fill-rule="evenodd" stroke-width="2">
+              <circle cx="22" cy="22" r="1">
+                <animate
+                  attributeName="r"
+                  begin="0s"
+                  dur="1.8s"
+                  values="1; 20"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.165, 0.84, 0.44, 1"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="stroke-opacity"
+                  begin="0s"
+                  dur="1.8s"
+                  values="1; 0"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.3, 0.61, 0.355, 1"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="22" cy="22" r="1">
+                <animate
+                  attributeName="r"
+                  begin="-0.9s"
+                  dur="1.8s"
+                  values="1; 20"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.165, 0.84, 0.44, 1"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="stroke-opacity"
+                  begin="-0.9s"
+                  dur="1.8s"
+                  values="1; 0"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.3, 0.61, 0.355, 1"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          </svg>
+        </div> 
+        <monthly-income :barMonthNames='lightBillMonthName' :barMonthData='lightBillMonthData' v-if="monthlyStatus"></monthly-income>
+      </b-card>
+      <b-card class="p-1">   
+        <b-table-simple responsive bordered striped hover class="m-0 flatTable responsiveTable"  v-if="flatListStatus > 0">
+          <b-thead>
+              <b-tr>
+                  <b-th>Id</b-th>                                
+                  <b-th>Flat Name</b-th>
+                  <b-th>Base Rent</b-th>
+                  <b-th>Status</b-th>
+              </b-tr>
+          </b-thead>
+          <b-tbody>
+              <b-tr v-bind:key="item.index" v-for="(item, index) in flats" :variant="item.status == 0 ? 'success' : 'diposited'">
+                  <b-td>{{ item.id }}</b-td>               
+                  <b-td>{{ item.flatName }}</b-td>
+                  <b-td><span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</b-td>
+                  <b-td>
+                    <span class="bold" style="color:red" v-if="item.status == 1">Not Available</span>
+                    <span class="bold" style="color:green" v-else>Available</span>
+                  </b-td>
+              </b-tr>
+          </b-tbody>
+        </b-table-simple>
+      </b-card>
+    </b-card-group>
+        
     <b-row>
       <b-col class="mb-3" sm="4" v-bind:key="item.index" v-for="item in users">
         <b-card class="p-0">
@@ -188,12 +269,10 @@
 </style>
 
 <script>
-import VueSlideBar from 'vue-slide-bar'
 import MonthlyIncome from '@/pages/chart.vue'
 export default {
    components: {
-        MonthlyIncome,
-        VueSlideBar
+        MonthlyIncome
     },
   data() {
     return {
@@ -211,6 +290,7 @@ export default {
         "November",
         "December"
       ],
+      monthlyStatus:false,
       user7AndUser8Data: [],
       waterList: [],
       errors: [],
@@ -242,40 +322,7 @@ export default {
       water_charge_temp_store: null,
       user7DataReading: 0,
       user8DataReading: 0,
-      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear(),
-      rangeValue: {},
-      slider: {
-        value: 45,
-        data: [
-          100,
-          500,
-          1500,
-          2000,
-          2500,
-          3000
-        ],
-        range: [
-          {
-            label: '100'
-          },
-          {
-            label: '500',
-            // isHide: true
-          },
-          {
-            label: '1500'
-          },
-          {
-            label: '2000'
-          },
-          {
-            label: '2500'
-          },
-          {
-            label: '3000'
-          }
-        ]
-      }
+      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear()
     };
   },
   methods: {
@@ -310,15 +357,15 @@ export default {
         });
     },
     getRentRecordMonthWise() {
+      this.isActiveLoader = true;
       axios
         .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
           action: "getRentRecordMonthWise"
         })
-        .then(response => {
-           if (response.data.status == 1) {
+        .then(response => {            
+            if (response.data.status == 1) {
             console.log(response);            
-            this.lightBillData = response.data.records;   
-            
+            this.lightBillData = response.data.records;            
             for(var i = 0; i < this.lightBillData.length;i++){    
               this.lightBillMonthData.push(this.lightBillData[i].total_charges);
             }
@@ -329,7 +376,11 @@ export default {
                   this.lightBillMonthName.push(this.months[j]);
                 }
               }
-            }    
+            }
+            this.monthlyStatus = true;
+            this.isActiveLoader = false;
+            /*setTimeout(() => {               
+            }, 1500);*/
            }
         });
     },
