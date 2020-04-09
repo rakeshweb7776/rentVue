@@ -100,7 +100,7 @@ export default {
     },
     methods:{
         fatchWaterList(){
-            axios.post('http://codingkloud.com/rentVue/waterCalculationApi.php',{
+            axios.post(httpBase+'://codingkloud.com/rentVue/waterCalculationApi.php',{
                 action: "getWaterList"
             }).then((response) => {
                 console.log(response);
@@ -130,7 +130,7 @@ export default {
 
             if (!this.errors.length) {
                 this.isLoaderActive = true; 
-                axios.post('http://codingkloud.com/rentVue/waterCalculationApi.php',{
+                axios.post(httpBase+'://codingkloud.com/rentVue/waterCalculationApi.php',{
                 currentMonth: this.waterCalculation.currentMonth,
                 bmr: this.waterCalculation.bmr,
                 cmr: this.waterCalculation.cmr,
