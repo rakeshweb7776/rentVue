@@ -110,7 +110,7 @@ export default {
             this.sendChatEntry.senderId = this.loggedUserMainDataForContent.userID;
         },
         sendChatMessage(){
-            axios.post(this.httpBase+"://codingkloud.com/rentVue/chatApi.php",{
+            axios.post(httpBase+"://codingkloud.com/rentVue/chatApi.php",{
                 senderId: this.sendChatEntry.senderId,
                 recipientId: this.sendChatEntry.recipientId,
                 text: this.sendChatEntry.text,
@@ -133,7 +133,7 @@ export default {
             if(this.loggedUserMainDataForContent.userType == 2 ){
                 this.getChatData.recipientId = this.loggedUserMainDataForContent.userID;
             }
-            axios.get(this.httpBase+'://codingkloud.com/rentVue/chatApi.php?action=fetchChating&senderId='+this.getChatData.senderId+'&recipientId='+this.getChatData.recipientId).then((response) => {
+            axios.get(httpBase+'://codingkloud.com/rentVue/chatApi.php?action=fetchChating&senderId='+this.getChatData.senderId+'&recipientId='+this.getChatData.recipientId).then((response) => {
                 console.log(response);
                 this.chatingData = response.data.chat;
             }).catch(error => {
@@ -141,7 +141,7 @@ export default {
             });
         },
         fatchUsers(){
-            axios.post(this.httpBase+'://codingkloud.com/rentVue/users.php',{
+            axios.post(httpBase+'://codingkloud.com/rentVue/users.php',{
                 action: "listUsers"
             }).then((response) => {
                 console.log(response);
@@ -149,7 +149,7 @@ export default {
             });
         },
         fatchCkData(){
-            axios.get(this.httpBase+'://codingkart-d70b0.firebaseio.com/characters.json').then((response) => {
+            axios.get(httpBase+'://codingkart-d70b0.firebaseio.com/characters.json').then((response) => {
                 console.log(response);     
                 this.ckData = response.data;           
             });
