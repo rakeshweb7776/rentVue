@@ -530,7 +530,7 @@ export default {
       if (!this.errors.length) {
         this.isActiveLoader = true;
         axios
-          .post(httpBase+":http://codingkloud.com/rentVue/addRentApi.php", {
+          .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
             renter_id: this.renterData.renter_id,
             back_month_reading: this.renterData.back_month_reading,
             current_month_reading: this.renterData.current_month_reading,
