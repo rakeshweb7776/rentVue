@@ -3,7 +3,7 @@
     
     <b-card-group deck class="mb-4" style="min-height:350px">
       <b-card class="p-1">  
-        <div id="loader" v-bind:class="{ loaderActive: isActiveLoader }">
+        <div id="loader" v-bind:class="{ loaderActive: isActiveGraphLoader }">
           <svg
             width="100"
             height="100"
@@ -315,6 +315,7 @@ export default {
       showAlertError: false,
       showAlertSuccess: false,
       isActiveLoader: false,
+      isActiveGraphLoader:false,
       rentValueStatus: false,
       waterChargesValueStatus: true,
       // backMonthReadingValueStatus:false,
@@ -357,7 +358,7 @@ export default {
         });
     },
     getRentRecordMonthWise() {
-      this.isActiveLoader = true;
+      this.isActiveGraphLoader = true;
       axios
         .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
           action: "getRentRecordMonthWise"
@@ -378,7 +379,7 @@ export default {
               }
             }
             this.monthlyStatus = true;
-            this.isActiveLoader = false;
+            this.isActiveGraphLoader = false;
             /*setTimeout(() => {               
             }, 1500);*/
            }
