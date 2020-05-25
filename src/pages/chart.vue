@@ -15,7 +15,7 @@ export default {
         {
           label: 'Light Bill owner',
           backgroundColor: '#007bff',
-          data: [1850, 1355,1500,1800]
+          data: [1850, 1355,1500,4399]
         }
       ]
     }, {responsive: true, maintainAspectRatio: false})
