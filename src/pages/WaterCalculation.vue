@@ -3,13 +3,14 @@
         <b-row>
             <b-col>
                 <b-card class="p-1">  
-                    <h3>Water Calculations 2</h3> 
+                    <h3>Water Calculations</h3> 
                     <b-row>
                         <b-col cols="12">
                             <b-card class="p-1 mb-3"> 
                                 <b-form inline class="mb-3">
                                     <b-form-input type="text" placeholder="BMR" @keyup="watercalculationFunction" v-bind:disabled="bmrValueStatus" v-model.number="waterCalculation.bmr"></b-form-input>                                         
                                     <b-form-input type="text" placeholder="CMR" @keyup="watercalculationFunction" v-model.number="waterCalculation.cmr" class="ml-3"></b-form-input>                                         
+                                    <b-form-input type="text" placeholder="CMR" @keyup="watercalculationFunction" v-model.number="waterCalculation.totalUser" class="ml-3"></b-form-input>                                         
                                 </b-form>
                                 <ul class="errorListing" v-if="errors.length">
                                     <li v-bind:key="error.index"  v-for="error in errors">{{ error }}</li>
@@ -88,7 +89,8 @@ export default {
                 cmr:0,
                 totalMR:0,
                 totalWC:0,
-                perUserWC:0
+                perUserWC:0,
+                totalUser:6
             },
             alertMessage:null,
             bmrValueStatus:false,
@@ -177,7 +179,7 @@ export default {
                 this.waterCalculation.totalMR = this.waterCalculation.cmr - this.waterCalculation.bmr;
                 console.log("Testing" + this.waterCalculation.totalMR);
                 this.waterCalculation.totalWC = this.waterCalculation.totalMR * 8;
-                this.waterCalculation.perUserWC = Math.trunc( this.waterCalculation.totalWC / 6 );
+                this.waterCalculation.perUserWC = Math.trunc( this.waterCalculation.totalWC / this.waterCalculation.totalUser );
             }else {
                 this.waterCalculation.totalMR = 0;
                 this.waterCalculation.totalWC = 0;
