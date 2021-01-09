@@ -484,7 +484,6 @@ export default {
         }
       }
       this.fatchBackMonthReading();
-      this.fatchUser7AndUser8Data();
       if (this.renterData.rent !== null) {
         this.rentValueStatus = true;
       }
@@ -519,14 +518,6 @@ export default {
         this.errors.push("Please calculate water charges before add rent.");
       }
 
-      if (this.renterData.renter_id == 9) {
-        if (this.user7DataReading <= 0) {
-          this.errors.push("Please submit 7 Number Rent.");
-        } 
-        if (this.user8DataReading <= 0) {
-          this.errors.push("Please submit 8 Number Rent.");
-        } 
-      }
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
