@@ -1,30 +1,6 @@
 <template>
   <div>
-    <b-card-group deck class="mb-4" style="min-height:350px">
-     <b-card class="p-1">   
-        <b-table-simple responsive bordered striped hover class="m-0 flatTable responsiveTable"  v-if="flatListStatus > 0">
-          <b-thead>
-              <b-tr>
-                  <b-th>Id</b-th>                                
-                  <b-th>Flat Name</b-th>
-                  <b-th>Base Rent</b-th>
-                  <b-th>Status</b-th>
-              </b-tr>
-          </b-thead>
-          <b-tbody>
-              <b-tr v-bind:key="item.index" v-for="(item, index) in flats" :variant="item.status == 0 ? 'success' : 'diposited'">
-                  <b-td>{{ item.id }}</b-td>               
-                  <b-td>{{ item.flatName }}</b-td>
-                  <b-td><span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</b-td>
-                  <b-td>
-                    <span class="bold" style="color:red" v-if="item.status == 1">Not Available</span>
-                    <span class="bold" style="color:green" v-else>Available</span>
-                  </b-td>
-              </b-tr>
-          </b-tbody>
-        </b-table-simple>
-      </b-card>
-    </b-card-group>
+    
     <b-card-group deck class="mb-4" style="min-height:350px">
       <b-card class="p-1">  
         <div id="loader" v-bind:class="{ loaderActive: isActiveGraphLoader }">
@@ -84,6 +60,29 @@
           </svg>
         </div> 
         <monthly-income :barMonthNames='lightBillMonthName' :barMonthData='lightBillMonthData' v-if="monthlyStatus"></monthly-income>
+      </b-card>
+      <b-card class="p-1">   
+        <b-table-simple responsive bordered striped hover class="m-0 flatTable responsiveTable"  v-if="flatListStatus > 0">
+          <b-thead>
+              <b-tr>
+                  <b-th>Id</b-th>                                
+                  <b-th>Flat Name</b-th>
+                  <b-th>Base Rent</b-th>
+                  <b-th>Status</b-th>
+              </b-tr>
+          </b-thead>
+          <b-tbody>
+              <b-tr v-bind:key="item.index" v-for="(item, index) in flats" :variant="item.status == 0 ? 'success' : 'diposited'">
+                  <b-td>{{ item.id }}</b-td>               
+                  <b-td>{{ item.flatName }}</b-td>
+                  <b-td><span class="pinkColor bold">&#8377;</span> {{ item.baseRent }} /-</b-td>
+                  <b-td>
+                    <span class="bold" style="color:red" v-if="item.status == 1">Not Available</span>
+                    <span class="bold" style="color:green" v-else>Available</span>
+                  </b-td>
+              </b-tr>
+          </b-tbody>
+        </b-table-simple>
       </b-card>
     </b-card-group>
         
