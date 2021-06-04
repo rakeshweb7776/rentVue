@@ -132,7 +132,7 @@ export default {
 
             if (!this.errors.length) {
                 this.isLoaderActive = true; 
-                axios.post(httpBase+'://codingkloud.com/rentVue/waterCalculationApi.php',{
+                axios.post(server_path+'waterCalculationApi.php',{
                 currentMonth: this.waterCalculation.currentMonth,
                 bmr: this.waterCalculation.bmr,
                 cmr: this.waterCalculation.cmr,
