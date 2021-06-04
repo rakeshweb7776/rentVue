@@ -259,7 +259,7 @@ export default {
     fatchUsers() {
       this.isActiveLoader = true;
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/users.php", {
+        .post(server_path+"users.php", {
           action: "checkAdminData"
         })
         .then(response => {
@@ -280,7 +280,7 @@ export default {
     fatchFlats() {
       /* Get Flat Data For Form Options */
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/flatListApi.php", {
+        .post(server_path+"flatListApi.php", {
           action: "listAvailableFlats"
         })
         .then(response => {
@@ -366,7 +366,7 @@ export default {
 
       if (!this.errors.length) {
         this.isActiveLoader = true;
-        axios.post(httpBase+"://codingkloud.com/rentVue/registerUserApi.php", {
+        axios.post(server_path+"registerUserApi.php", {
             firstName: this.registerDetails.firstName,
             lastName: this.registerDetails.lastName,
             email: this.registerDetails.email,

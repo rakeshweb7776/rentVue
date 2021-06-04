@@ -232,7 +232,7 @@ export default {
     },
     methods:{
         fatchFlats(){
-            axios.post(httpBase+'://codingkloud.com/rentVue/flatListApi.php',{
+            axios.post(server_path+'flatListApi.php',{
             action: "listFlats"
             }).then((response) => {
                 if(response.data.status == 1){
@@ -261,7 +261,7 @@ export default {
 
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
-                axios.post(httpBase+'://codingkloud.com/rentVue/flatListApi.php',{
+                axios.post(server_path+'flatListApi.php',{
                 flatName: this.newFlat.flatName,
                 baseRent: this.newFlat.baseRent,
                 action: "addNewFlat"
@@ -314,7 +314,7 @@ export default {
             if (!this.errors.length) {
                 this.isActiveLoader = true; 
                 /* Update Data Using API */ 
-                axios.post(httpBase+'://codingkloud.com/rentVue/flatListApi.php',{
+                axios.post(server_path+'flatListApi.php',{
                     flatId:this.editedFlatId,
                     flatName:this.editedFlat.flatName,
                     baseRent:this.editedFlat.baseRent,
@@ -342,7 +342,7 @@ export default {
         deleteUser(delFlat) {
             this.delFlatId = delFlat;
             /* Update Data Using API */ 
-            axios.post(httpBase+'://codingkloud.com/rentVue/flatListApi.php',{
+            axios.post(server_path+'flatListApi.php',{
                 deleteIdData:this.delFlatId,
                 action: "deleteFlat"
             }).then((response) => {

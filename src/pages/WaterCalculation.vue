@@ -102,7 +102,7 @@ export default {
     },
     methods:{
         fatchWaterList(){
-            axios.post(httpBase+'://codingkloud.com/rentVue/waterCalculationApi.php',{
+            axios.post(server_path+'waterCalculationApi.php',{
                 action: "getWaterList"
             }).then((response) => {
                 console.log(response);

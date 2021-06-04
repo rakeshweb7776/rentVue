@@ -24,7 +24,7 @@ import router from './routes/routes'
 
 window.router = router;
 window.swal = swal;
-window.httpBase = "https";
+window.server_path = "http://codingkloud.com/rentVue/";
 
 window.Vue = Vue;
 window.VueMask = VueMask;
