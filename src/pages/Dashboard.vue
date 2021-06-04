@@ -332,7 +332,7 @@ export default {
     },
     fatchFlats() {
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/flatListApi.php", {
+        .post(server_path+"flatListApi.php", {
           action: "listFlats"
         })
         .then(response => {
@@ -349,7 +349,7 @@ export default {
     },
     fatchUsers() {
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/users.php", {
+        .post(server_path+"users.php", {
           action: "listUsers"
         })
         .then(response => {
@@ -360,7 +360,7 @@ export default {
     getRentRecordMonthWise() {
       this.isActiveGraphLoader = true;
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
+        .post(server_path+"addRentApi.php", {
           action: "getRentRecordMonthWise"
         })
         .then(response => {            
@@ -387,7 +387,7 @@ export default {
     },
     fatchWaterList() {
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/waterCalculationApi.php", {
+        .post(server_path+"waterCalculationApi.php", {
           action: "getWaterList"
         })
         .then(response => {
@@ -407,7 +407,7 @@ export default {
         });
     },
     fatchBackMonthReading() {
-      axios.get(httpBase+"://codingkloud.com/rentVue/addRentApi.php?action=fatchBackMonthReading&records=" +
+      axios.get(server_path+"addRentApi.php?action=fatchBackMonthReading&records=" +
             this.renterData.renter_id
         )
         .then(response => {
@@ -425,7 +425,7 @@ export default {
     },
     fatchUser7AndUser8Data() {
       axios
-        .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
+        .post(server_path+"addRentApi.php", {
           currentMonth:this.currentMonth,
           action: "getUser7AndUser8Data"
         })
@@ -522,7 +522,7 @@ export default {
       if (!this.errors.length) {
         this.isActiveLoader = true;
         axios
-          .post(httpBase+"://codingkloud.com/rentVue/addRentApi.php", {
+          .post(server_path+"addRentApi.php", {
             renter_id: this.renterData.renter_id,
             back_month_reading: this.renterData.back_month_reading,
             current_month_reading: this.renterData.current_month_reading,
