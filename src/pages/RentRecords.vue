@@ -137,7 +137,7 @@
             <p>
               Total Reading: {{ copyRentRecord.meter_reading }}
               <sup>Unit</sup>
-              * 8 - {{ copyRentRecord.light_charge }} /-
+              * 10 - {{ copyRentRecord.light_charge }} /-
             </p>
             <p>Water Charge: &#8377; {{ copyRentRecord.water_charge }} /-</p>
             <p>Total Rent: &#8377; {{ copyRentRecord.total_rent }} /-</p>
