@@ -94,7 +94,8 @@ export default {
             },
             alertMessage:null,
             bmrValueStatus:false,
-            isLoaderActive:false
+            isLoaderActive:false,
+            perUnitCharge:10
         }
     },
     computed:{
@@ -178,7 +179,7 @@ export default {
             if(this.waterCalculation.bmr > 0 && this.waterCalculation.cmr > this.waterCalculation.bmr) {
                 this.waterCalculation.totalMR = this.waterCalculation.cmr - this.waterCalculation.bmr;
                 console.log("Testing" + this.waterCalculation.totalMR);
-                this.waterCalculation.totalWC = this.waterCalculation.totalMR * 8;
+                this.waterCalculation.totalWC = this.waterCalculation.totalMR * this.perUnitCharge;
                 this.waterCalculation.perUserWC = Math.trunc( this.waterCalculation.totalWC / this.waterCalculation.totalUser );
             }else {
                 this.waterCalculation.totalMR = 0;
