@@ -279,7 +279,7 @@ export default {
         "%0a" +
         "Total Reading: " +
         this.copyRentRecord.meter_reading +
-        " X 8 = " +
+        " X 10 = " +
         this.copyRentRecord.light_charge +
         " /- %0a Water Charge: ₹" +
         this.copyRentRecord.water_charge +
