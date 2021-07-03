@@ -323,7 +323,8 @@ export default {
       water_charge_temp_store: null,
       user7DataReading: 0,
       user8DataReading: 0,
-      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear()
+      currentMonth: new Date().getMonth() + 1 + "-" + new Date().getFullYear(),
+      perUnitCharge:10
     };
   },
   methods: {
@@ -463,11 +464,11 @@ export default {
                     let user7User8Reading = parseInt(this.user7DataReading) + parseInt(this.user8DataReading);
                     let meaterReadingForUser_9 =  tempMeaterReading - user7User8Reading;
                     this.renterData.meter_reading = meaterReadingForUser_9;
-                    this.renterData.light_charge = this.renterData.meter_reading * 8;
+                    this.renterData.light_charge = this.renterData.meter_reading * this.perUnitCharge;
                 }
           }else {
               this.renterData.meter_reading = this.renterData.current_month_reading - this.renterData.back_month_reading;
-              this.renterData.light_charge = this.renterData.meter_reading * 8;
+              this.renterData.light_charge = this.renterData.meter_reading * this.perUnitCharge;
           }
         
         this.renterData.total_rent = this.renterData.light_charge + parseInt(this.renterData.rent) + parseInt(this.renterData.water_charge);
