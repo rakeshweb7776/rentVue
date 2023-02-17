@@ -29,6 +29,7 @@
     "vue2-filters": "^0.9.1"
   },
   "devDependencies": {
+    "@vercel/node": "^2.9.6",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
