@@ -2,7 +2,7 @@
     <div>   
         <b-row>
             <b-col>
-                {{ckData.adventurer.name}}
+                <!-- {{ckData.adventurer.name}} -->
                 <div class="chatContainer">
                     <div class="chatingUsersList" v-if="loggedUserMainDataForContent.userType == 1">
 
@@ -18,9 +18,9 @@
 
                     </div>
                     <div class="chatingArea" v-bind:class="{ 'chatingAreaFull': loggedUserMainDataForContent.userType == 2 }">
-                        <div class="chatShowingArea">
+                        <div class="chatShowingArea">                            
 
-                            <div class="chatInAndOutContainer">                            
+                            <div class="chatInAndOutContainer" ref="chat">                            
                                 <!--<div class="chatInComing">
                                     <div class="received_msg">
                                         <h6>Swadeep Sohani</h6>
@@ -139,6 +139,8 @@ export default {
             }).catch(error => {
                 console.log(error.message);
             });
+
+            this.$refs.chat.scrollIntoView();
         },
         fatchUsers(){
             axios.post(server_path+'users.php',{
@@ -157,12 +159,12 @@ export default {
         
     },
     mounted(){
-        this.fatchCkData();
+       // this.fatchCkData();
         this.fatchUsers();  
         this.fetchChatMessage();        
-       /* window.setInterval(() => {
+        window.setInterval(() => {
            this.fetchChatMessage();   
-        }, 5000);*/
+        }, 5000);
     }
 }
 /*

@@ -45,7 +45,7 @@
                 v-for="(item, index) in rentRecord"
                 :variant="item.status == 0 ? 'danger' : 'diposited'"
               >
-                <b-td>{{ item.monthName }}</b-td>
+                <b-td>{{ item.monthName }} {{ item.month }}</b-td>
                 <b-td>
                   {{ item.back_month_reading }}
                   <sup>Unit</sup>
