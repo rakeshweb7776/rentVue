@@ -47,7 +47,7 @@
               >
                 <b-td>{{ item.monthName }} {{ item.month }}</b-td>
                 <b-td>
-                  {{ item.back_month_reading }}
+                  {{ item.back_month_reading }} 
                   <sup>Unit</sup>
                 </b-td>
                 <b-td>
