@@ -24,7 +24,7 @@ import router from './routes/routes'
 
 window.router = router;
 window.swal = swal;
-window.server_path = "https://codingkloud.com/rentVue/";
+window.server_path = "https://codingkart.com/rentVue/";
 
 window.Vue = Vue;
 window.VueMask = VueMask;
